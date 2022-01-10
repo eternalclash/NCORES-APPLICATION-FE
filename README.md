@@ -7,3 +7,4 @@ LOGIN&SIGNUP FEATURE
 
 
 <img src="https://user-images.githubusercontent.com/77526745/148815454-a29100cf-2e5a-4cae-bae6-bcb3ed1a3b80.png" height="500px"/>
+<img src="https://user-images.githubusercontent.com/77526745/148816020-39b7554b-54bd-4965-a0c5-e6089e029d24.png" height="500px"/>
