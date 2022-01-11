@@ -10,6 +10,7 @@ const CustomButton = ({ onPress, title, hasMarginBottom, theme }) => {
                     styles.wrapper,
                     pressed && { opacity: 0.5 },
                     isPrimary && styles.primaryWrapper //primary 
+                 
             ]}
             >
                 <Text style={[styles.text, isPrimary ? styles.primaryText : styles.secondaryText]}>{title}</Text>    
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         height: 48,
         alignItems: 'center',
         justifyContent: 'center',
-     
+        borderWidth: 0.7,
     },
     text: {
         fontSize: 14,
@@ -41,13 +42,15 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     primaryWrapper: {
-        backgroundColor: '#6200ee'
+        backgroundColor: `#191919`
     },
     primaryText: {
         color: 'white'
     },
     secondaryText: {
-        color: '#6200ee'
+        color: 'black',
+        fontWeight: '500',
+        
     },
 });
 export default CustomButton;
