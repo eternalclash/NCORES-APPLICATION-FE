@@ -13,7 +13,12 @@ import GetWorry from './SignUp/GetWorry';
 const RootStack = () => {
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator   initialRouteName="GetEmail">
+        <Stack.Navigator initialRouteName="MainPage">
+                 <Stack.Screen
+                name="MainPage"
+                component={MainPage}
+                options={{headerShown: false}}
+            />
             <Stack.Screen
                 name="SignIn"
                 component={SignInScreen}
@@ -66,11 +71,7 @@ const RootStack = () => {
                 component={GetWorry}
                 options={{headerShown: false}}
             />
-            <Stack.Screen
-                name="MainPage"
-                component={MainPage}
-                options={{headerShown: false}}
-            />
+       
       </Stack.Navigator>  
     )
 }
