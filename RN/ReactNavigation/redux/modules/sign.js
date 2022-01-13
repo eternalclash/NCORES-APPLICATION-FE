@@ -2,26 +2,47 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
+
 const CHECK_EMAIL = "CHECK_EMAIL";
 const CHECK_PASSWORD = "CHECK_PASSWORD";
 const CHECK_CONFIRMPASSWORD = "CHECK_CONFIRMPASSWORD";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
+const SET_GENDER = "SET_GENDER"
+const SET_AGE = "SET_AGE"
 const SIGN_UP = "SIGN_UP";
 const LOG_IN = "LOG_IN";
 const CHECK="CHECK"
-
+const LOGIN = "LOGIN"
 const initialState = {
     email: "",
     password: "",
     confirmPassword: "",
     nickName: "",
-    check:true
+    check: false,
+    login: false
+}
+const set = async () => {
+    try {
+       const value = await AsyncStorage.setItem('token', res.data.token)
+        console.log(await AsyncStorage.setItem('token', res.data.token))
+    }
+    catch (e) {
+        console.log(e)
+        
+    }
+}
+const value = ""
+async function load () {
+    
+        value = await AsyncStorage.getItem('token')
+     
 }
 
 const checkEmail=createAction(CHECK_EMAIL,(email)=>({email}))
 const checkPassword=createAction(CHECK_PASSWORD,(password)=>({password}))
 const checkConfirmPassword = createAction(CHECK_CONFIRMPASSWORD, (confirmPassword) => ({ confirmPassword }))
-const check = createAction(CHECK,(check)=>({check}))
+const check = createAction(CHECK, (check) => ({ check }))
+const login = createAction(LOGIN, (login)=> ({login}))
 const checkNickName=createAction(CHECK_NICKNAME,(nickName)=>({nickName}))
 // const signUp=createAction(CHECK_EMAIL,(email)=>({email}))
 // const logIn=createAction(CHECK_EMAIL,(email)=>({email}))
@@ -74,7 +95,30 @@ const checkPasswordAPI = (password,confirmPassword) => {
         });
     };
 };
-
+const setGenderAPI = (gender) => {
+    return function  (dispatch, navigation) {
+        axios({
+        method: "PATCH",
+        url: "http://54.180.134.111/user/gender",
+         data: { gender },
+         headers: {
+            Accept: "application/json",
+             "Access-Control-Allow-Origin": "*",
+            Authorization: value,
+          },
+        })
+          .then(async(res) => {
+            
+            console.log(await AsyncStorage.getItem("token"))
+            dispatch(check(true))
+        })
+        .catch(async(err) => {
+            dispatch(check(false))
+            console.log(await AsyncStorage.getItem("token"))
+          throw new Error(err);
+        });
+    };
+};
 const signUpAPI = (email,password,confirmPassword,nickname) => {
     return function (dispatch) {
       axios({
@@ -88,9 +132,9 @@ const signUpAPI = (email,password,confirmPassword,nickname) => {
       })
           .then((res) => {
               
-            dispatch(checkNickName(nickname))
+           
             dispatch(check(true))
-        
+            
         })
           .catch((err) => {
             dispatch(checkNickName(nickname))
@@ -99,8 +143,8 @@ const signUpAPI = (email,password,confirmPassword,nickname) => {
         });
     };
 };
-const logInAPI =  (email,password) => {
-    return function (dispatch) {
+const logInAPI =   (email,password) => {
+    return function(dispatch) {
       axios({
         method: "POST",
         url: "http://54.180.134.111/user/login",
@@ -111,16 +155,21 @@ const logInAPI =  (email,password) => {
           
         },
       })
-          .then(async (res) => {
-              console.log(res.data)
-           await AsyncStorage.setItem('token', JSON.stringify(res.data.token))
-              const token = AsyncStorage.getItem('token')
-              console.log(token)
-            dispatch(check(true))
-        
+          .then( async (res) => {
+            await AsyncStorage.setItem('token',res.data.token)
+              console.log(await AsyncStorage.getItem('token'))
+              dispatch(checkNickName(await AsyncStorage.getItem('token')))
+            //   const rawtoken = AsyncStorage.getItem('token')
+            // //   const token = JSON.parse(AsyncStorage.getItem('token2'))
+            //   console.log(JSON.parse(AsyncStorage.getItem('token')))
+            //   console.log(token)
+              load()
+              dispatch(login(res.data.ageExist && res.data.genderExist))
+              dispatch(check(true))
+            
         })
           .catch((err) => {
-           
+            
             dispatch(check(false))
           throw new Error(err);
         });
@@ -149,6 +198,14 @@ export default handleActions(
         produce(state, (draft) => {
             draft.nickName=action.payload.nickName
         }),
+        [SET_GENDER]: (state, action) =>
+        produce(state, (draft) => {
+            draft.gender=action.payload.gender
+        }),
+        [SET_AGE]: (state, action) =>
+        produce(state, (draft) => {
+            draft.age=action.payload.age
+        }),
         [CHECK]: (state, action) =>
         produce(state, (draft) => {
             draft.check=action.payload.check
@@ -164,4 +221,6 @@ export default handleActions(
       checkPasswordAPI,
       signUpAPI,
       logInAPI,
+      setGenderAPI,
+      check,
   };

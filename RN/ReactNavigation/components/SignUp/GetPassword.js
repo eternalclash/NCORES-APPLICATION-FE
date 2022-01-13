@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react'
+import React, {useState,useRef,useEffect} from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
@@ -13,9 +13,15 @@ const GetPassword = ({ navigation, route }) => {
     const passwordHandler = () => {
         dispatch(signActions.checkPasswordAPI(password,confirmPassword))
        
-        if (check)
-            navigation.navigate("GetNickName")
     }
+    useEffect(() => {
+        if (check)
+        {
+            console.log(check)
+            dispatch(signActions.check(false))
+            navigation.navigate("GetNickName")
+            }
+    }, [check])
     return (
         <>
             <View style={styles.fullscreen}>

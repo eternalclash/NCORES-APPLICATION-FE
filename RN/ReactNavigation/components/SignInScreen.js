@@ -1,4 +1,4 @@
-import React, {useRef,useState} from 'react'
+import React, {useRef,useState,useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet,  View,Keyboard,KeyboardAvoidingView,Text } from 'react-native'
 import BorderedInput from './BorderedInput'
@@ -24,9 +24,24 @@ const SignInScreen = ({ navigation, route }) => {
     const { isSignUp } = route.params ?? {}; //nulish 병합연산자 활용(??)를 사용 
     //화면에 파라미터가 지정되어 있지 않다면 route.params 값이 undefined이기 때문입니다. undefined 값에 객체 구조 분해 할당
     //KeyboardAvoidingView=>키보드
-    const check = useSelector((state)=>state.sign.check)
-    const logInHandler = () => {
-        dispatch(signActions.logInAPI(form.email, form.password))
+    
+    const login = useSelector((state) => state.sign.login)
+    const check = useSelector((state) => state.sign.check)
+    useEffect(() => {
+        // if (check)
+        // { 
+        //     if (login)
+        //     {
+        //         navigation.navigate("MainPage")
+        //     }
+        //     else
+        //     {
+        //         navigation.navigate("GetGender")
+        //      }    
+        //     }
+    }, [])
+    const logInHandler = async () => {
+        dispatch(signActions.logInAPI(form.email, form.password))  
     }
     return (
         <KeyboardAvoidingView style={styles.KeyboardAvoidingView}>

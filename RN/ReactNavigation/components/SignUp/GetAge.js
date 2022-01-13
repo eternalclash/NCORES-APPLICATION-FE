@@ -1,31 +1,21 @@
-
 import React, {useState,useEffect} from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
-const GetEmail = ({ navigation, route }) => {
+const GetAge = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
-    
     const [email, setEmail] = useState("")
-    
-    const emailHandler = async () => {
+    const emailHandler = () => {
         dispatch(signActions.checkEmailAPI(email))
+       
+        if (check)
+            navigation.navigate("GetPassword")
     }
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (check)
-        {
-            console.log(check)
-            dispatch(signActions.check(false))
-            navigation.navigate("GetPassword")
-            }
-    }, [check])
-  
     return (
         <>
-            
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>회원가입</Text>
                 <View style= {styles.form}>
@@ -66,4 +56,4 @@ const styles = StyleSheet.create({
         marginTop: 82,
     }
 })
-export default GetEmail
+export default GetAge

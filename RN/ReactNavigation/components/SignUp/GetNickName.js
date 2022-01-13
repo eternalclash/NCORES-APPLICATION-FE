@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
@@ -12,15 +12,16 @@ const GetNickName = ({navigation, route}) => {
     const password = useSelector((state) => state.sign.password)
     const confirmPassword = useSelector((state) => state.sign.confirmPassword)
     const dispatch = useDispatch();
-    const nickNameChange = (value) => {
-        console.log(value)
-    }
-    const nickNameHandler = () => {
-        console.log(nickName)
-        dispatch(signActions.signUpAPI(email,password,confirmPassword,nickName))
-       
+    useEffect(() => {
         if (check)
+        {
+               
+            dispatch(signActions.check(false))
             navigation.navigate("GetFinish")
+            }
+    }, [check])
+    const nickNameHandler = () => {
+        dispatch(signActions.signUpAPI(email,password,confirmPassword,nickName))
     }
    
     return (

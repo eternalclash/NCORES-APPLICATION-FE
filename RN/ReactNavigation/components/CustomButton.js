@@ -1,13 +1,16 @@
 import React from 'react'
 import { StyleSheet, View, Pressable, Text } from 'react-native'
-const CustomButton = ({ onPress, title, hasMarginBottom, theme }) => {
+const CustomButton = ({ onPress,color, title, hasMarginBottom, theme }) => {
     const isPrimary = theme === 'primary';
+    const isGender = theme === 'gender';
+    const isBlue = color === 'blue';
+    const isRed = color === 'red';
     return (
-        <View style={[styles.block, hasMarginBottom && styles.margin]}>
+        <View style={[ isRed&&styles.red,isBlue&&styles.blue  ,isGender&&styles.genderWrap,styles.block, hasMarginBottom && styles.margin]}>
             <Pressable
                 onPress={onPress}
                 style={({ pressed }) => [
-                    styles.wrapper,
+                   styles.wrapper,    
                     pressed && { opacity: 0.5 },
                     isPrimary && styles.primaryWrapper //primary 
                  
@@ -52,5 +55,14 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         
     },
+    genderWrap: {
+        width:'45%'
+    },
+    blue: {
+        backgroundColor:'lightblue'
+    },
+    red: {
+        backgroundColor:'pink'
+    }
 });
 export default CustomButton;
