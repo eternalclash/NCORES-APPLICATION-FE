@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     margin: {
-        marginBottom: 8,
+        marginBottom: 20,
     },
     primaryWrapper: {
         backgroundColor: `#191919`

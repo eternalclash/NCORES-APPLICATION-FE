@@ -28,18 +28,18 @@ const SignInScreen = ({ navigation, route }) => {
     const login = useSelector((state) => state.sign.login)
     const check = useSelector((state) => state.sign.check)
     useEffect(() => {
-        // if (check)
-        // { 
-        //     if (login)
-        //     {
-        //         navigation.navigate("MainPage")
-        //     }
-        //     else
-        //     {
-        //         navigation.navigate("GetGender")
-        //      }    
-        //     }
-    }, [])
+        if (check)
+        { 
+            if (login)
+            {     dispatch(signActions.check(false))
+                navigation.navigate("MainPage")
+            }
+            else
+            {    dispatch(signActions.check(false))
+                navigation.navigate("GetGender")
+             }    
+            }
+    }, [check])
     const logInHandler = async () => {
         dispatch(signActions.logInAPI(form.email, form.password))  
     }

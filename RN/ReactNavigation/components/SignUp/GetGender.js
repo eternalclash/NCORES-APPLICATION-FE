@@ -8,9 +8,16 @@ const GetGender = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
     const [gender, setGender] = useState("")
     const dispatch = useDispatch();
+    useEffect(() => {
+        if (check)
+        {   
+            dispatch(signActions.check(false))
+            navigation.navigate("GetAge")
+            }
+    }, [check])
     const genderHandler = () => {
         dispatch(signActions.setGenderAPI(gender))
-       
+        // navigation.navigate("GetAge")
         // if (check)
         //     navigation.navigate("GetAge")
     }

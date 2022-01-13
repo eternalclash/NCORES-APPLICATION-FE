@@ -21,22 +21,7 @@ const initialState = {
     check: false,
     login: false
 }
-const set = async () => {
-    try {
-       const value = await AsyncStorage.setItem('token', res.data.token)
-        console.log(await AsyncStorage.setItem('token', res.data.token))
-    }
-    catch (e) {
-        console.log(e)
-        
-    }
-}
-const value = ""
-async function load () {
-    
-        value = await AsyncStorage.getItem('token')
-     
-}
+
 
 const checkEmail=createAction(CHECK_EMAIL,(email)=>({email}))
 const checkPassword=createAction(CHECK_PASSWORD,(password)=>({password}))
@@ -96,15 +81,15 @@ const checkPasswordAPI = (password,confirmPassword) => {
     };
 };
 const setGenderAPI = (gender) => {
-    return function  (dispatch, navigation) {
-        axios({
+    return async function  (dispatch, navigation) {
+       await axios({
         method: "PATCH",
         url: "http://54.180.134.111/user/gender",
          data: { gender },
          headers: {
             Accept: "application/json",
              "Access-Control-Allow-Origin": "*",
-            Authorization: value,
+            "Authorization": await AsyncStorage.getItem("token"),
           },
         })
           .then(async(res) => {
@@ -119,6 +104,80 @@ const setGenderAPI = (gender) => {
         });
     };
 };
+
+const setAgeAPI = (age) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "PATCH",
+      url: "http://54.180.134.111/user/age",
+       data: { age },
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => {
+          
+ 
+          dispatch(check(true))
+      })
+      .catch(async(err) => {
+          dispatch(check(false))
+          console.log(await AsyncStorage.getItem("token"))
+        throw new Error(err);
+      });
+  };
+};
+const setIndicateAPI = (indicate) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "POST",
+      url: "http://54.180.134.111/skin/oil-indicate",
+       data: { skinId:indicate },
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => {
+          
+ 
+          dispatch(check(true))
+      })
+      .catch(async(err) => {
+          dispatch(check(false))
+          console.log(await AsyncStorage.getItem("token"))
+        throw new Error(err);
+      });
+  };
+};
+const setWorryAPI = (worry) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "POST",
+      url: "http://54.180.134.111/skin/worry",
+       data: {skinWorryId:worry},
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => {
+          
+ 
+          dispatch(check(true))
+      })
+      .catch(async(err) => {
+          dispatch(check(false))
+          console.log(await AsyncStorage.getItem("token"))
+        throw new Error(err);
+      });
+  };
+};
+
 const signUpAPI = (email,password,confirmPassword,nickname) => {
     return function (dispatch) {
       axios({
@@ -152,10 +211,11 @@ const logInAPI =   (email,password) => {
         headers: {
           Accept: "application/json",
           "Access-Control-Allow-Origin": "*",
-          
+        
         },
       })
-          .then( async (res) => {
+        .then(async (res) => {
+            console.log(res.data)
             await AsyncStorage.setItem('token',res.data.token)
               console.log(await AsyncStorage.getItem('token'))
               dispatch(checkNickName(await AsyncStorage.getItem('token')))
@@ -163,7 +223,7 @@ const logInAPI =   (email,password) => {
             // //   const token = JSON.parse(AsyncStorage.getItem('token2'))
             //   console.log(JSON.parse(AsyncStorage.getItem('token')))
             //   console.log(token)
-              load()
+         
               dispatch(login(res.data.ageExist && res.data.genderExist))
               dispatch(check(true))
             
@@ -222,5 +282,8 @@ export default handleActions(
       signUpAPI,
       logInAPI,
       setGenderAPI,
+      setAgeAPI,
+    setIndicateAPI,
+      setWorryAPI,
       check,
   };

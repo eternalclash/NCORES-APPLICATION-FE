@@ -8,10 +8,12 @@ import GetFinish from './SignUp/GetFinish';
 import GetGender from './SignUp/GetGender';
 import MainPage from './MainPage';
 import GetAge from './SignUp/GetAge';
+import GetIndicate from './SignUp/GetIndicate';
+import GetWorry from './SignUp/GetWorry';
 const RootStack = () => {
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator   initialRouteName="SignIn">
+        <Stack.Navigator   initialRouteName="GetEmail">
             <Stack.Screen
                 name="SignIn"
                 component={SignInScreen}
@@ -52,6 +54,16 @@ const RootStack = () => {
             <Stack.Screen
                 name="GetAge"
                 component={GetAge}
+                options={{headerShown: false}}
+            />
+              <Stack.Screen
+                name="GetIndicate"
+                component={GetIndicate}
+                options={{headerShown: false}}
+            />
+              <Stack.Screen
+                name="GetWorry"
+                component={GetWorry}
                 options={{headerShown: false}}
             />
             <Stack.Screen

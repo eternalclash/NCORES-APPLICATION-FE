@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
 })
 //hasMarginBottom 값이 true라면 하단에 여백을 지정, hasMarginBottom Props로 하단 여백 지정, onPress와 title로 버튼을 클릭했을 때 지정
 export default React.forwardRef(BorderedInput);
-//onChangeText,value,placeholder => ...rest 사용해 지정한 키 외의 props를 객체에 담는다. 
+//onChangeText,value,placeholder => ...rest 사용해 지정한 키 외의 props를 객체에 담는다.  
