@@ -36,6 +36,7 @@ function CameraButton() {
     }
     navigation.push('Upload', {res});
   };
+    //res라우트 파라미터를 받아와 이를 Image 컴포넌트를 사용해 화면에 보여줍니다.
 
   const onLaunchCamera = () => {
     launchCamera(imagePickerOption, onPickImage);
@@ -102,14 +103,14 @@ function CameraButton() {
 const styles = StyleSheet.create({
   wrapper: {
     zIndex: 5,
-    borderRadius: 27,
-    height: 54,
-    width: 54,
+    borderRadius: 36,
+    height: 72,
+    width: 72,
     position: 'absolute',
     left: '50%',
     transform: [
       {
-        translateX: -27,
+        translateX: -37,
       },
     ],
     ...Platform.select({
@@ -119,17 +120,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 4,
       },
-      android: {
-        elevation: 5,
-        overflow: 'hidden',
-      },
+     
     }),
   },
   circle: {
-    backgroundColor: '#6200ee',
-    borderRadius: 27,
-    height: 54,
-    width: 54,
+    backgroundColor: 'black',
+    borderRadius: 36,
+    height: 72,
+    width: 72,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -10,6 +10,7 @@ import MainPage from './MainPage';
 import GetAge from './SignUp/GetAge';
 import GetIndicate from './SignUp/GetIndicate';
 import GetWorry from './SignUp/GetWorry';
+import UploadScreen from './UploadScreen';
 const RootStack = () => {
     const Stack = createNativeStackNavigator();
     return (
@@ -69,6 +70,11 @@ const RootStack = () => {
               <Stack.Screen
                 name="GetWorry"
                 component={GetWorry}
+                options={{headerShown: false}}
+            />
+                <Stack.Screen
+                name="Upload"
+                component={UploadScreen}
                 options={{headerShown: false}}
             />
        

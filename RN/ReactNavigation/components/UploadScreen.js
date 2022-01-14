@@ -1,33 +1,32 @@
-import React from 'react'
-import { Text, View, StyleSheet,Image,useWindowDimensions } from 'react-native'
-import CameraButton from './Camera/CameraButton'
-const MainPage = () => {
+import React, {useEffect, useRef, useState} from 'react'
+import { View,StyleSheet,TextInput,Image,useWindowDimensions,Text,Button } from 'react-native'
+import { useRoute } from '@react-navigation/native';
+import CustomButton from './CustomButton';
+
+const UploadScreen = () => {
+    const route = useRoute();
+    const { res } = route.params || {};
     const { width } = useWindowDimensions();
+    console.log(res.assets[0].uri)
     return (
-        <>
-            <View style={styles.main}>
+        <View style={styles.block}>
             <Image
-                source={{ uri: "https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"}}
-                style={[styles.image, { height: width }]}
+                source={{ uri: res.assets[0]?.uri }}
+                style={[styles.image]}
                 resizeMode="cover"
             />
-            </View>  
-            <Text style={styles.step}>Step 1</Text>
+             <Text style={styles.step}>Step 1</Text>
             <Text style={styles.info}>원안에 얼굴 정면을 맞춰주세요</Text>
-            <CameraButton/>
-           
-          
-        </>
+            <CustomButton/>
+        </View>
     )
 }
+
 const styles = StyleSheet.create({
-    main: {
-     
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        height:600,
+    block: {
+        flex: 1,
     },
+    image: { height:600, },
     main1: {
      
         justifyContent: 'center',
@@ -61,7 +60,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    image: { width: '100%',borderRadius: 250, },
-})
+});
 
-export default MainPage
+export default UploadScreen
