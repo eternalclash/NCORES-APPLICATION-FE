@@ -13,6 +13,7 @@ import GetWorry from './SignUp/GetWorry';
 import UploadScreen from './UploadScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as signActions } from '../redux/modules/sign';
+import { TouchableOpacity,Text,View, Image } from 'react-native';
 const RootStack = () => {
     const dispatch = useDispatch();
     const isLogin= useSelector(state=>state.sign.checkLogin)
@@ -29,7 +30,21 @@ const RootStack = () => {
               name="MainPage"
               component={MainPage}
               options={{
-                  title:''
+                  headerLeft: ({ onPress }) => (
+                      <TouchableOpacity>
+                         <Text style={{fontSize:20}}>Logo</Text>
+                    </TouchableOpacity>  
+                  ),
+                  headerTitle: ({ onPress }) => (
+                      <View>
+                          <Text>메인페이지</Text>
+                      </View>
+                  ),
+                  headerRight: ({ onPress }) => (
+                      <TouchableOpacity>
+                         <Text  style={{fontSize:30}}>+</Text>
+                      </TouchableOpacity>
+                  )
               }}
               />          
               <Stack.Screen
