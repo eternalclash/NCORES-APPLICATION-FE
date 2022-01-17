@@ -6,15 +6,20 @@ import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 const GetIndicate = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
+    const indicateError = useSelector(state => state.sign.indicateError)
     const [indicate, setIndicate] = useState("")
     const dispatch = useDispatch();
     useEffect(() => {
         if (check)
         {   
             dispatch(signActions.check(false))
+            dispatch(signActions.indicateError(""))
             navigation.navigate("GetWorry")
             }
     }, [check])
+    useEffect(() => {
+  
+    }, [indicateError])
     const indicateHandler = () => {
         dispatch(signActions.setIndicateAPI(indicate))
         // navigation.navigate("GetAge")
@@ -89,7 +94,7 @@ const GetIndicate = ({ navigation, route }) => {
                                           setIndicate(5)
                         }} />
                     }
-                   
+                    <Text style={styles.error}>{indicateError}</Text>
                    
                    
                     <View style={styles.buttons}/>
@@ -129,6 +134,10 @@ const styles = StyleSheet.create({
     },
     red: {
         backgroundColor:"pink"
+    },
+    error: {
+        color: "red",
+        marginTop:10
     }
 })
 export default GetIndicate

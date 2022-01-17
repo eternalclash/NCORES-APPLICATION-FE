@@ -7,7 +7,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 const GetEmail = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
-    
+    const emailError = useSelector(state=>state.sign.emailError)
     const [email, setEmail] = useState("")
     
     const emailHandler = async () => {
@@ -18,10 +18,14 @@ const GetEmail = ({ navigation, route }) => {
         if (check)
         {
             console.log(check)
-            dispatch(signActions.check(false))
+            dispatch(signActions.check(false)) 
+            dispatch(signActions.emailError(""))
             navigation.navigate("GetPassword")
             }
     }, [check])
+    useEffect(() => {
+        
+    }, [emailError])
   
     return (
         <>
@@ -38,6 +42,7 @@ const GetEmail = ({ navigation, route }) => {
                     returnKeyType="done"
                     
                     />
+                    <Text style={styles.error}>{emailError}</Text>
                     <View style={styles.buttons}/>
                     <CustomButton title="다음" onPress={
                         emailHandler
@@ -64,6 +69,10 @@ const styles = StyleSheet.create({
     },
     buttons: {
         marginTop: 82,
+    },
+    error: {
+        color: 'red',
+        marginTop:10,
     }
 })
 export default GetEmail

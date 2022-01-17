@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import SignInScreen from './SignInScreen';
 import GetEmail from './SignUp/GetEmail';
@@ -11,20 +11,74 @@ import GetAge from './SignUp/GetAge';
 import GetIndicate from './SignUp/GetIndicate';
 import GetWorry from './SignUp/GetWorry';
 import UploadScreen from './UploadScreen';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as signActions } from '../redux/modules/sign';
 const RootStack = () => {
+    const dispatch = useDispatch();
+    const isLogin= useSelector(state=>state.sign.checkLogin)
+    useEffect(()=>{
+       dispatch(signActions.checkLoginMD())
+    }, [])
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator initialRouteName="MainPage">
-                 <Stack.Screen
-                name="MainPage"
-                component={MainPage}
-                options={{headerShown: false}}
-            />
-            <Stack.Screen
-                name="SignIn"
-                component={SignInScreen}
-                options={{ headerShown: false }}
-            />
+        <Stack.Navigator >
+            {
+                isLogin ?  
+              <>
+              <Stack.Screen
+              name="MainPage"
+              component={MainPage}
+              options={{
+                  title:''
+              }}
+              />          
+              <Stack.Screen
+              name="SignIn"
+              component={SignInScreen}
+              options={{
+                  title:''
+              }}
+        
+                        
+                        />
+                        </>
+                    :
+                    <>
+                     <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+              title:''
+          }}
+                        />
+                           <Stack.Screen
+              name="MainPage"
+              component={MainPage}
+              options={{
+                  title:''
+              }}
+              />       
+                    </>
+
+            }
+          {/* {
+              !isLogin?  <Stack.Screen
+              name="MainPage"
+              component={MainPage}
+              options={{
+                  title:''
+              }}
+                />
+                    : <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+              title:''
+          }}
+      />
+            } */}
+            
+            
             <Stack.Screen
                 name="GetEmail"
                 component={GetEmail}

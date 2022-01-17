@@ -3,10 +3,12 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import sign from "./modules/sign"
+import photo from "./modules/photo";
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 const stack=createNativeStackNavigator()
 const rootReducer = combineReducers({
   sign,
+  photo,
  
 });
 

@@ -3,6 +3,9 @@ import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 
+//login상태인지 CHECK
+const CHECK_LOGIN ="CHECK_LOGIN"
+
 const CHECK_EMAIL = "CHECK_EMAIL";
 const CHECK_PASSWORD = "CHECK_PASSWORD";
 const CHECK_CONFIRMPASSWORD = "CHECK_CONFIRMPASSWORD";
@@ -13,13 +16,31 @@ const SIGN_UP = "SIGN_UP";
 const LOG_IN = "LOG_IN";
 const CHECK="CHECK"
 const LOGIN = "LOGIN"
+const ERROR = "ERROR"
+const LOGIN_ERROR = "LOGIN_ERROR"
+const EMAIL_ERROR = "EMAIL_ERROR"
+const PASSWORD_ERROR = "PASSWORD_ERROR"
+const NICKNAME_ERROR = "NICKNAME_ERROR"
+const GENDER_ERROR = "GENDER_ERROR"
+const AGE_ERROR = "AGE_ERROR"
+const WORRY_ERROR = "WORRY_ERROR"
+const INDICATE_ERROR = "INDICATE_ERROR" 
 const initialState = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-    nickName: "",
-    check: false,
-    login: false
+  email: "",
+  password: "",
+  confirmPassword: "",
+  nickName: "",
+  check: false,
+  login: false,
+  loginError: "",
+  emailError: "",
+  passwordError: "",
+  nickNameError: "",
+  genderError: "",
+  ageError: "",
+  worryError: "",
+  indicateError: "",
+  checkLogin:false,
 }
 
 
@@ -28,9 +49,32 @@ const checkPassword=createAction(CHECK_PASSWORD,(password)=>({password}))
 const checkConfirmPassword = createAction(CHECK_CONFIRMPASSWORD, (confirmPassword) => ({ confirmPassword }))
 const check = createAction(CHECK, (check) => ({ check }))
 const login = createAction(LOGIN, (login)=> ({login}))
-const checkNickName=createAction(CHECK_NICKNAME,(nickName)=>({nickName}))
+const checkNickName = createAction(CHECK_NICKNAME, (nickName) => ({ nickName }))
+const loginError =createAction(LOGIN_ERROR, (loginError)=>({loginError}))
+const emailError =createAction(EMAIL_ERROR, (emailError)=>({emailError}))
+const passwordError =createAction(PASSWORD_ERROR, (passwordError)=>({passwordError}))
+const nickNameError =createAction(NICKNAME_ERROR, (nickNameError)=>({nickNameError}))
+const genderError =createAction(GENDER_ERROR, (genderError)=>({genderError}))
+const ageError = createAction(AGE_ERROR, (ageError) => ({ ageError }))
+const indicateError = createAction(INDICATE_ERROR, (indicateError)=>({indicateError}))
+const worryError = createAction(WORRY_ERROR, (worryError) => ({ worryError }))
+const checkLogin = createAction(CHECK_LOGIN, (checkLogin)=>({checkLogin}))
 // const signUp=createAction(CHECK_EMAIL,(email)=>({email}))
 // const logIn=createAction(CHECK_EMAIL,(email)=>({email}))
+const checkLoginMD = () => {
+   return async function (dispatch) {
+    if (await AsyncStorage.getItem("token"))
+    {
+      console.log(true)
+      dispatch(checkLogin(true))
+    }
+    else
+      await dispatch(checkLogin(false))
+  }
+ 
+
+};
+
 
 const checkEmailAPI = (email) => {
     return function (dispatch, { navigation }) {
@@ -50,9 +94,9 @@ const checkEmailAPI = (email) => {
           
         })
         .catch((err) => {
-            console.log(email)
+            dispatch(emailError(err.response.data))
             dispatch(check(false))
-          throw new Error(err);
+           
         });
     };
 };
@@ -76,7 +120,7 @@ const checkPasswordAPI = (password,confirmPassword) => {
         })
         .catch((err) => {
             dispatch(check(false))
-          throw new Error(err);
+            dispatch(passwordError(err.response.data))
         });
     };
 };
@@ -99,7 +143,7 @@ const setGenderAPI = (gender) => {
         })
         .catch(async(err) => {
             dispatch(check(false))
-            console.log(await AsyncStorage.getItem("token"))
+            dispatch(genderError(err.response.data))
           throw new Error(err);
         });
     };
@@ -124,7 +168,7 @@ const setAgeAPI = (age) => {
       })
       .catch(async(err) => {
           dispatch(check(false))
-          console.log(await AsyncStorage.getItem("token"))
+          dispatch(ageError(err.response.data))
         throw new Error(err);
       });
   };
@@ -148,8 +192,8 @@ const setIndicateAPI = (indicate) => {
       })
       .catch(async(err) => {
           dispatch(check(false))
-          console.log(await AsyncStorage.getItem("token"))
-        throw new Error(err);
+          dispatch(indicateError(err.response.data))    
+     
       });
   };
 };
@@ -172,7 +216,7 @@ const setWorryAPI = (worry) => {
       })
       .catch(async(err) => {
           dispatch(check(false))
-          console.log(await AsyncStorage.getItem("token"))
+          dispatch(worryError(err.response.data)) 
         throw new Error(err);
       });
   };
@@ -195,7 +239,8 @@ const signUpAPI = (email,password,confirmPassword,nickname) => {
             dispatch(check(true))
             
         })
-          .catch((err) => {
+        .catch((err) => {
+            dispatch(nickNameError(err.response.data))
             dispatch(checkNickName(nickname))
             dispatch(check(false))
           throw new Error(err);
@@ -223,15 +268,17 @@ const logInAPI =   (email,password) => {
             // //   const token = JSON.parse(AsyncStorage.getItem('token2'))
             //   console.log(JSON.parse(AsyncStorage.getItem('token')))
             //   console.log(token)
-         
-              dispatch(login(res.data.ageExist && res.data.genderExist))
-              dispatch(check(true))
+              dispatch(loginError(""))
+             
+             await dispatch(login(res.data.ageExist && res.data.genderExist))  
+             await dispatch(check(true))
+        
             
         })
           .catch((err) => {
-            
+            dispatch(loginError(err.response.data))
             dispatch(check(false))
-          throw new Error(err);
+         
         });
     };
 };
@@ -239,44 +286,87 @@ const logInAPI =   (email,password) => {
 
   
 export default handleActions(
-    {
+  {
       
-       [CHECK_EMAIL]: (state, action) =>
-        produce(state, (draft) => {
-          draft.email=action.payload.email
-        }),
-        [CHECK_PASSWORD]: (state, action) =>
-        produce(state, (draft) => {
-            draft.password = action.payload.password
+    [CHECK_EMAIL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.email = action.payload.email
+      }),
+    [CHECK_PASSWORD]: (state, action) =>
+      produce(state, (draft) => {
+        draft.password = action.payload.password
             
-        }),
-        [CHECK_CONFIRMPASSWORD]: (state, action) =>
-        produce(state, (draft) => {
-            draft.confirmPassword=action.payload.confirmPassword
-        }),
-        [CHECK_NICKNAME]: (state, action) =>
-        produce(state, (draft) => {
-            draft.nickName=action.payload.nickName
-        }),
-        [SET_GENDER]: (state, action) =>
-        produce(state, (draft) => {
-            draft.gender=action.payload.gender
-        }),
-        [SET_AGE]: (state, action) =>
-        produce(state, (draft) => {
-            draft.age=action.payload.age
-        }),
-        [CHECK]: (state, action) =>
-        produce(state, (draft) => {
-            draft.check=action.payload.check
-        }),
+      }),
+    [CHECK_CONFIRMPASSWORD]: (state, action) =>
+      produce(state, (draft) => {
+        draft.confirmPassword = action.payload.confirmPassword
+      }),
+    [CHECK_NICKNAME]: (state, action) =>
+      produce(state, (draft) => {
+        draft.nickName = action.payload.nickName
+      }),
+    [SET_GENDER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.gender = action.payload.gender
+      }),
+    [SET_AGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.age = action.payload.age
+      }),
+    [CHECK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.check = action.payload.check
+      }),
+    [LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.login = action.payload.login
+      }),
         
+    [LOGIN_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.loginError = action.payload.loginError
+      }),
+    [EMAIL_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.emailError = action.payload.emailError
+      }),
+    [PASSWORD_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.passwordError = action.payload.passwordError
+      }),
+    [NICKNAME_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.nickNameError = action.payload.nickNameError
+      }),
+    [GENDER_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.genderError = action.payload.genderError
+      }),
+    [AGE_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.ageError = action.payload.ageError
+      }),
+    [WORRY_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.worryError = action.payload.worryError
+      }),
+    [INDICATE_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.indicateError = action.payload.indicateError
+      }),
+    [CHECK_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.checkLogin= action.payload.checkLogin
+      })
     },
   
     initialState
   );
 
-  export const actionCreators = {
+export const actionCreators = {
+    
+   //로그인 체크
+      checkLoginMD,
       checkEmailAPI,
       checkPasswordAPI,
       signUpAPI,
@@ -284,6 +374,16 @@ export default handleActions(
       setGenderAPI,
       setAgeAPI,
     setIndicateAPI,
-      setWorryAPI,
-      check,
+    setWorryAPI,
+    check,
+      
+    //에러
+    loginError,
+    emailError,
+    nickNameError,
+    passwordError,
+    genderError,
+    ageError,
+    indicateError,
+    worryError,
   };

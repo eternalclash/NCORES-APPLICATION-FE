@@ -1,11 +1,13 @@
-import React, {useState,useEffect} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, {useState,useEffect,useRef} from 'react'
+import { Text, View, StyleSheet,TextInput,Keyboard } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 const GetAge = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
+    const ageError = useSelector(state=>state.sign.ageError)
+
     const dispatch = useDispatch();
     const number0 = useRef();
     const number1 = useRef();
@@ -18,35 +20,45 @@ const GetAge = ({ navigation, route }) => {
     }
     useEffect(() => {
         if (check)
-        {  dispatch(signActions.check(false))
+        {
+            dispatch(signActions.check(false))
+            dispatch(signActions.ageError(""))
            navigation.navigate('GetIndicate')
             }
     }, [check])
+    useEffect(() => {
+        
+    }, [ageError])
     const [age, setAge] = useState('');
+    const [age1, setAge1] = useState('');
+    const [age2, setAge2] = useState('');
+    const [age3, setAge3] = useState('');
 
     const ageHandler0 = (value) => {
-        setAge(age+value)
+        setAge(value)
         if(value.length>0)
         number1.current.focus()
     }
     const ageHandler1 = (value) => {
-        setAge(age+value )
+        setAge1(value )
         if(value.length>0)
         number2.current.focus()
     }
     const ageHandler2 = (value) => {
-        setAge(age+value)
+        setAge2(value)
         if(value.length>0)
         number3.current.focus()
     }
     const ageHandler3 = (value) => {
-        setAge(age + value)
+        setAge3(value)
         console.log(age)
         if (value.length > 0)
             Keyboard.dismiss();
     }
     const ageHandler = () => {
-        dispatch(signActions.setAgeAPI(age))
+        console.log(age+age1+age2+age3)
+        dispatch(signActions.setAgeAPI(age+age1+age2+age3))
+        setAge("")
     }
 
     return (
@@ -77,8 +89,10 @@ const GetAge = ({ navigation, route }) => {
                          onSubmitEditing={()=> onSubmit()}  onChangeText={ageHandler3}
                             keyboardType='numeric' maxLength={1} />
                
-                </View>
-                    <View style={styles.buttons}/>
+                    </View>
+                    <Text style={styles.error}>{ageError}</Text>
+                    <View style={styles.buttons} />
+                    
                     <CustomButton title="다음" onPress={
                         ageHandler
                     } style={styles.buttons}/>
@@ -116,6 +130,10 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         justifyContent:"center",
+    },
+    error: {
+        color: "red",
+        marginTop:30,
     }
 })
 export default GetAge

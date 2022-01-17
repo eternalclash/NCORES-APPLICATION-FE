@@ -6,15 +6,20 @@ import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 const GetGender = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
+    const genderError = useSelector(state => state.sign.genderError)
     const [gender, setGender] = useState("")
     const dispatch = useDispatch();
     useEffect(() => {
         if (check)
         {   
             dispatch(signActions.check(false))
+            dispatch(signActions.genderError(""))
             navigation.navigate("GetAge")
             }
     }, [check])
+    useEffect(() => {
+     
+    }, [genderError])
     const genderHandler = () => {
         dispatch(signActions.setGenderAPI(gender))
         // navigation.navigate("GetAge")
@@ -36,9 +41,10 @@ const GetGender = ({ navigation, route }) => {
                    {
                             gender == "Female" ? <CustomButton theme="gender" color="red" title="여자" onPress={() => setGender("Female")} />  
                        : <CustomButton theme="gender" title="여자" onPress={()=>setGender("Female")} />         
-                    }
+                        }
+                       
                     </View>
-                   
+                    <Text style={styles.error}>{genderError}</Text>
                     <View style={styles.buttons}/>
                     <CustomButton title="다음" onPress={
                         genderHandler
@@ -70,5 +76,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    error: {
+        color: "red",
+        marginTop:10,
+    }
 })
 export default GetGender

@@ -9,19 +9,25 @@ const GetPassword = ({ navigation, route }) => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const confirmPasswordRef = useRef();
     const dispatch = useDispatch()
-    const check=useSelector((state)=>state.sign.check)
+    const check = useSelector((state) => state.sign.check)
+    const passwordError = useSelector(state => state.sign.passwordError)
+
+
     const passwordHandler = () => {
         dispatch(signActions.checkPasswordAPI(password,confirmPassword))
-       
     }
     useEffect(() => {
         if (check)
         {
             console.log(check)
+            dispatch(signActions.passwordError(""))
             dispatch(signActions.check(false))
             navigation.navigate("GetNickName")
             }
     }, [check])
+    useEffect(() => {
+    
+    }, [passwordError])
     return (
         <>
             <View style={styles.fullscreen}>
@@ -42,6 +48,7 @@ const GetPassword = ({ navigation, route }) => {
                         secureTextEntry
                         ref={confirmPasswordRef}
                     />
+                     <Text style={styles.error}>{passwordError}</Text>
                     <View style={styles.buttons}/>
                     <CustomButton title="다음" onPress={
                         passwordHandler
@@ -71,6 +78,10 @@ const styles = StyleSheet.create({
     },
     buttons2: {
         marginTop:12
+    },
+    error: {
+        color: 'red',
+        marginTop:10,
     }
 })
 export default GetPassword

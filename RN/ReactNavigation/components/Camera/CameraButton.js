@@ -17,7 +17,7 @@ const imagePickerOption = {
   mediaType: 'photo',
   maxWidth: 768,
   maxHeight: 768,
-  includeBase64: Platform.OS === 'android',
+
 };
 
 function CameraButton() {
