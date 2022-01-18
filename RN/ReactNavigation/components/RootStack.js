@@ -16,6 +16,8 @@ import { actionCreators as signActions } from '../redux/modules/sign';
 import { TouchableOpacity,Text,View, Image } from 'react-native';
 import CameraPage from './CameraPage';
 import AsyncStorage from '@react-native-community/async-storage';
+import MainTab from './Tab/MainTab';
+import MyLogOut from './MyPage/MyLogOut';
 
 
 // const get = async () => {
@@ -47,17 +49,15 @@ const RootStack = ({ navigation }) => {
      console.log(login)
     // console.log( AsyncStorage.getItem('token') )
     return (
-        <Stack.Navigator  initialRouteName='MainPage'
+        <Stack.Navigator  
         >
             {
           login?  
               <>
               <Stack.Screen
               name="MainPage"
-              component={MainPage}
-              options={{
-                   headerShown:false
-              }}
+              component={MainTab}
+              options={{headerShown: false}}
               />          
               <Stack.Screen
               name="SignIn"
@@ -71,19 +71,17 @@ const RootStack = ({ navigation }) => {
                         </>
                     :
                     <>
-                     <Stack.Screen
+                     {/* <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{
               title:''
           }}
-                        />
+                        /> */}
                            <Stack.Screen
               name="MainPage"
-              component={MainPage}
-              options={{
-                headerShown:false
-            }}
+              component={MainTab}
+              options={{headerShown: false}}
               />       
                     </>
 
@@ -147,6 +145,7 @@ const RootStack = ({ navigation }) => {
                 component={UploadScreen}
                 options={{headerShown: false}}
             />
+          
        
       </Stack.Navigator>  
     )

@@ -5,7 +5,7 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import Icon from 'react-native-vector-icons/EvilIcons'
 
 import ShopCarousel from '../Carousel/Carousel'
-const MyProfileScreen = ({ navigation }) => {
+const MyPage = ({ navigation }) => {
     const {top} = useSafeAreaInsets()
     return (
         <View style={styles.main}>
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MyProfileScreen
+export default MyPage

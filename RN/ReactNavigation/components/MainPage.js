@@ -1,15 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable } from 'react-native'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import CustomButton from './CustomButton'
 import MainTab from './Tab/MainTab'
 import Icon from 'react-native-vector-icons/EvilIcons'
 
 import Carousel from './Carousel/Carousel'
 import ShopCarousel from './Carousel/Carousel'
-const MainPage = ({navigation}) => {
+const MainPage = ({ navigation }) => {
+    const {top} = useSafeAreaInsets()
     return (
-      <SafeAreaView style={styles.main}>
+        <View style={styles.main}>
+            <View style={{ height: top }}></View>
             <View style={styles.main}>
                 <View style={styles.row}>
                 <View>
@@ -40,7 +42,7 @@ const MainPage = ({navigation}) => {
                     </Pressable>
                 </View>
             </View>
-            </SafeAreaView>
+            </View>
    
     )
 }
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     informationSubKeyword: {
-        marginTop: 10,
+        marginVertical: 10,
         fontSize: 15,
         fontWeight: "300",
     },
