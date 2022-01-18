@@ -1,9 +1,26 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import CustomButton from './CustomButton'
+import MainTab from './Tab/MainTab'
+import Icon from 'react-native-vector-icons/EvilIcons'
 
-const MainPage = () => {
+import Carousel from './Carousel/Carousel'
+import ShopCarousel from './Carousel/Carousel'
+const MainPage = ({navigation}) => {
     return (
-        <View style={styles.main}>
+      <SafeAreaView style={styles.main}>
+            <View style={styles.main}>
+                <View style={styles.row}>
+                <View>
+                    <Text style={styles.fontSize}>Logo</Text>
+                </View>
+                <View style={styles.right}>
+                    <Pressable onPress={()=>{navigation.navigate("CameraPage")}} >
+                        <Icon name="camera" size={40} />
+                        </Pressable>
+                    </View>
+                    </View>
             <View style={styles.mainImage}>
             <Image
                 source={{ uri: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1187&q=80"}}
@@ -15,11 +32,45 @@ const MainPage = () => {
                 <Text style={styles.informationKeyword}>민감한 피부엔 이런 제품</Text>
                 <Text style={styles.informationSubKeyword}>비슷한 고민을 가진 고객님들은 이런 제품을 찜했어요</Text>
             </View>
-        </View>
+                <ShopCarousel />
+                <View style={styles.lowButton}>
+                    <Pressable>
+                        <Text>차원이 다른 뷰티 디바이스</Text>
+                        <Text  style={styles.fontSize}>플라럽스 기기 연결하기</Text>
+                    </Pressable>
+                </View>
+            </View>
+            </SafeAreaView>
+   
     )
 }
 
 const styles = StyleSheet.create({
+    lowButton: {
+        flex: 0.3,
+        backgroundColor:"white",
+        marginHorizontal:20,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: "white",
+        paddingLeft:15,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
+       
+    },
+    right: {
+        alignItems: 'flex-end',
+
+        
+    },
+    fontSize: {
+    fontSize:20
+    },
     main: {
         flex: 1,
  
@@ -32,7 +83,7 @@ const styles = StyleSheet.create({
         flex:1,
     },
     information: {
-        flex: 1,
+        
         paddingLeft: 10,
       
     },
@@ -45,7 +96,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 15,
         fontWeight: "300",
-    }
+    },
+    
+
 })
 
 export default MainPage

@@ -1,10 +1,10 @@
 import React from 'react'
 import { View } from 'react-native'
 
-const FeedScreen = () => {
+const SkinTestScreen = () => {
     return (
         <View/>
     )
 }
 
-export default FeedScreen
+export default SkinTestScreen

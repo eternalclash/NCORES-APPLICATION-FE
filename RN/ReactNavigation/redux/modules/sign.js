@@ -275,7 +275,9 @@ const logInAPI =   (email,password) => {
         
             
         })
-          .catch((err) => {
+        .catch((err) => {
+            console.log(err)
+            console.log(err.response)
             dispatch(loginError(err.response.data))
             dispatch(check(false))
          

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect,useState} from 'react'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import SignInScreen from './SignInScreen';
 import GetEmail from './SignUp/GetEmail';
@@ -14,37 +14,49 @@ import UploadScreen from './UploadScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as signActions } from '../redux/modules/sign';
 import { TouchableOpacity,Text,View, Image } from 'react-native';
-const RootStack = () => {
+import CameraPage from './CameraPage';
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+// const get = async () => {
+//     return await AsyncStorage.getItem('token')
+// }
+
+const RootStack = ({ navigation }) => {
+
     const dispatch = useDispatch();
-    const isLogin= useSelector(state=>state.sign.checkLogin)
+    
+  
     useEffect(()=>{
        dispatch(signActions.checkLoginMD())
     }, [])
+    const [login,setLogin] = useState()
+    useEffect(()=>{
+        async function load() {
+            try {
+                const raw = await AsyncStorage.getItem('token')
+                setLogin(raw)    
+            } catch (e) {
+                console.log(e)
+           }
+        }
+        load()
+     }, [])
+    // console.log(isLogin)
     const Stack = createNativeStackNavigator();
+     console.log(login)
+    // console.log( AsyncStorage.getItem('token') )
     return (
-        <Stack.Navigator >
+        <Stack.Navigator  initialRouteName='MainPage'
+        >
             {
-                isLogin ?  
+          login?  
               <>
               <Stack.Screen
               name="MainPage"
               component={MainPage}
               options={{
-                  headerLeft: ({ onPress }) => (
-                      <TouchableOpacity>
-                         <Text style={{fontSize:20}}>Logo</Text>
-                    </TouchableOpacity>  
-                  ),
-                  headerTitle: ({ onPress }) => (
-                      <View>
-                          <Text>메인페이지</Text>
-                      </View>
-                  ),
-                  headerRight: ({ onPress }) => (
-                      <TouchableOpacity>
-                         <Text  style={{fontSize:30}}>+</Text>
-                      </TouchableOpacity>
-                  )
+                   headerShown:false
               }}
               />          
               <Stack.Screen
@@ -70,28 +82,17 @@ const RootStack = () => {
               name="MainPage"
               component={MainPage}
               options={{
-                  title:''
-              }}
+                headerShown:false
+            }}
               />       
                     </>
 
             }
-          {/* {
-              !isLogin?  <Stack.Screen
-              name="MainPage"
-              component={MainPage}
-              options={{
-                  title:''
-              }}
-                />
-                    : <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{
-              title:''
-          }}
-      />
-            } */}
+            <Stack.Screen
+                name="CameraPage"
+                component={CameraPage}
+                options={{headerShown: false}}
+            />
             
             
             <Stack.Screen

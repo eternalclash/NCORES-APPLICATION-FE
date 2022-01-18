@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet,Image,useWindowDimensions } from 'react-native'
+
 import CameraButton from './Camera/CameraButton'
 const CameraPage = () => {
     const { width } = useWindowDimensions();

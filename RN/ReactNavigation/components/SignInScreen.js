@@ -30,11 +30,11 @@ const SignInScreen = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check)
     useEffect(() => {
         if (check) {
-            if (login)
+            if (!login)
             {
                 dispatch(signActions.check(false))
                 dispatch(signActions.loginError(""))
-                navigation.navigate("MainPage")
+                navigation.navigate("GetGender")
                     }
                    
             else
@@ -91,9 +91,7 @@ const SignInScreen = ({ navigation, route }) => {
                         (
                                 <>
                                     <CustomButton title="로그인" hasMarginBottom onPress={logInHandler} />
-                                    <View style={styles.buttons2}>
-
-                                    </View>
+                                 
                                     <CustomButton title="이메일로 회원가입하기" theme="secondary" onPress={() => {
                                         navigation.push('GetEmail')
                                     }}/>
