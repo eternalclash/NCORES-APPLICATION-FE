@@ -6,20 +6,18 @@ import MyProfileScreen from './MyProfileScreen';
 import SkinTestScreen from './SkinTestScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import MainPage from '../MainPage';
-import MyLogOut from '../MyPage/MyLogOut';
 import MyPageStack from '../MyPage/MyPageStack';
+import MainSkin from '../Skin/MainSkin';
+import MainSkinPage from '../Skin/MainSkinPage';
 const Tab = createBottomTabNavigator();
 const MainTab = () => {
  
     return (
         <Tab.Navigator
-            tabBarOptions={{
-                tabBarLabelStyle: {
-                    fonSize: 15,
-                    headerShown: false,
-                },
+            screenOptions={{
+              
                 headerShown: false,
-                activeTintColor: '#009688',
+               
         }}
         >
             <Tab.Screen name="홈" component={MainPage} options={{
@@ -31,7 +29,7 @@ const MainTab = () => {
                 headerShown: false,
             
         	}}  />
-            <Tab.Screen name="피부기록" component={SkinTestScreen}
+            <Tab.Screen name="피부기록" component={MainSkinPage}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="event" size={size} color={color}/>

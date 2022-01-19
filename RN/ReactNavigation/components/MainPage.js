@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable, ScrollView } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import CustomButton from './CustomButton'
 import MainTab from './Tab/MainTab'
@@ -10,6 +10,7 @@ import ShopCarousel from './Carousel/Carousel'
 const MainPage = ({ navigation }) => {
     const {top} = useSafeAreaInsets()
     return (
+        
         <View style={styles.main}>
             <View style={{ height: top }}></View>
             <View style={styles.main}>
@@ -18,7 +19,7 @@ const MainPage = ({ navigation }) => {
                     <Text style={styles.fontSize}>Logo</Text>
                 </View>
                 <View style={styles.right}>
-                    <Pressable onPress={()=>{navigation.navigate("CameraPage")}} >
+                    <Pressable onPress={()=>{navigation.navigate("CameraInfo")}} >
                         <Icon name="camera" size={40} />
                         </Pressable>
                     </View>

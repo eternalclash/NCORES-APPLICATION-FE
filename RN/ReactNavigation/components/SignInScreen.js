@@ -41,7 +41,7 @@ const SignInScreen = ({ navigation, route }) => {
             {   
                 dispatch(signActions.check(false))
                 dispatch(signActions.loginError(""))
-                navigation.navigate("GetGender")
+                navigation.navigate("MainPage")
                 }
                     
         }

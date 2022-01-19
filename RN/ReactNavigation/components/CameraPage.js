@@ -13,8 +13,8 @@ const CameraPage = () => {
                 resizeMode="cover"
             />
             </View>  
-            <Text style={styles.step}>Step 1</Text>
-            <Text style={styles.info}>원안에 얼굴 정면을 맞춰주세요</Text>
+            <Text style={styles.step}>사진 찍기 전 안내사항</Text>
+            <Text style={styles.info}>화면 안에 얼굴 정면을 맞춰주세요</Text>
             <CameraButton/>
            
           
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     step: {
         marginTop: 20,
-        marginHorizontal:'40%',
+        marginHorizontal:'23%',
         flexDirection: 'row',
         fontSize:24,
         justifyContent: 'center',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     info: {
         
             marginTop: 20,
-            marginHorizontal:70,
+            marginHorizontal:60,
             flexDirection: 'row',
             fontSize:20,
             justifyContent: 'center',

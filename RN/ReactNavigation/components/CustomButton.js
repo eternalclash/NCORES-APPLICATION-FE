@@ -7,8 +7,9 @@ const CustomButton = ({ onPress,color, title, hasMarginBottom, theme }) => {
     const isBlue = color === 'blue';
     const isRed = color === 'red';
     const isBlack = color === 'black';
+    const isBlock = color === 'big';
     return (
-        <View style={[ isBlack&&styles.black,isRed&&styles.red,isBlue&&styles.blue  ,isGender&&styles.genderWrap,styles.block, hasMarginBottom && styles.margin]}>
+        <View style={[isBlack && styles.black, isRed && styles.red, isBlue && styles.blue, isGender && styles.genderWrap, styles.block && isBlock, hasMarginBottom && styles.margin]}>
             <Pressable
                 onPress={onPress}
                 style={({ pressed }) => [
@@ -27,6 +28,9 @@ CustomButton.defaultProps = {
     theme: 'primary',
 }
 const styles = StyleSheet.create({
+    block: {
+    height:150,
+    },
     overflow: {
         borderRadius: 4,
         overflow: 'hidden'

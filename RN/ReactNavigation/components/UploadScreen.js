@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { View,StyleSheet,TextInput,Image,useWindowDimensions,Text,Button } from 'react-native'
-import { useRoute } from '@react-navigation/native';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 import { actionCreators as photoActions } from '../redux/modules/photo';
-const UploadScreen = () => {
+const UploadScreen = ({navigation}) => {
     const route = useRoute();
     const { res } = route.params || {};
     const { width } = useWindowDimensions();
@@ -28,8 +28,8 @@ const UploadScreen = () => {
              <Text style={styles.step}>잘 찍으셨네요!</Text>
             <Text style={styles.info}>이 사진으로 피부 진단을 시작할게요</Text>
             <View style={styles.row}>
-            <CustomButton theme="gender" title="다시하기"/>
-            <CustomButton theme="gender" title="진단하기" color="red" onPress={PhotoHandler}/>
+                <CustomButton theme="gender" title="다시하기" onPress={()=>{navigation.pop()}}/>
+            <CustomButton theme="gender" title="진단하기" color="red" onPress={()=>navigation.navigate("MainReport")}/>
             </View>
            
         </View>

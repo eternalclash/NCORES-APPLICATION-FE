@@ -61,15 +61,9 @@ const worryError = createAction(WORRY_ERROR, (worryError) => ({ worryError }))
 const checkLogin = createAction(CHECK_LOGIN, (checkLogin)=>({checkLogin}))
 // const signUp=createAction(CHECK_EMAIL,(email)=>({email}))
 // const logIn=createAction(CHECK_EMAIL,(email)=>({email}))
-const checkLoginMD = () => {
+const checkLoginMD = (check) => {
    return async function (dispatch) {
-    if (await AsyncStorage.getItem("token"))
-    {
-      console.log(true)
-      dispatch(checkLogin(true))
-    }
-    else
-      await dispatch(checkLogin(false))
+    dispatch(checkLogin(check))
   }
  
 

@@ -6,8 +6,10 @@ import store from './redux/store'
 import { Provider } from 'react-redux'
 import { SafeAreaView } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { LogBox } from 'react-native'
 const App = () => {
   const Stack = createNativeStackNavigator();
+  console.disableYellowBox = true; 
   return (
     <SafeAreaProvider>
     <Provider store={store}>
@@ -22,4 +24,5 @@ const App = () => {
 }
 export default App;
 
+LogBox.ignoreLogs(['Console Warning']);
 //createNativeStackNavigator

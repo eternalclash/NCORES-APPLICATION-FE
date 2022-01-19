@@ -1,13 +1,23 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MyPage from './MyPage';
 import MyLogOut from './MyLogOut';
 import SignInScreen from '../SignInScreen';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 
-
-function MyPageStack() {
+function MyPageStack({navigation,route}) {
     const Stack = createNativeStackNavigator();
+    React.useLayoutEffect(() => {
+        
+        const routeName = getFocusedRouteNameFromRoute(route);
+        console.log(routeName)
+        if (routeName === "SignIn") {
+            navigation.setOptions({tabBarVisible: false});
+        }else {
+            navigation.setOptions({tabBarVisible: true});
+        }
+    }, [navigation, route]);
   return (
     <Stack.Navigator>
           <Stack.Screen
@@ -20,12 +30,7 @@ function MyPageStack() {
         component={MyLogOut}
         options={{title: ''}}
           />
-            <Stack.Screen
-              name="SignIn"
-              component={SignInScreen}
-              options={{
-                 headerShown:false
-              }}/>
+         
     </Stack.Navigator>
   );
 }

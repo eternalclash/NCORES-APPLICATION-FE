@@ -6,7 +6,7 @@ import GetPassword from './SignUp/GetPassword';
 import GetNickName from './SignUp/GetNickName';
 import GetFinish from './SignUp/GetFinish';
 import GetGender from './SignUp/GetGender';
-import MainPage from './MainPage';
+
 import GetAge from './SignUp/GetAge';
 import GetIndicate from './SignUp/GetIndicate';
 import GetWorry from './SignUp/GetWorry';
@@ -18,6 +18,13 @@ import CameraPage from './CameraPage';
 import AsyncStorage from '@react-native-community/async-storage';
 import MainTab from './Tab/MainTab';
 import MyLogOut from './MyPage/MyLogOut';
+import CameraInfo from './Camera/CameraInfo';
+import CameraConcern from './Camera/CameraConcern';
+import CameraIndicate from './Camera/CameraIndicate';
+import CameraCheck from './Camera/CameraCheck';
+import CameraRating from './Camera/CameraRating';
+import MainReport from './Report/MainReport';
+import HairCheck from './Skin/HairCheck';
 
 
 // const get = async () => {
@@ -27,29 +34,33 @@ import MyLogOut from './MyPage/MyLogOut';
 const RootStack = ({ navigation }) => {
 
     const dispatch = useDispatch();
-    
+    const isLogin = useSelector(state=>state.sign.checkLogin)
   
     useEffect(()=>{
        dispatch(signActions.checkLoginMD())
     }, [])
-    const [login,setLogin] = useState()
+   
     useEffect(()=>{
         async function load() {
             try {
                 const raw = await AsyncStorage.getItem('token')
+                console.log(raw)
                 setLogin(raw)    
             } catch (e) {
                 console.log(e)
            }
         }
         load()
-     }, [])
+    }, [isLogin])
+    const [login,setLogin] = useState()
     // console.log(isLogin)
     const Stack = createNativeStackNavigator();
-     console.log(login)
+    console.log(login)
+     console.log(isLogin)
     // console.log( AsyncStorage.getItem('token') )
     return (
-        <Stack.Navigator  
+        <Stack.Navigator 
+      
         >
             {
           login?  
@@ -59,25 +70,18 @@ const RootStack = ({ navigation }) => {
               component={MainTab}
               options={{headerShown: false}}
               />          
-              <Stack.Screen
-              name="SignIn"
-              component={SignInScreen}
-              options={{
-                  title:''
-              }}
-        
-                        
-                        />
+                         
+                     
                         </>
                     :
                     <>
-                     {/* <Stack.Screen
+                     <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{
               title:''
           }}
-                        /> */}
+                        />
                            <Stack.Screen
               name="MainPage"
               component={MainTab}
@@ -86,12 +90,55 @@ const RootStack = ({ navigation }) => {
                     </>
 
             }
+              <Stack.Screen
+                name="MainReport"
+                component={MainReport}
+                options={{
+                    headerShown: false
+                }}
+            />
+              <Stack.Screen
+                name="CameraInfo"
+                component={CameraInfo}
+                options={{
+                    headerShown: false
+                }}
+            />
             <Stack.Screen
+                name="CameraCheck"
+                component={CameraCheck}
+                options={{
+                    headerShown: false
+                }}
+            />
+              <Stack.Screen
+                name="CameraConcern"
+                component={CameraConcern}
+                options={{
+                    headerShown: false
+                }}
+            />
+             <Stack.Screen
+                name="CameraIndicate"
+                component={CameraIndicate}
+                options={{
+                    headerShown: false
+                }}
+            />
+              <Stack.Screen
                 name="CameraPage"
                 component={CameraPage}
-                options={{headerShown: false}}
+                options={{
+                    headerShown: false
+                }}
             />
-            
+             <Stack.Screen
+                name="CameraRating"
+                component={CameraRating}
+                options={{
+                    headerShown: false
+                }}
+            />
             
             <Stack.Screen
                 name="GetEmail"
@@ -145,7 +192,11 @@ const RootStack = ({ navigation }) => {
                 component={UploadScreen}
                 options={{headerShown: false}}
             />
-          
+          <Stack.Screen
+                name="HairCheck"
+                component={HairCheck}
+                options={{headerShown: false}}
+            />
        
       </Stack.Navigator>  
     )

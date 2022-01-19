@@ -1,12 +1,26 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Pressable, StyleSheet, Text,View } from 'react-native'
-
-
-const MyLogOut = ({navigation}) => {
+import AsyncStorage from '@react-native-community/async-storage'
+import { useDispatch } from 'react-redux'
+import { actionCreators as signActions } from '../../redux/modules/sign'
+const MyLogOut = ({ navigation }) => {
+    const [login,setLogin] = useState()
+    const dispatch = useDispatch();
+        const load = async() => {
+            try {
+                 await AsyncStorage.removeItem('token')
+                dispatch(signActions.checkLoginMD(true))
+                navigation.navigate("SignIn")
+            } catch (e) {
+                console.log(e)
+           }
+        }
+   
+  
     return (
         <View style={styles.main}>
             <View style={styles.main1}>
-                <Pressable onPress={()=>{navigation.navigate("SignIn")}}>
+                <Pressable onPress={load}>
                 <Text style={styles.fontSize}>로그아웃</Text>
                 </Pressable>
                 
