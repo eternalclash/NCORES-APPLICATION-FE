@@ -27,6 +27,8 @@ import MainReport from './Report/MainReport';
 import HairCheck from './Skin/HairCheck';
 import SkinReport from './Skin/SkinReport';
 import ShopList from './Report/ShopList';
+import { Button } from 'react-native-paper';
+import BlueTooth from './BlueTooth';
 
 
 // const get = async () => {
@@ -62,7 +64,7 @@ const RootStack = ({ navigation }) => {
     // console.log( AsyncStorage.getItem('token') )
     return (
         <Stack.Navigator 
-        initialRouteName='ShopList'
+        initialRouteName='BlueTooth'
         >
             {
           login?  
@@ -95,6 +97,13 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="MainReport"
                 component={MainReport}
+                options={{
+                    headerShown: false
+                }}
+            />
+              <Stack.Screen
+                name="BlueTooth"
+                component={BlueTooth}
                 options={{
                     headerShown: false
                 }}

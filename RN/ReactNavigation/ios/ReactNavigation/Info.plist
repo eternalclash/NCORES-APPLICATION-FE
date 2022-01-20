@@ -75,5 +75,7 @@
 	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app uses BLE to communicate with Sensor Tag</string>
 </dict>
 </plist>

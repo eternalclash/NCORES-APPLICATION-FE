@@ -5842,6 +5842,11 @@ react-native-anchor-carousel@^4.0.1:
   resolved "https://registry.yarnpkg.com/react-native-anchor-carousel/-/react-native-anchor-carousel-4.0.1.tgz#47d556b408a94a4e7e0f564a93a00aecdf60d031"
   integrity sha512-MF5N7Z4CAg99ojh1EU9BtNJJjBvcHLLjuX8/k/IOLmBasipZfkDx723972OEZZPt1iKJCe1ESOICDLRnZZRtTg==
 
+react-native-ble-manager@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-ble-manager/-/react-native-ble-manager-8.0.1.tgz#6eeaad01a6631f11c006932aeaceafd22f43239e"
+  integrity sha512-a7RCqXkxRPomENMNc04yOi/oJK0xfADg1p0PYln9dvkUdQ5aj12M0pMers/ldZP6BkuWMRcaxhV71jKD4MyvZg==
+
 react-native-cli@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-cli/-/react-native-cli-2.0.1.tgz#f2cd3c7aa1b83828cdfba630e2dfd817df766d54"
