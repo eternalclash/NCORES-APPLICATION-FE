@@ -12,8 +12,18 @@ const MainSkinPage = ({navigation}) => {
               <View style={{ height: top }}></View>
             <Text style={{fontSize:30,marginTop:10,marginLeft:10,}}>플라럽스로 기록한지</Text>
             <Text style={{ fontSize: 30,marginTop:10,marginLeft:10, }}>6일째</Text>
-        
-            <MainSkin />
+                <Pressable onPress={()=>navigation.navigate("SkinReport")}>
+                <MainSkin />
+                </Pressable>
+              
+                <View style={{ flexDirection: "row",justifyContent:"space-around" }}>
+                    <Text>12월 29일</Text>  
+                    <Text>1월 1일</Text>
+                    <Text>1월 3일</Text>
+                    <Text>1월 5일</Text>
+                    <Text>1월 9일</Text>
+                </View>
+              
             <View style={styles.lowButton}>
                     <Pressable>
                         <Text>지난주 보다 피부 점수가</Text>

@@ -25,6 +25,8 @@ import CameraCheck from './Camera/CameraCheck';
 import CameraRating from './Camera/CameraRating';
 import MainReport from './Report/MainReport';
 import HairCheck from './Skin/HairCheck';
+import SkinReport from './Skin/SkinReport';
+import ShopList from './Report/ShopList';
 
 
 // const get = async () => {
@@ -60,7 +62,7 @@ const RootStack = ({ navigation }) => {
     // console.log( AsyncStorage.getItem('token') )
     return (
         <Stack.Navigator 
-      
+        initialRouteName='ShopList'
         >
             {
           login?  
@@ -95,6 +97,13 @@ const RootStack = ({ navigation }) => {
                 component={MainReport}
                 options={{
                     headerShown: false
+                }}
+            />
+               <Stack.Screen
+                name="ShopList"
+                component={ShopList}
+                options={{
+                    title:"추천제품"
                 }}
             />
               <Stack.Screen
@@ -196,6 +205,11 @@ const RootStack = ({ navigation }) => {
                 name="HairCheck"
                 component={HairCheck}
                 options={{headerShown: false}}
+            />
+            <Stack.Screen
+                name="SkinReport"
+                component={SkinReport}
+                options={{ title:"나의 피부 기록" }}
             />
        
       </Stack.Navigator>  
