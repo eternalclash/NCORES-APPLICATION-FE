@@ -66,6 +66,7 @@ const MainSkinPage = ({navigation}) => {
     )
 }
 const styles = StyleSheet.create({
+    
     lowButton: {
         height:70,
         backgroundColor:"white",

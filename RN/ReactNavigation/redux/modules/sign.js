@@ -25,6 +25,7 @@ const GENDER_ERROR = "GENDER_ERROR"
 const AGE_ERROR = "AGE_ERROR"
 const WORRY_ERROR = "WORRY_ERROR"
 const INDICATE_ERROR = "INDICATE_ERROR" 
+const HEAD_ERROR = "HEAD_ERROR"
 const initialState = {
   email: "",
   password: "",
@@ -171,7 +172,7 @@ const setIndicateAPI = (indicate) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/skin/oil-indicate",
+      url: "http://54.180.134.111/skin/now/status",
        data: { skinId:indicate },
        headers: {
           Accept: "application/json",
@@ -196,7 +197,7 @@ const setWorryAPI = (worry) => {
      await axios({
       method: "POST",
       url: "http://54.180.134.111/skin/worry",
-       data: {skinWorryId:worry},
+       data: {id:worry},
        headers: {
           Accept: "application/json",
            "Access-Control-Allow-Origin": "*",
@@ -215,7 +216,30 @@ const setWorryAPI = (worry) => {
       });
   };
 };
-
+const setHeadAPI = (worry) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "POST",
+      url: "http://54.180.134.111/skin/worry",
+       data: {id:worry},
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => {
+          
+ 
+          dispatch(check(true))
+      })
+      .catch(async(err) => {
+          dispatch(check(false))
+          dispatch(worryError(err.response.data)) 
+        throw new Error(err);
+      });
+  };
+};
 const signUpAPI = (email,password,confirmPassword,nickname) => {
     return function (dispatch) {
       axios({

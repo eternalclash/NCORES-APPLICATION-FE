@@ -14,7 +14,7 @@ const postImageAPI = (image) => {
      await axios({
       method: "POST",
       url: "http://54.180.134.111/photo",
-       data: image,
+       data: {image: image},
          headers: {
             "Content-Type": "multipart/form-data",
         //   Accept: "application/json",
@@ -22,7 +22,7 @@ const postImageAPI = (image) => {
           "Authorization": await AsyncStorage.getItem("token"),
         },
       })
-        .then(async(res) => {
+        .then(async(res) => { //바디 부분
          console.log(await AsyncStorage.getItem("token"))
          
          console.log("사진 성공!")

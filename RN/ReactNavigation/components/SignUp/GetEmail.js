@@ -1,15 +1,21 @@
 
 import React, {useState,useEffect} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Pressable } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Icon } from 'react-native-vector-icons/EvilIcons'
 const GetEmail = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
     const emailError = useSelector(state=>state.sign.emailError)
     const [email, setEmail] = useState("")
     
+   //safeInset
+    const { top } = useSafeAreaInsets();
+
+
     const emailHandler = async () => {
         dispatch(signActions.checkEmailAPI(email))
     }
@@ -29,8 +35,11 @@ const GetEmail = ({ navigation, route }) => {
   
     return (
         <>
-            
+            <View style={{
+                height:top}}></View>
+             <View><Pressable onPress={()=>navigation.navigate("SignIn")}><Icon name="chevron-left" size={30}></Icon></Pressable></View>
             <View style={styles.fullscreen}>
+               
                 <Text style={styles.text}>회원가입</Text>
                 <View style= {styles.form}>
                 <BorderedInput placeholder="이메일"

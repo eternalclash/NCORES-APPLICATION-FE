@@ -34,8 +34,192 @@
   import BleManager from '../BleManager';
   const BleManagerModule = NativeModules.BleManager;
   const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
+function ASC(value) {
+    console.log("아스키코드", value.split(':')[1].split(',')[0])
+    console.log("시간", value.split(':')[2].split(' ')[0])
+    console.log("모드", value.split(":")[3].split(',')[0])
+    console.log("단계", value.split(":")[4].split(" ")[0])
+  }
+//   const BlueTooth = () => {
+//     const [isScanning, setIsScanning] = useState(false);
+//     const peripherals = new Map();
+//     const [list, setList] = useState([]);
+//       const [mode, setMode] = useState();
+//       const [time, setTime] = useState();
+//       const [position,setPosition] = useState();
+//       const [level,setLevel] = useState();
+//       const [plaluvs, setPlaluvs] = useState();
+//     const startScan = () => {
+//       if (!isScanning) {
+//         BleManager.scan([], 3, true).then((results) => {
+//           console.log('Scanning...');
+//           setIsScanning(true);
+//         }).catch(err => {
+//           console.error(err);
+//         });
+//       }    
+//     }
   
-  const BlueTooth = () => {
+//     const handleStopScan = () => {
+//       console.log('Scan is stopped');
+//       setIsScanning(false);
+//     }  //지금 true 줌
+  
+//     const handleDisconnectedPeripheral = (data) => {
+//       let peripheral = peripherals.get(data.peripheral);
+//       if (peripheral) {
+//         peripheral.connected = false;
+//         peripherals.set(peripheral.id, peripheral);
+//         setList(Array.from(peripherals.values()));
+//       }
+//       console.log('Disconnected from ' + data.peripheral);
+//     }
+  
+//     const handleUpdateValueForCharacteristic = (data) => {
+//       console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+//     }
+  
+//     const retrieveConnected = () => {
+//       BleManager.getConnectedPeripherals([]).then((results) => {
+//         if (results.length == 0) {
+//           console.log('No connected peripherals')
+//         }
+    
+          
+     
+//         console.log(results)
+            
+//         for (var i = 0; i < results.length; i++) {
+//           var peripheral = results[i]
+//           peripheral.connected = true;
+//           peripherals.set(peripheral.id, peripheral);
+//           setList(Array.from(peripherals.values()));
+//         }
+//         if (results[0].characteristics[0].value.bytes)
+//         { let a = results[0].characteristics[0].value.bytes;
+//           for (let i = 0; i < a.length; i++)
+//           {
+//               a[i]=String.fromCharCode(a[i])
+//           }
+//           let value= a.join("")       
+//             }
+     
+//         console.log(a.join(""))
+//         setPlaluvs(a.join(""))
+//         if (value.split(':')[1].split(',')[0] == "working")
+//             setMode("피부 케어중")
+//         if (value.split(':')[1].split(',')[0] == "stopped")
+//             setMode("멈춤")
+//         if (value.split(':')[1].split(',')[0] == "charging")
+//             setMode("충전 중")
+//         if(value.split(':')[1].split(',')[0])
+//         setTime(value.split(':')[2].split(' ')[0] + "초")
+//         if (value.split(":")[3].split(',')[0] == "Face")
+//             setPosition("피부 모드")
+//        if (value.split(":")[3].split(',')[0] == "Scalp")
+//            setPosition("두피 모드")
+//         if (value.split(":")[4].split(" ")[0] == "High")
+//             setLevel("3단계")
+//             if (value.split(":")[4].split(" ")[0] == "Middle")
+//                 setLevel("2단계")
+//                 if (value.split(":")[4].split(" ")[0] == "Low")
+//                 setLevel("1단계")
+        
+        
+//         console.log("시간", value.split(':')[2].split(' ')[0])
+//         console.log("모드", value.split(":")[3].split(',')[0])
+//         console.log("단계", value.split(":")[4].split(" ")[0])
+//       });
+//     }
+  
+//     const handleDiscoverPeripheral = (peripheral) => {
+//       console.log('Got ble peripheral', peripheral);
+//       if (!peripheral.name||peripheral.name!="PLALUVS") {
+//         peripheral.name = 'NO NAME';
+//       }
+//       else {
+//         peripherals.set(peripheral.id, peripheral);
+//       setList(Array.from(peripherals.values()));     
+//       }
+     
+//     }
+  
+//     const testPeripheral = (peripheral) => {
+//       if (peripheral){
+//         if (peripheral.connected){
+//           BleManager.disconnect(peripheral.id);
+//         }else{
+//           BleManager.connect(peripheral.id).then(() => {
+//             let p = peripherals.get(peripheral.id);
+//             if (p) {
+//               p.connected = true;
+//               peripherals.set(peripheral.id, p);
+//               setList(Array.from(peripherals.values()));
+//             }
+//             console.log('Connected to ' + peripheral.id);
+  
+  
+//             setTimeout(() => {
+  
+//               /* Test read current RSSI value */
+//               BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
+//                 console.log('Retrieved peripheral services', peripheralData);
+             
+//                 BleManager.readRSSI(peripheral.id).then((rssi) => {
+//                   console.log('Retrieved actual RSSI value', rssi);
+//                   let p = peripherals.get(peripheral.id);
+//                   if (p) {
+//                     p.rssi = rssi;
+//                     peripherals.set(peripheral.id, p);
+//                     setList(Array.from(peripherals.values()));
+//                   }                
+//                 });                                          
+//               });
+  
+//               // Test using bleno's pizza example
+//               // https://github.com/sandeepmistry/bleno/tree/master/examples/pizza
+//               /*
+//               BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
+//                 console.log(peripheralInfo);
+//                 var service = '13333333-3333-3333-3333-333333333337';
+//                 var bakeCharacteristic = '13333333-3333-3333-3333-333333330003';
+//                 var crustCharacteristic = '13333333-3333-3333-3333-333333330001';
+//                 setTimeout(() => {
+//                   BleManager.startNotification(peripheral.id, service, bakeCharacteristic).then(() => {
+//                     console.log('Started notification on ' + peripheral.id);
+//                     setTimeout(() => {
+//                       BleManager.write(peripheral.id, service, crustCharacteristic, [0]).then(() => {
+//                         console.log('Writed NORMAL crust');
+//                         BleManager.write(peripheral.id, service, bakeCharacteristic, [1,95]).then(() => {
+//                           console.log('Writed 351 temperature, the pizza should be BAKED');
+                          
+//                           //var PizzaBakeResult = {
+//                           //  HALF_BAKED: 0,
+//                           //  BAKED:      1,
+//                           //  CRISPY:     2,
+//                           //  BURNT:      3,
+//                           //  ON_FIRE:    4
+//                           //};
+//                         });
+//                       });
+//                     }, 500);
+//                   }).catch((error) => {
+//                     console.log('Notification error', error);
+//                   });
+//                 }, 200);
+//               });*/
+  
+              
+  
+//             }, );
+//           }).catch((error) => {
+//             console.log('Connection error', error);
+//           });
+//         }
+//       }
+  
+//     }
+const BlueTooth = () => {
     const [isScanning, setIsScanning] = useState(false);
     const peripherals = new Map();
     const [list, setList] = useState([]);
@@ -76,7 +260,7 @@
         if (results.length == 0) {
           console.log('No connected peripherals')
         }
-        console.log(results[0].characteristics[0].value.bytes);
+        // console.log(results[0].characteristics[0].value.bytes);
         for (var i = 0; i < results.length; i++) {
           var peripheral = results[i]
           peripheral.connected = true;
@@ -118,7 +302,13 @@
               /* Test read current RSSI value */
               BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
                 console.log('Retrieved peripheral services', peripheralData);
-                 console.log(peripheralData.characteristic[0].value.bytes)
+                //   console.log(peripheralData.characteristic[0].value.bytes)
+                //   let k = peripheralData.characteristic[0].value.bytes
+                //   for (let i = 0; i < k.length; i++)
+                //   {
+                //       k[i]=k[i].String.charCodeAt(k[i])
+                //   }
+                //   console.log(k.join(""))
                 BleManager.readRSSI(peripheral.id).then((rssi) => {
                   console.log('Retrieved actual RSSI value', rssi);
                   let p = peripherals.get(peripheral.id);
@@ -173,7 +363,7 @@
       }
   
     }
-  
+
     useEffect(() => {
       BleManager.start({showAlert: false});
   
@@ -257,13 +447,57 @@
               data={list}
               renderItem={({ item }) => renderItem(item) }
               keyExtractor={item => item.id}
-            />              
+                />              
+                {/* {
+                 <>
+                     <View style={styles.lowButton1}>
+                        <Text >상태</Text>     
+                        <View style={{alignItems:'center'}}>
+                                <Text style={styles.fontSize}>{mode}</Text>   
+                         </View>
+                       
+                        <Text >충전시간</Text>     
+                        <View style={{alignItems:'center'}}>
+                                <Text style={styles.fontSize}>{time}</Text> 
+                        </View>
+                            <Text >모드</Text>     
+                        <View style={{alignItems:'center'}}>
+                                <Text style={styles.fontSize}>{position}</Text> 
+                        </View>
+                         <Text >단계</Text>     
+                              
+                        <View style={{alignItems:'center'}}>
+                                <Text style={styles.fontSize}>{level}</Text> 
+                        </View>            
+                  
+                      
+                   </View>
+                    </> 
+                } */}
         </SafeAreaView>
       </>
     );
   };
   
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    fontSize: {
+        fontSize: 20,
+        marginVertical:10,
+        color: "gray",
+       
+  },
+    lowButton1: {
+        height:300,
+        backgroundColor:"white",
+        marginHorizontal:20,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        borderRadius: 10,
+        borderWidth: 0.15,
+     
+    
+        marginVertical: 20,
+    },
     scrollView: {
       backgroundColor: Colors.lighter,
     },

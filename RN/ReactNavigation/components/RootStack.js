@@ -64,7 +64,7 @@ const RootStack = ({ navigation }) => {
     // console.log( AsyncStorage.getItem('token') )
     return (
         <Stack.Navigator 
-        initialRouteName='BlueTooth'
+       
         >
             {
           login?  
@@ -73,7 +73,13 @@ const RootStack = ({ navigation }) => {
               name="MainPage"
               component={MainTab}
               options={{headerShown: false}}
-              />          
+                        /> 
+               <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{
+              title:''
+          }} />         
                          
                      
                         </>
@@ -161,23 +167,17 @@ const RootStack = ({ navigation }) => {
             <Stack.Screen
                 name="GetEmail"
                 component={GetEmail}
-                options={{
-                    title:''
-                }}
+                options={{headerShown: false}}
             />
             <Stack.Screen
                 name="GetPassword"
                 component={GetPassword}
-                options={{
-                    title:''
-                }}
+                options={{headerShown: false}}
             />
             <Stack.Screen
                 name="GetNickName"
                 component={GetNickName}
-                options={{
-                    title:''
-                }}
+                options={{headerShown: false}}
             />
              <Stack.Screen
                 name="GetFinish"
