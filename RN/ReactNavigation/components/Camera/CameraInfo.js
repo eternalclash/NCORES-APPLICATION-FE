@@ -9,14 +9,7 @@ const GetIndicate = ({ navigation, route }) => {
     const indicateError = useSelector(state => state.sign.indicateError)
     const [indicate, setIndicate] = useState("")
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (check)
-        {   
-            dispatch(signActions.check(false))
-            dispatch(signActions.indicateError(""))
-            navigation.navigate("GetWorry")
-            }
-    }, [check])
+  
     useEffect(() => {
   
     }, [indicateError])

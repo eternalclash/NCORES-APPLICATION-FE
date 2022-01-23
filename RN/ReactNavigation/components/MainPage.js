@@ -4,11 +4,20 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import CustomButton from './CustomButton'
 import MainTab from './Tab/MainTab'
 import Icon from 'react-native-vector-icons/EvilIcons'
-
+import { useDispatch,useSelector } from 'react-redux'
 import Carousel from './Carousel/Carousel'
 import ShopCarousel from './Carousel/Carousel'
+import { useEffect } from 'react'
+import { actionCreators as cosmeticActions } from '../redux/modules/cosmetics'
 const MainPage = ({ navigation }) => {
-    const {top} = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
+    const dispatch = useDispatch();
+    useEffect(() => {
+        // dispatch(cosmeticActions.mainCosmeticAPI())
+        // dispatch(cosmeticActions.categoryCosmeticAPI())
+        // dispatch(cosmeticActions.simpleCosmeticAPI())
+        dispatch(cosmeticActions.elementCosmeticAPI())
+    }, [])
     return (
         
         <View style={styles.main}>

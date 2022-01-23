@@ -1,10 +1,12 @@
 
 import React, {useState,useEffect} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet,Pressable } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Icon  from 'react-native-vector-icons/EvilIcons'
 const GetNickName = ({navigation, route}) => {
     const [nickName, setNickName] = useState("")
     const check = useSelector((state) => state.sign.check)
@@ -12,7 +14,8 @@ const GetNickName = ({navigation, route}) => {
     const password = useSelector((state) => state.sign.password)
     const confirmPassword = useSelector((state) => state.sign.confirmPassword)
     const nickNameError = useSelector((state) => state.sign.nickNameError)
-    
+    const { top } = useSafeAreaInsets();
+ 
     const dispatch = useDispatch();
     useEffect(() => {
         if (check)
@@ -32,6 +35,15 @@ const GetNickName = ({navigation, route}) => {
    
     return (
         <>
+              <View style={{
+                height:top
+            }}></View>
+         
+            <View>
+                <Pressable onPress={()=>navigation.navigate("GetPassword")}>
+                    <Icon name="chevron-left" size={60}></Icon>
+                </Pressable>
+             </View>
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>회원가입</Text>
                 <View style= {styles.form}>

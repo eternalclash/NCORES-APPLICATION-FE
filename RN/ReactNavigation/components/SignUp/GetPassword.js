@@ -1,9 +1,11 @@
 import React, {useState,useRef,useEffect} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet,Pressable } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Icon  from 'react-native-vector-icons/EvilIcons'
 const GetPassword = ({ navigation, route }) => {
     const [password,setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -11,7 +13,7 @@ const GetPassword = ({ navigation, route }) => {
     const dispatch = useDispatch()
     const check = useSelector((state) => state.sign.check)
     const passwordError = useSelector(state => state.sign.passwordError)
-
+    const { top } = useSafeAreaInsets();
 
     const passwordHandler = () => {
         dispatch(signActions.checkPasswordAPI(password,confirmPassword))
@@ -30,6 +32,15 @@ const GetPassword = ({ navigation, route }) => {
     }, [passwordError])
     return (
         <>
+              <View style={{
+                height:top
+            }}></View>
+         
+            <View>
+                <Pressable onPress={()=>navigation.navigate("GetEmail")}>
+                    <Icon name="chevron-left" size={60}></Icon>
+                </Pressable>
+             </View>
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>회원가입</Text>
                 <View style= {styles.form}>

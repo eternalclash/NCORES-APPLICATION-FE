@@ -3,36 +3,41 @@ import { Text, View, StyleSheet } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
-import { actionCreators as signActions } from '../../redux/modules/sign'
+import { actionCreators as checkActions } from '../../redux/modules/check'
 const CameraConcern = ({ navigation, route }) => {
-    const check = useSelector((state) => state.sign.check); 
+
     const [num1, setNum1] = useState(false)
     const [num2, setNum2] = useState(false)
     const [num3, setNum3] = useState(false)
     const [num4, setNum4] = useState(false)
     const [num5, setNum5] = useState(false)
+    const [num6, setNum6] = useState(false)
     const dispatch = useDispatch();
+    const cameraCheck = useSelector(state => state.check.cameraCheck)
     useEffect(() => {
-        if (check)
+        if (cameraCheck)
         {   
-            dispatch(signActions.check(false))
-            navigation.navigate("MainPage")
+            dispatch(checkActions.cameraCheck(false))
+            navigation.navigate("CameraIndicate")
             }
-    }, [check])
+    }, [cameraCheck])
     const worryHandler = () => {
         const arr = [];
         if (num1)
-            arr.push(num1)
+            arr.push(1)
         if (num2)
-            arr.push(num2)
+            arr.push(2)
         if (num3)
-            arr.push(num3)
+            arr.push(3)
         if (num4)
-            arr.push(num4)
+            arr.push(4)
         if (num5)
-            arr.push(num5)
+            arr.push(5)
+         if (num6)
+            arr.push(6)
+        dispatch(checkActions.check2API(arr))
         // dispatch(signActions.setWorryAPI())
-        navigation.navigate("CameraIndicate")
+
         // if (check)
         //     navigation.navigate("GetAge")
     }
@@ -92,7 +97,19 @@ const CameraConcern = ({ navigation, route }) => {
                                 setNum4(!num4)
                         }} />
                     }
-                 { num5==true
+                        { num5==true
+                         ?<CustomButton color="red"
+                         title="음주" theme="secondary" hasMarginBottom
+                         onPress={() => {
+                                         setNum4(!num4)
+                            }} />:
+                            <CustomButton
+                            title="음주" theme="secondary" hasMarginBottom
+                            onPress={() => {
+                                setNum4(!num4)
+                        }} />
+                    }
+                 { num6==true
                          ?<CustomButton color="red"
                          title="없음" theme="secondary" hasMarginBottom
                          onPress={() => {

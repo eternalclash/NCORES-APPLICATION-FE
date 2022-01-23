@@ -6,7 +6,7 @@ import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Icon } from 'react-native-vector-icons/EvilIcons'
+import Icon  from 'react-native-vector-icons/EvilIcons'
 const GetEmail = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
     const emailError = useSelector(state=>state.sign.emailError)
@@ -36,10 +36,18 @@ const GetEmail = ({ navigation, route }) => {
     return (
         <>
             <View style={{
-                height:top}}></View>
-             <View><Pressable onPress={()=>navigation.navigate("SignIn")}><Icon name="chevron-left" size={30}></Icon></Pressable></View>
+                height:top
+            }}></View>
+         
+            <View>
+                <Pressable onPress={()=>navigation.navigate("SignIn")}>
+                    <Icon name="chevron-left" size={60}></Icon>
+                </Pressable>
+             </View>
             <View style={styles.fullscreen}>
-               
+            <View>
+       
+            </View>
                 <Text style={styles.text}>회원가입</Text>
                 <View style= {styles.form}>
                 <BorderedInput placeholder="이메일"

@@ -4,12 +4,17 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import sign from "./modules/sign"
 import photo from "./modules/photo";
+import check from "./modules/check";
+import cosmetics from "./modules/cosmetics";
+import myPage from "./modules/myPage";
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 const stack=createNativeStackNavigator()
 const rootReducer = combineReducers({
   sign,
   photo,
- 
+  cosmetics,
+  check,
+  myPage
 });
 
 const middlewares = [thunk.withExtraArgument()];

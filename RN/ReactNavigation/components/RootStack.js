@@ -64,7 +64,7 @@ const RootStack = ({ navigation }) => {
     // console.log( AsyncStorage.getItem('token') )
     return (
         <Stack.Navigator 
-       
+        initialRouteName='MainPage'
         >
             {
           login?  

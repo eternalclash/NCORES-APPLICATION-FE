@@ -1,12 +1,34 @@
 import { NavigationContainer } from '@react-navigation/native'
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { StyleSheet, View, Text ,Pressable} from 'react-native'
 import { Rating } from 'react-native-ratings'
+import { actionCreators as checkActions } from '../../redux/modules/check'
+import { useDispatch,useSelector } from 'react-redux'
 import CustomButton from '../CustomButton'
-const CameraRating = ({navigation}) => {
+const CameraRating = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const cameraCheck = useSelector(state => state.check.cameraCheck)
+    const [rate,setRate] = useState(2)
+    useEffect(() => {
+        if (cameraCheck)
+        {   
+            dispatch(checkActions.cameraCheck(false))
+            navigation.navigate("CameraPage")
+            }
+    }, [cameraCheck])
     function ratingCompleted(rating) {
         console.log("Rating is: " + rating)
-      }
+        setRate(rating)
+    }
+    const rateHandler = () => {
+         
+        dispatch(checkActions.ratingAPI(rate))
+        // dispatch(signActions.setWorryAPI())
+
+        // if (check)
+        //     navigation.navigate("GetAge")
+    }
+
     return (
         <View style={styles.main}> 
             <Text style={styles.font}>자가 점수 체크</Text>
@@ -17,8 +39,8 @@ const CameraRating = ({navigation}) => {
                 ratingBackgroundColor='gray'
                 tintColor='#ffffff'
                 jumpValue={1}
-  ratingCount={5}
-  imageSize={60}
+                ratingCount={5}
+                imageSize={60}
                 showRating
                 startingValue={2}
                 onFinishRating={ratingCompleted}
@@ -26,9 +48,7 @@ const CameraRating = ({navigation}) => {
             </View>
        
             <View style={styles.form}>     
-                    <Pressable onPress={() => navigation.navigate(
-                        "CameraPage"
-                    )}>
+                    <Pressable onPress={rateHandler}>
                     <Text style={styles.textMedium}>시작하기</Text>    
                     </Pressable>
                     </View>
