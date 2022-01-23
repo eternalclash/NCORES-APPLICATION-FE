@@ -1,6 +1,6 @@
 
 import React, {useState,useEffect} from 'react'
-import { Text, View, StyleSheet, Pressable } from 'react-native'
+import { Text, View, StyleSheet, Pressable, Image } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
@@ -64,16 +64,21 @@ const GetEmail = ({ navigation, route }) => {
                     <CustomButton title="다음" onPress={
                         emailHandler
                     } style={styles.buttons}/>
-                    </View>
+                </View>
+               
+                <View style={{position:"absolute",bottom:-400}} >
+                <Text style={{fontSize:30,}}>PLALUVS</Text>
+                </View>  
             </View>   
+            
         </>
     )
 }
 const styles = StyleSheet.create({
     fullscreen: {
-        flex: 1,
+      
         alignItems: 'center',
-        marginTop: 104,
+    
     },
     text: {
         fontSize: 32,

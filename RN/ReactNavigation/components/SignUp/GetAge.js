@@ -64,7 +64,8 @@ const GetAge = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>태어난 해</Text>
+                <Text style={styles.text}>언제 태어나셨나요?</Text>
+                <Text style={styles.text1}>태어난 년도를 입력해주세요</Text>
                 <View style= {styles.form}>
                 {/* <BorderedInput placeholder="이메일"
                     value={email}
@@ -108,8 +109,12 @@ const styles = StyleSheet.create({
         marginTop: 104,
     },
     text: {
-        fontSize: 32,
+        fontSize: 18,
         fontWeight: 'bold'
+    },
+    text1: {
+        fontSize: 15,
+        marginTop:14,
     },
     form: {
         marginTop: 44,

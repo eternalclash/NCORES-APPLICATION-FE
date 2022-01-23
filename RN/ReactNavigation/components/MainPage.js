@@ -35,7 +35,7 @@ const MainPage = ({ navigation }) => {
                     </View>
             <View style={styles.mainImage}>
             <Image
-                source={{ uri: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1187&q=80"}}
+                source={require('../image/mainTop.png')}
                 style={styles.cosmetic}
                 resizeMode="cover"
             />
@@ -89,13 +89,15 @@ const styles = StyleSheet.create({
     },
     mainImage: {
         flex: 0.5,
+        justifyContent: "center",
+        alignItems:"center",
         
     },
     cosmetic: {
         flex:1,
     },
     information: {
-        
+        marginVertical:20,
         paddingLeft: 10,
       
     },

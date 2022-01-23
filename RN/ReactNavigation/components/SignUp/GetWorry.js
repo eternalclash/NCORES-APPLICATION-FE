@@ -41,8 +41,9 @@ const GetWorry = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>현재 피부 고민</Text>
-                <Text style={styles.textMedium}>다중 선택 가능</Text>
+                <Text style={styles.text}>현재 피부 고민은 무엇인가요?</Text>
+                <Text style={styles.text1}>해당하는 건 모두 골라주세요</Text>
+               
                 <View style={styles.form}>
                 { num1==true
                          ?<CustomButton color="red"
@@ -122,8 +123,12 @@ const styles = StyleSheet.create({
         marginTop: 104,
     },
     text: {
-        fontSize: 32,
+        fontSize: 18,
         fontWeight: 'bold'
+    },
+    text1: {
+        fontSize: 15,
+        marginTop: 14,
     },
     textMedium: {
         marginTop:20,

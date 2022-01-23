@@ -27,7 +27,7 @@ import MainReport from './Report/MainReport';
 import HairCheck from './Skin/HairCheck';
 import SkinReport from './Skin/SkinReport';
 import ShopList from './Report/ShopList';
-import { Button } from 'react-native-paper';
+
 import BlueTooth from './BlueTooth';
 
 
@@ -64,7 +64,7 @@ const RootStack = ({ navigation }) => {
     // console.log( AsyncStorage.getItem('token') )
     return (
         <Stack.Navigator 
-        initialRouteName='MainPage'
+       
         >
             {
           login?  
@@ -77,9 +77,7 @@ const RootStack = ({ navigation }) => {
                <Stack.Screen
           name="SignIn"
           component={SignInScreen}
-          options={{
-              title:''
-          }} />         
+          options={{headerShown: false}} />         
                          
                      
                         </>
@@ -88,9 +86,7 @@ const RootStack = ({ navigation }) => {
                      <Stack.Screen
           name="SignIn"
           component={SignInScreen}
-          options={{
-              title:''
-          }}
+          options={{headerShown: false}}
                         />
                            <Stack.Screen
               name="MainPage"

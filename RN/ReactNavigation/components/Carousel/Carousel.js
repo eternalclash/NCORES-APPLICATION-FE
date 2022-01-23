@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 const {width: windowWidth} = Dimensions.get('window');
 
 const data = [
@@ -78,15 +78,17 @@ export default function ShopCarousel(props) {
         onPress={() => {
           carouselRef.current.scrollToIndex(index);
         }}>
-        <Image source={{uri: image}} style={styles.image} />
+
+        <Image source={{ uri: image }} style={styles.image} />
+        <Icon name="heart-o" size={20} style={styles.heart}></Icon>
+
+       
         <View style={styles.lowerContainer}>
           <View style={styles.lowerLeft}>
             <Text style={styles.titleText} numberOfLines={2}>
               {title}
             </Text>
-            <Text style={styles.descriptionText} numberOfLines={1}>
-             피부,로션
-            </Text>
+            
           </View>
        
         </View>
@@ -115,7 +117,11 @@ export default function ShopCarousel(props) {
 }
 
 const styles = StyleSheet.create({
-  
+  heart: {
+    position: "absolute",
+    right: 10,
+    bottom: 50,
+  },
   carousel: {
     width: windowWidth,
     height: (ITEM_WIDTH + 100)*0.7,
@@ -123,11 +129,8 @@ const styles = StyleSheet.create({
   },
   item: {
     // backgroundColor: 'white',
-
-  
     flex: 2,
     borderRadius: 5,
- 
     elevation: 3,
   },
   image: {
@@ -145,9 +148,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#1C2127',
-
   },
   descriptionText: {
     fontSize: 14,

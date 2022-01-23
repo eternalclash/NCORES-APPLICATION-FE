@@ -31,8 +31,9 @@ const GetIndicate = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>현재 피부상태</Text>
-                <Text style={styles.textMedium}>택1</Text>
+                <Text style={styles.text}>현재 피부상태는 어떤가요?</Text>
+                <Text style={styles.text1}>현재 피부상태는 어떤가요?</Text>
+                
                 <View style={styles.form}> 
                     { indicate==1
                          ?<CustomButton color="red"
@@ -113,8 +114,12 @@ const styles = StyleSheet.create({
         marginTop: 104,
     },
     text: {
-        fontSize: 32,
+        fontSize: 18,
         fontWeight: 'bold'
+    },
+    text1: {
+        fontSize: 15,
+        marginTop: 14,
     },
     textMedium: {
         marginTop:20,

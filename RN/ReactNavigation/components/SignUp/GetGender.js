@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Pressable } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
@@ -31,18 +31,36 @@ const GetGender = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>성별</Text>
+                <Text style={styles.text}>이제 플라롭스로 관리하세요</Text>
+                <Text style={styles.text1}>성별을 선택해주세요</Text>
                 <View style={styles.form}>
                     <View style={styles.row}>
                     {
-                            gender == "Male" ? <CustomButton theme="gender" color="blue" title="남자" onPress={() => setGender("Male")} />  
-                       : <CustomButton theme="gender" title="남자" onPress={()=>setGender("Male")} />         
+                            gender == "Male" ?  <Pressable onPress={() => { setGender("") }}>
+                            <View style={[styles.buttons2,styles.buttonColor]}>
+                   <Text style={{fontSize:18}}>남자</Text>
+                   </View>          
+                   </Pressable>
+                                :  <Pressable onPress={() => { setGender("Male") }}>
+                                <View style={[styles.buttons2]}>
+                       <Text style={{fontSize:18}}>남자</Text>
+                       </View>          
+                       </Pressable>
                     }
                    {
-                            gender == "Female" ? <CustomButton theme="gender" color="red" title="여자" onPress={() => setGender("Female")} />  
-                       : <CustomButton theme="gender" title="여자" onPress={()=>setGender("Female")} />         
+                            gender == "Female" ?  <Pressable onPress={() => { setGender("") }}>
+                            <View style={[styles.buttons2,styles.buttonColor]}>
+                   <Text style={{fontSize:18}}>여자</Text>
+                   </View>          
+                   </Pressable>
+                       :  <Pressable onPress={() => { setGender("Female") }}>
+                       <View style={[styles.buttons2]}>
+              <Text style={{fontSize:18}}>여자</Text>
+              </View>          
+              </Pressable>       
                         }
                        
+                      
                     </View>
                     <Text style={styles.error}>{genderError}</Text>
                     <View style={styles.buttons}/>
@@ -61,8 +79,12 @@ const styles = StyleSheet.create({
         marginTop: 104,
     },
     text: {
-        fontSize: 32,
+        fontSize: 18,
         fontWeight: 'bold'
+    },
+    text1: {
+        fontSize: 15,
+        marginTop: 14,
     },
     form: {
         marginTop: 44,
@@ -75,6 +97,17 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+    
+    },
+    buttons2: {
+        width: 158,
+        height: 96,
+        borderWidth: 0.7,
+        justifyContent: "center",
+        alignItems:"center",
+    },
+    buttonColor: {
+      backgroundColor:"pink",  
     },
     error: {
         color: "red",

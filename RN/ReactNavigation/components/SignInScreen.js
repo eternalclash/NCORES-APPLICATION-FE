@@ -1,6 +1,6 @@
 import React, {useRef,useState,useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { StyleSheet,  View,Keyboard,KeyboardAvoidingView,Text } from 'react-native'
+import { StyleSheet,  View,Keyboard,KeyboardAvoidingView,Text, Image } from 'react-native'
 import BorderedInput from './BorderedInput'
 import CustomButton from './CustomButton'
 import sign, { actionCreators as signActions } from '../redux/modules/sign'
@@ -55,9 +55,13 @@ const SignInScreen = ({ navigation, route }) => {
         dispatch(signActions.logInAPI(form.email, form.password))  
     }
     return (
-        <KeyboardAvoidingView style={styles.KeyboardAvoidingView}>
-        <SafeAreaView style={styles.fullscreen}>
-            <Text style={styles.text}>로그인</Text>
+  
+            <SafeAreaView style={styles.fullscreen}>
+                <View style={{alignItems:"center",justifyContent:"flex-start",position:"relative",top:0}}>
+                <Image source={require('../image/img_logo.png')}></Image>
+            <Text style={styles.text}>로그인</Text>          
+            </View>
+          
             <View style={styles.form}>
                     <BorderedInput hasMarginBottom placeholder="이메일"
                         value={form.email} onChangeText={createChangeTextHandler('email')}
@@ -102,7 +106,7 @@ const SignInScreen = ({ navigation, route }) => {
                 </View>
             </View>
             </SafeAreaView>
-            </KeyboardAvoidingView>
+           
     )
 }
 const styles = StyleSheet.create({
@@ -111,13 +115,14 @@ const styles = StyleSheet.create({
     },
     fullscreen: {
         flex: 1,
-        alignItems: 'center',
+      
         marginTop: 104,
     
     },
     text: {
         fontSize: 32,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop:20,
     },
     form: {
         marginTop: 64,

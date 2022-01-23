@@ -8,7 +8,9 @@ const GetFinish = ({navigation, route}) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>회원가입 완료</Text>
+                <Text style={styles.text}>회원가입이 완료되었습니다</Text>
+                <Text style={styles.text1}>이제 플라럽스를 시작해보세요</Text>
+              
                 <View style= {styles.form}>
                
                     <View style={styles.buttons}/>
@@ -24,11 +26,15 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+        marginTop: 120,
     },
     text: {
-        fontSize: 32,
+        fontSize: 22,
         fontWeight: 'bold'
+    },
+    text1: {
+        fontSize: 18,
+        marginTop:20,
     },
     form: {
         marginTop: 44,
