@@ -3,9 +3,13 @@ import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 
-
+const GET_COSMETICS = "GET_COSMETICS"
+const GET_ELEMENTS = "GET_ELEMENTS"
+const getCosmetics = createAction(GET_COSMETICS, (cosmetics) => ({ cosmetics }))
+const getElements = createAction(GET_ELEMENTS, (elements) => ({ elements }))
 const initialState = {
-   
+  cosmetics: "",
+  elements:"",
 }
 
 
@@ -24,8 +28,8 @@ const userElementsAPI = (cosmetic) => {
       })
         .then(async(res) => { //바디 부분
          
-         
-        console.log(res.data)
+         dispatch(getElements(res.data.data))
+        console.log(res.data.data)
       })
          .catch(async (err) => {
            
@@ -50,8 +54,8 @@ const userCosmeticAPI = (cosmetic) => {
         })
           .then(async(res) => { //바디 부분
            
-           
-          console.log(res.data)
+            dispatch(getCosmetics(res.data.data))
+            console.log(res.data.data)
         })
            .catch(async (err) => {
              
@@ -64,7 +68,14 @@ const userCosmeticAPI = (cosmetic) => {
 
 export default handleActions(
     {
-      
+      [GET_COSMETICS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.cosmetics = action.payload.cosmetics
+      }),
+      [GET_ELEMENTS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.elements = action.payload.elements
+      }),
        
         
     },

@@ -1,19 +1,28 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useMemo} from 'react'
 import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { actionCreators as myActions } from '../../redux/modules/myPage'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { useDispatch,useSelector } from 'react-redux'
 import ShopCarousel from '../Carousel/Carousel'
+import MyCosmeticsCarousel from '../Carousel/MyCosmeticsCarousel'
+import MyElementsCarousel from '../Carousel/MyElementsCarousel'
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
 const MyPage = ({ navigation }) => {
     const dispatch = useDispatch();
-    useEffect(() => {
+    const myCosmetics = useSelector(state=>state.myPage.cosmetics)
+    const myElements = useSelector(state => state.myPage.elements)
+    const [cosmetic,setCosmetic] = useState("")
+    const [element,setElement] = useState("")
+    useMemo(() => {
         // dispatch(cosmeticActions.mainCosmeticAPI())
         // dispatch(cosmeticActions.categoryCosmeticAPI())
         // dispatch(cosmeticActions.simpleCosmeticAPI())
         dispatch(myActions.userCosmeticAPI())
+        setCosmetic(myCosmetics)
         dispatch(myActions.userElementsAPI())
-    }, [])
+        setElement(myElements)
+    }, [cosmetic,element])
     const {top} = useSafeAreaInsets()
     return (
         <View style={styles.main}>
@@ -42,14 +51,14 @@ const MyPage = ({ navigation }) => {
                 <Text style={styles.informationKeyword}>내가 고른 성분</Text>
                       <Icon name="chevron-right" size={45}></Icon>
             </View>
-            
-            <ShopCarousel />
+            <MyElementsCarousel myElements={myElements} />
+          
                
              <View style={styles.information}>
                 <Text style={styles.informationKeyword}>내가 찜한 화장품</Text>
                 <Icon name="chevron-right" size={45}></Icon>
             </View>
-                <ShopCarousel />
+            <MyCosmeticsCarousel myCosmetics={myCosmetics}  />
                 </View>
                 </View>
             </View>

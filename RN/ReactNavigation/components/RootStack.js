@@ -1,5 +1,7 @@
 import React, {useEffect,useState} from 'react'
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { actionCreators as cosmeticActions } from '../redux/modules/cosmetics'
+
 import SignInScreen from './SignInScreen';
 import GetEmail from './SignUp/GetEmail';
 import GetPassword from './SignUp/GetPassword';
@@ -38,8 +40,10 @@ import BlueTooth from './BlueTooth';
 const RootStack = ({ navigation }) => {
 
     const dispatch = useDispatch();
-    const isLogin = useSelector(state=>state.sign.checkLogin)
-  
+    const isLogin = useSelector(state => state.sign.checkLogin)
+
+   
+
     useEffect(()=>{
        dispatch(signActions.checkLoginMD())
     }, [])
@@ -48,7 +52,6 @@ const RootStack = ({ navigation }) => {
         async function load() {
             try {
                 const raw = await AsyncStorage.getItem('token')
-                console.log(raw)
                 setLogin(raw)    
             } catch (e) {
                 console.log(e)
@@ -59,12 +62,9 @@ const RootStack = ({ navigation }) => {
     const [login,setLogin] = useState()
     // console.log(isLogin)
     const Stack = createNativeStackNavigator();
-    console.log(login)
-     console.log(isLogin)
-    // console.log( AsyncStorage.getItem('token') )
+    
     return (
         <Stack.Navigator 
-       
         >
             {
           login?  
@@ -72,12 +72,10 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
               name="MainPage"
               component={MainTab}
-              options={{headerShown: false}}
+                            options={{ headerShown: false }}
+                          
                         /> 
-               <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{headerShown: false}} />         
+                       
                          
                      
                         </>
@@ -88,11 +86,7 @@ const RootStack = ({ navigation }) => {
           component={SignInScreen}
           options={{headerShown: false}}
                         />
-                           <Stack.Screen
-              name="MainPage"
-              component={MainTab}
-              options={{headerShown: false}}
-              />       
+                         
                     </>
 
             }

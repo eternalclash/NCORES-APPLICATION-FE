@@ -2,10 +2,11 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
-
+const MAINCOS = "MAINCOS";
+const mainCos=createAction(MAINCOS,(main)=>({main}))
 
 const initialState = {
-   
+   main:"",
 }
 
 
@@ -23,9 +24,9 @@ const mainCosmeticAPI = (cosmetic) => {
         },
       })
         .then(async(res) => { //바디 부분
+         dispatch(mainCos(res.data.data))
          
-         
-        console.log(res.data)
+      
       })
          .catch(async (err) => {
            
@@ -115,7 +116,10 @@ const categoryCosmeticAPI = (cosmetic) => {
   };
 export default handleActions(
     {
-      
+        [MAINCOS]: (state, action) =>
+        produce(state, (draft) => {
+          draft.main = action.payload.main
+        }),
        
         
     },

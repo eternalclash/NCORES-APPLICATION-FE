@@ -14,53 +14,14 @@ import Carousel from 'react-native-anchor-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome'
 const {width: windowWidth} = Dimensions.get('window');
 
-const data = [
-  {
-    id: 'item2',
-    image: 'https://i.imgur.com/N3nQ9CS.jpg',
-    title: '화장품1',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
-  {
-    id: 'item3',
-    image: 'https://i.imgur.com/AzdYlDM.jpg',
-    title: '화장품2',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-  {
-    id: 'item1',
-    image: 'https://i.imgur.com/s7GgEa8.jpg',
-    title: '화장품3',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-  {
-    id: 'item6',
-    image: 'https://i.imgur.com/1O1Kd6T.jpg',
-    title: '화장품4',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
-  {
-    id: 'item4',
-    image: 'https://i.imgur.com/eNuhvpN.jpg',
-    title: '화장품5',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
 
-  {
-    id: 'item5',
-    image: 'https://i.imgur.com/jEiBmma.jpg',
-    title: '화장품6',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-];
 
 const ITEM_WIDTH = 0.4*windowWidth;
 const SEPARATOR_WIDTH = 10;
-export default function ShopCarousel(props) {
+export default function MyElementsCarousel(props) {
   const {style} = props;
   const carouselRef = useRef(null);
-  const mainCos = props.mainCos
-  console.log(mainCos)
+    const myElements = props.myElements
   async function handleInstallNowClick(url) {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
@@ -71,7 +32,7 @@ export default function ShopCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, name, url} = item;
+    const {img, korName, url} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -87,7 +48,7 @@ export default function ShopCarousel(props) {
         <View style={styles.lowerContainer}>
           <View style={styles.lowerLeft}>
             <Text style={styles.titleText} numberOfLines={1}>
-              {name}
+              {korName}
             </Text>
             
           </View>
@@ -104,7 +65,7 @@ export default function ShopCarousel(props) {
         keyExtractor={item => item?.id}
         style={[styles.carousel, style]}
         ref={carouselRef}
-        data={mainCos}
+        data={myElements}
         renderItem={renderItem}
         itemWidth={0.4 * windowWidth}
         separatorWidth={SEPARATOR_WIDTH}
