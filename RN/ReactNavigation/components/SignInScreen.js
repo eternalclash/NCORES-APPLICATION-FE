@@ -28,6 +28,7 @@ const SignInScreen = ({ navigation, route }) => {
     
     const login = useSelector((state) => state.sign.login)
     const check = useSelector((state) => state.sign.check)
+    const checkL = useSelector((state) => state.sign.checkL)
     useEffect(() => {
         if (check) {
             if (!login)

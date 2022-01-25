@@ -4,8 +4,9 @@ import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 
 //login상태인지 CHECK
+const WORRY_LOGIN = "WORRY_LOGIN"
 const CHECK_LOGIN ="CHECK_LOGIN"
-
+const CHECKL = "CHECKL"
 const CHECK_EMAIL = "CHECK_EMAIL";
 const CHECK_PASSWORD = "CHECK_PASSWORD";
 const CHECK_CONFIRMPASSWORD = "CHECK_CONFIRMPASSWORD";
@@ -27,11 +28,13 @@ const WORRY_ERROR = "WORRY_ERROR"
 const INDICATE_ERROR = "INDICATE_ERROR" 
 const HEAD_ERROR = "HEAD_ERROR"
 const initialState = {
+  worryLogin:"",
   email: "",
   password: "",
   confirmPassword: "",
   nickName: "",
   check: false,
+  checkL: false,
   login: false,
   loginError: "",
   emailError: "",
@@ -43,8 +46,8 @@ const initialState = {
   indicateError: "",
   checkLogin:false,
 }
-
-
+const worryLogin = createAction(WORRY_LOGIN,(worryLogin)=>({worryLogin}))
+const checkL = createAction(CHECKL, (checkL)=>({checkL}))
 const checkEmail=createAction(CHECK_EMAIL,(email)=>({email}))
 const checkPassword=createAction(CHECK_PASSWORD,(password)=>({password}))
 const checkConfirmPassword = createAction(CHECK_CONFIRMPASSWORD, (confirmPassword) => ({ confirmPassword }))
@@ -67,6 +70,14 @@ const checkLoginMD = (check) => {
     dispatch(checkLogin(check))
   }
  
+
+};
+
+const worryLoginMD = (check) => {
+  return async function (dispatch) {
+   dispatch(worryLogin(check))
+ }
+
 
 };
 
@@ -266,41 +277,41 @@ const signUpAPI = (email,password,confirmPassword,nickname) => {
     };
 };
 const logInAPI =   (email,password) => {
-    return function(dispatch) {
-      axios({
-        method: "POST",
-        url: "http://54.180.134.111/user/login",
-        data: { email,password},
-        headers: {
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        
-        },
+  return function(dispatch) {
+    axios({
+      method: "POST",
+      url: "http://54.180.134.111/user/login",
+      data: { email,password},
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      
+      },
+    })
+      .then(async (res) => {
+          console.log(res.data)
+          await AsyncStorage.setItem('token',res.data.token)
+            console.log(await AsyncStorage.getItem('token'))
+            dispatch(checkNickName(await AsyncStorage.getItem('token')))
+          //   const rawtoken = AsyncStorage.getItem('token')
+          // //   const token = JSON.parse(AsyncStorage.getItem('token2'))
+          //   console.log(JSON.parse(AsyncStorage.getItem('token')))
+          //   console.log(token)
+            dispatch(loginError(""))
+           
+           await dispatch(login(res.data.ageExist && res.data.genderExist))  
+           await dispatch(check(true))
+      
+          
       })
-        .then(async (res) => {
-            console.log(res.data)
-            await AsyncStorage.setItem('token',res.data.token)
-              console.log(await AsyncStorage.getItem('token'))
-              dispatch(checkNickName(await AsyncStorage.getItem('token')))
-            //   const rawtoken = AsyncStorage.getItem('token')
-            // //   const token = JSON.parse(AsyncStorage.getItem('token2'))
-            //   console.log(JSON.parse(AsyncStorage.getItem('token')))
-            //   console.log(token)
-              dispatch(loginError(""))
-             
-             await dispatch(login(res.data.ageExist && res.data.genderExist))  
-             await dispatch(check(true))
-        
-            
-        })
-        .catch((err) => {
-            console.log(err)
-            console.log(err.response)
-            dispatch(loginError(err.response.data))
-            dispatch(check(false))
-         
-        });
-    };
+      .catch((err) => {
+          console.log(err)
+          console.log(err.response)
+          dispatch(loginError(err.response.data))
+          dispatch(check(false))
+       
+      });
+  };
 };
 
 
@@ -336,6 +347,10 @@ export default handleActions(
     [CHECK]: (state, action) =>
       produce(state, (draft) => {
         draft.check = action.payload.check
+      }),
+      [CHECKL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.checkL = action.payload.checkL
       }),
     [LOGIN]: (state, action) =>
       produce(state, (draft) => {
@@ -374,17 +389,22 @@ export default handleActions(
       produce(state, (draft) => {
         draft.indicateError = action.payload.indicateError
       }),
+      [WORRY_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.worryLogin = action.payload.worryLogin
+      }),
     [CHECK_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.checkLogin= action.payload.checkLogin
       })
+     
     },
   
     initialState
   );
 
 export const actionCreators = {
-    
+    worryLoginMD,
    //로그인 체크
       checkLoginMD,
       checkEmailAPI,

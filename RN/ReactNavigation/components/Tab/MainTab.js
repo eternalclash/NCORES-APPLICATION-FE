@@ -36,7 +36,7 @@ const MainTab = () => {
                )
            }}
             />
-           <Tab.Screen name="마이페이지" component={MyPageStack}
+           <Tab.Screen name="내계정" component={MyPageStack}
                 options={{
                     tabBarIcon: ({ color, size })=> (
             <Icon name="person" size={size} color={color}/>

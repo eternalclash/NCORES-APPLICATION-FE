@@ -1,52 +1,258 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import { Text, View, StyleSheet,Pressable, ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import MainSkin from './MainSkin'
 import ShopCarousel from '../Carousel/Carousel'
 import Icon from 'react-native-vector-icons/EvilIcons'
+import { StackedBarChart } from 'react-native-svg-charts'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as cosmeticsAction } from '../../redux/modules/cosmetics'
+import SimpleCarousel from '../Carousel/SimpleCarousel'
 const MainSkinPage = ({navigation}) => {
-    const {top} = useSafeAreaInsets();
+    const { top } = useSafeAreaInsets();
+    const dispatch = useDispatch()
+    const colors = ['#EFC2C2', '#C14242','gray','lightgray']
+    const keys = ['apples', 'banana','orange','peach']
+    const data = [
+        {
+      
+            apples: 70,
+            banana:30,
+            orange: 40,
+            peach:50,
+        },
+      
+    ]
+    const simpleCos = useSelector(state => state.cosmetics.simple)
+    console.log(simpleCos)
+    useEffect(() => {
+       dispatch(cosmeticsAction.simpleCosmeticAPI())
+    },[])
     return (
         <ScrollView style={{ flex: 1 }}>
-        <View >
-              <View style={{ height: top }}></View>
-            <Text style={{fontSize:30,marginTop:10,marginLeft:10,}}>플라럽스로 기록한지</Text>
-            <Text style={{ fontSize: 30,marginTop:10,marginLeft:10, }}>6일째</Text>
+            <View  >
+            <View style={{backgroundColor:"#F5EBE8"}}>
+                <View style={{ height: top }}></View>
+                <View style={styles.row1}>
+                    <Text style={styles.profileText1}>피부 점수</Text>
+                    <Text style={styles.profileText2}>추천화장품</Text>
+                    </View> 
+                <View style={{width:"100%",borderBottomWidth:1,}}></View>    
+                <Text style={{fontSize:18,marginTop:30,marginLeft:10,fontWeight:"500",lineHeight:22,}}>최근 측정한 피부 점수의</Text>
+            <Text style={{ fontSize:18,marginTop:3,marginLeft:10,fontWeight:"500" }}>평균은 60점이었어요</Text>
                 <Pressable onPress={()=>navigation.navigate("SkinReport")}>
                 <MainSkin />
                 </Pressable>
               
                 <View style={{ flexDirection: "row",justifyContent:"space-around" }}>
-                    <Text>12월 29일</Text>  
-                    <Text>1월 1일</Text>
-                    <Text>1월 3일</Text>
-                    <Text>1월 5일</Text>
-                    <Text>1월 9일</Text>
+                    <Text>1일 전</Text>  
+                    <Text>5일 전</Text>
+                    <Text>1주 전</Text>
+                    <Text>2주 전</Text>
+                    <Text>2주 전</Text>
+                    <Text>2달 전</Text>
+                    <Text>3달 전</Text>
                 </View>
               
-            <View style={styles.lowButton}>
-                    <Pressable>
-                        <Text>지난주 보다 피부 점수가</Text>
-                        <Text  style={styles.fontSize}>20점 상승했어요</Text>
-                    </Pressable>
-            </View>
-            <View style={styles.lowButton}>
-                    <Pressable>
-                        <Text>어제보다 민감한 피부가</Text>
-                        <Text  style={styles.fontSize}>개선되었어요</Text>
-                    </Pressable>
-            </View>
+         
             <View style={styles.lowButton1}>
                     <Pressable>
-                        <Text>오늘의 피부 기록 하기</Text>
+                        <Text>오늘의 피부 진단 하기</Text>
                        
                     </Pressable>
+                    </View>
+                    <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>주름성</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>주름성</Text> 
+                                <Text >100</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 20,borderRadius:2,marginTop:10 }}
+                keys={keys}
+                colors={colors}
+                data={data}
+                showGrid={false}
+                            
+                                horizontal="true"
+                        />    
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
+                        </View>
+                     
+                    </View>
+                    
+                    <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>민감</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>수분</Text> 
+                                <Text >100</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 20,borderRadius:2,marginTop:10 }}
+                keys={keys}
+                colors={colors}
+                data={data}
+                showGrid={false}
+                            
+                                horizontal="true"
+                        />    
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
+                        </View>
+                     
+                    </View>
+                    
+
+          
+
+                <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>색소성</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>수분</Text> 
+                                <Text >100</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 20,borderRadius:2,marginTop:10 }}
+                keys={keys}
+                colors={colors}
+                data={data}
+                showGrid={false}
+                            
+                                horizontal="true"
+                        />    
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
+                        </View>
+                     
                 </View>
-                <View style={styles.information}>
+                
+                <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>수분</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>수분</Text> 
+                                <Text >100</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 20,borderRadius:2,marginTop:10 }}
+                keys={keys}
+                colors={colors}
+                data={data}
+                showGrid={false}
+                            
+                                horizontal="true"
+                        />    
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
+                        </View>
+                     
+                </View>
+                
+                <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>유분</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>유분</Text> 
+                                <Text >100</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 20,borderRadius:2,marginTop:10 }}
+                keys={keys}
+                colors={colors}
+                data={data}
+                showGrid={false}
+                            
+                                horizontal="true"
+                        />    
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
+                        </View>
+                <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
+                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
+                        </View>
+                     
+                </View>
+                
+           <Pressable onPress={()=>navigation.navigate("ShopList") } >
+                    <View style={styles.information}>
+                       
                 <Text style={styles.informationKeyword}>나에게 맞는 제품 찾기</Text>
-                <Icon name="chevron-right" size={45}></Icon>
-            </View>
-                <ShopCarousel />
+                            <Icon name="chevron-right" size={45}></Icon>
+                          
+                        </View>
+                        </Pressable>
+                <SimpleCarousel simpleCos={simpleCos} />
                 <View style={styles.information}>
                 <Text style={styles.informationKeyword}>헤어 제품 찾기</Text>
                 <Icon name="chevron-right" size={45}></Icon>
@@ -60,51 +266,75 @@ const MainSkinPage = ({navigation}) => {
                         </View>
                         
                     </Pressable>
+                    </View>
+                    <View style={{height:30}}>
+
+</View>
+                    </View>
             </View>
-        </View>
+
         </ScrollView>
     )
 }
 const styles = StyleSheet.create({
-    
-    lowButton: {
-        height:70,
-        backgroundColor:"white",
-        marginHorizontal:20,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        borderRadius: 18,
-        borderWidth: 1,
-        borderColor: "white",
-        paddingLeft: 25,
-        marginVertical: 10,
+    filter2: {
+        fontSize: 20,
+        flexDirection: 'row',
+        justifyContent:'center',
+        marginTop:20,
     },
-    lowButton2: {
-        height:90,
-        backgroundColor:"white",
-        marginHorizontal:20,
+    filter1: {
+        fontSize: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 18,
-        borderWidth: 1,
-        borderColor: "white",
-        marginVertical: 10,
+        marginTop:20,
+    },
+    chart: {
+       
+       marginHorizontal:20,
+    },
+    row1: {
+        flexDirection: 'row',
+        alignItems:"center",
+        
+    },
+    row2: {
+        marginTop:10,
+        flexDirection: 'row',
+        alignItems:"center",
+        
+    },
+    profileText1: {
+        fontSize: 18,
+        marginTop: 20,
+        marginBottom:10,
+        marginHorizontal: 10,
+        fontWeight:"500"
+    },
+    profileText2: {
+        fontSize: 18,
+        marginTop: 20,
+        marginBottom:10,
+        marginHorizontal: 10,
+        fontWeight:"200"
     },
     lowButton1: {
-        height:50,
-        backgroundColor:"white",
+        height:56,
+        backgroundColor:"#F5EBE8",
         marginHorizontal:20,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 18,
         borderWidth: 1,
-        borderColor: "white",
+      
     
-        marginVertical: 10,
+        marginTop: 60,
+        marginBottom:36,
     },
+    
     information: {
         flexDirection: "row",
-        marginVertical: 13,
+        marginVertical: 25,
         justifyContent: "space-between",
         alignItems:"center",
         paddingLeft: 10,

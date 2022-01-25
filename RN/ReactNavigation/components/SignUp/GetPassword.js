@@ -1,5 +1,5 @@
 import React, {useState,useRef,useEffect} from 'react'
-import { Text, View, StyleSheet,Pressable } from 'react-native'
+import { Text, View, StyleSheet,Pressable,Image } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch, useSelector } from 'react-redux'
@@ -64,6 +64,11 @@ const GetPassword = ({ navigation, route }) => {
                     <CustomButton title="다음" onPress={
                         passwordHandler
                     } style={styles.buttons}/>
+                </View>
+                <View style={{ position: "absolute", bottom: 75,width: 160, height: 14 }} >
+                    <View  >
+                        <Image source={require('../../image/PLALUVS.png')} style={{width: 160, height: 25}}resizeMode='center'></Image>
+                    </View>
                     </View>
             </View>   
         </>

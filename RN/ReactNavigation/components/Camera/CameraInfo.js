@@ -25,14 +25,15 @@ const GetIndicate = ({ navigation, route }) => {
         <>
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>데일리 기록 안내사항</Text>
-            
-                <View style={styles.form}>     
-                    <Pressable onPress={() => navigation.navigate(
+                <Pressable onPress={() => navigation.navigate(
                         "CameraCheck"
-                    )}>
+                    )} style={styles.form}>
+                <View >     
+                   
                     <Text style={styles.textMedium}>시작하기</Text>    
-                    </Pressable>
+                    
                     </View>
+                    </Pressable>
             </View>   
         </>
     )

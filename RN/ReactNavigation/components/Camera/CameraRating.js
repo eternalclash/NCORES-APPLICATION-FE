@@ -46,13 +46,13 @@ const CameraRating = ({ navigation }) => {
                 onFinishRating={ratingCompleted}
             />
             </View>
-       
-            <View style={styles.form}>     
-                    <Pressable onPress={rateHandler}>
+            <Pressable onPress={rateHandler} style={styles.form}>   
+            <View >     
+                   
                     <Text style={styles.textMedium}>시작하기</Text>    
-                    </Pressable>
+                   
                     </View>
-  
+                    </Pressable>
 
         </View>
     )

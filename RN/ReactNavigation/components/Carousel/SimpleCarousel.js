@@ -12,16 +12,20 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as markActions } from '../../redux/modules/mark';
 const {width: windowWidth} = Dimensions.get('window');
 
 
 
 const ITEM_WIDTH = 0.4*windowWidth;
 const SEPARATOR_WIDTH = 10;
-export default function MyElementsCarousel(props) {
+export default function SimpleCarousel(props) {
+  const dispatch = useDispatch();
   const {style} = props;
   const carouselRef = useRef(null);
-    const myElements = props.myElements
+  const simpleCos = props.simpleCos
+
   async function handleInstallNowClick(url) {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
@@ -32,7 +36,7 @@ export default function MyElementsCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, korName, url} = item;
+    const {img, name, likeCheck,id} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -42,13 +46,19 @@ export default function MyElementsCarousel(props) {
         }}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
-        <Icon name="heart-o" size={20} style={styles.heart}></Icon>
+        {
+          likeCheck ? <Pressable style={styles.heart}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+          ><Icon name="heart-o" size={20} ></Icon></Pressable>
+          : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id))}><Icon name="heart" size={20} ></Icon></Pressable>
+
+}
 
        
         <View style={styles.lowerContainer}>
           <View style={styles.lowerLeft}>
             <Text style={styles.titleText} numberOfLines={1}>
-              {korName}
+              {name}
             </Text>
             
           </View>
@@ -65,7 +75,7 @@ export default function MyElementsCarousel(props) {
         keyExtractor={item => item?.id}
         style={[styles.carousel, style]}
         ref={carouselRef}
-        data={myElements}
+        data={simpleCos}
         renderItem={renderItem}
         itemWidth={0.4 * windowWidth}
         separatorWidth={SEPARATOR_WIDTH}

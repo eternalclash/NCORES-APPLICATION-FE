@@ -1,46 +1,47 @@
-import React from 'react'
+import React, {useEffect,useState} from 'react'
 import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable, ScrollView } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { StackedBarChart } from 'react-native-svg-charts'
 import CustomButton from '../CustomButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionCreators as reportActions } from '../../redux/modules/report'
+//삼항연산자 처리 차트 에러 걸리면~
 const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
+    const dispatch = useDispatch();
+    const [dry,setDry] = useState("")
+    const [oil,setOil] = useState("")
+    const [winkle,setWinkle] = useState("")
+    const [sense,setSense] = useState("")
+    const [pigment,setPigment] = useState("")
     const data = [
         {
-            month: new Date(2015, 0, 1),
-            apples: 700,
-            bananas: 1000,
-            cherries: 960,
-            dates: 400,
-            oranges: 400,
+      
+            apples: 70,
+            banana:30,
+           
         },
-        // {
-        //     month: new Date(2015, 1, 1),
-        //     apples: 700,
-        //     bananas: 1000,
-        //     cherries: 960,
-        //     dates: 400,
-        // },
-        // {
-        //     month: new Date(2015, 2, 1),
-        //     apples: 700,
-        //     bananas: 1000,
-        //     cherries: 3640,
-        //     dates: 400,
-        // },
-        // {
-        //     month: new Date(2015, 3, 1),
-        //     apples: 700,
-        //     bananas: 1000,
-        //     cherries: 640,
-        //     dates: 400,
-        // },
+      
     ]
     const colors = ['black', 'lightgray']
-    const keys = ['apples','bananas']
-
+    const keys = ['apples','banana']
+    const cameraReport = useSelector(state=>state.report.cameraReport)
+    useEffect( () => {
+       
+            dispatch(reportActions.cameraReportAPI())
+            setDry([{apples:cameraReport.dry,banana:100-cameraReport.dry}])
+            setOil([{apples:cameraReport.oilIndicate,banana:100-cameraReport.oilIndicate}])
+            setSense([{apples:cameraReport.sensitivity,banana:100-cameraReport.sensitivity}])
+            setWinkle([{apples:cameraReport.winkle,banana:100-cameraReport.winkle}])
+            setPigment([{apples:cameraReport.pigment,banana:100-cameraReport.pigment}])
+    
+    },[] )
+   
+    console.log(dry)
+    if(cameraReport)
     return (
+        
         <ScrollView showsVerticalScrollIndicator={false}>
         
         <View style={styles.main}>
@@ -61,20 +62,20 @@ const MainReport = ({ navigation }) => {
                 resizeMode="cover"
                     />
                     <Text style={styles.profileText2}>오늘의 피부점수</Text>
-                    <Text style={styles.profileText}>87점</Text>
-                    <Text style={styles.profileText3}>수분이 부족한 중/복합성 피부네요. 피부에 수분이 부족한 탓에 색소침착이 있네요. 다행히 피부가 저항성을 갖고 있어 외부 환경에 아주 민감 하진 않아요.그래도 주름과 색소침착을 예방하기 위해 자외선은 각별히 신경을 써주셔야해요.외출 시에는 꼭! 자외선 차단제를 자주 덧 발라주세요</Text>
+                        <Text style={styles.profileText}>{cameraReport.totalScore}</Text>
+                        <Text style={styles.profileText3}>{cameraReport.content}</Text>
                 </View>
             <View style={styles.main}>
              
                             
                         <View style={styles.chart}> 
                             <View style={styles.filter2}>
-                            <Text style={styles.filter2}>촉촉해요</Text>
+                            <Text style={styles.filter2}>수분</Text>
                             </View>
                          
                             <View style={styles.filter1}>
                             <Text style={styles.filter}>수분</Text> 
-                        <Text >40점</Text>      
+                                <Text >{cameraReport.dry}점</Text>      
                         </View>
                             
                             
@@ -83,7 +84,7 @@ const MainReport = ({ navigation }) => {
                 style={{ height: 80 }}
                 keys={keys}
                 colors={colors}
-                data={data}
+                data={dry.apples ? dry : data}
                 showGrid={false}
                                 contentInset={{ top: 30, bottom: 30 }}
                                 horizontal="true"
@@ -93,12 +94,12 @@ const MainReport = ({ navigation }) => {
                     
             <View style={styles.chart}> 
                             <View style={styles.filter2}>
-                            <Text style={styles.filter2}>촉촉해요</Text>
+                            <Text style={styles.filter2}>유분</Text>
                             </View>
                          
                             <View style={styles.filter1}>
-                            <Text style={styles.filter}>수분</Text> 
-                        <Text >40점</Text>      
+                            <Text style={styles.filter}>유분</Text> 
+                                <Text >{cameraReport.oilIndicate}점</Text>      
                         </View>
                             
                             
@@ -107,7 +108,7 @@ const MainReport = ({ navigation }) => {
                 style={{ height: 80 }}
                 keys={keys}
                 colors={colors}
-                data={data}
+                data={oil.apples ? oil : data}
                 showGrid={false}
                                 contentInset={{ top: 30, bottom: 30 }}
                                 horizontal="true"
@@ -116,12 +117,12 @@ const MainReport = ({ navigation }) => {
                         </View>
                         <View style={styles.chart}> 
                             <View style={styles.filter2}>
-                            <Text style={styles.filter2}>촉촉해요</Text>
+                            <Text style={styles.filter2}>색조성</Text>
                             </View>
                          
                             <View style={styles.filter1}>
-                            <Text style={styles.filter}>수분</Text> 
-                        <Text >40점</Text>      
+                            <Text style={styles.filter}>색조성</Text> 
+                                <Text >{cameraReport.pigment}점</Text>      
                         </View>
                             
                             
@@ -130,7 +131,7 @@ const MainReport = ({ navigation }) => {
                 style={{ height: 80 }}
                 keys={keys}
                 colors={colors}
-                data={data}
+                data={pigment.apples? pigment: data}
                 showGrid={false}
                                 contentInset={{ top: 30, bottom: 30 }}
                                 horizontal="true"
@@ -139,12 +140,12 @@ const MainReport = ({ navigation }) => {
                         </View>
                         <View style={styles.chart}> 
                             <View style={styles.filter2}>
-                            <Text style={styles.filter2}>촉촉해요</Text>
+                            <Text style={styles.filter2}>민감성</Text>
                             </View>
                          
                             <View style={styles.filter1}>
-                            <Text style={styles.filter}>수분</Text> 
-                        <Text >40점</Text>      
+                            <Text style={styles.filter}>민감성</Text> 
+                                <Text >{cameraReport.sensitivity}점</Text>      
                         </View>
                             
                             
@@ -153,7 +154,32 @@ const MainReport = ({ navigation }) => {
                 style={{ height: 80 }}
                 keys={keys}
                 colors={colors}
-                data={data}
+                data={sense.apples ? sense : data}
+                showGrid={false}
+                                contentInset={{ top: 30, bottom: 30 }}
+                                horizontal="true"
+                            />          
+                     
+                        </View>
+                        
+                    
+                        <View style={styles.chart}> 
+                            <View style={styles.filter2}>
+                            <Text style={styles.filter2}>주름성</Text>
+                            </View>
+                         
+                            <View style={styles.filter1}>
+                            <Text style={styles.filter}>주름성</Text> 
+                                <Text >{cameraReport.winkle}점</Text>      
+                        </View>
+                            
+                            
+                                   
+                            <StackedBarChart
+                style={{ height: 80 }}
+                keys={keys}
+                colors={colors}
+                data={winkle.apples? winkle:data}
                 showGrid={false}
                                 contentInset={{ top: 30, bottom: 30 }}
                                 horizontal="true"
@@ -163,51 +189,40 @@ const MainReport = ({ navigation }) => {
             <View style={styles.information}>
                 <Text style={styles.informationKeyword}>성분 추천</Text>
                     </View>
-                    
-            <View style={styles.information}>
-                        <View style={styles.row}>
-                        <View style={styles.circle}></View>
-                        <Text style={styles.informationKeyword1}>호호바오일</Text>    
-                    </View>
-               
-                        <Icon name="heart" size={30}> </Icon>
-                    </View>
-                    <View style={styles.information}>
-                        <View style={styles.row}>
-                        <View style={styles.circle}></View>
-                        <Text style={styles.informationKeyword1}>호호바오일</Text>    
-                    </View>
-               
-                        <Icon name="heart" size={30}> </Icon>
-                    </View>
-                    <View style={styles.information}>
-                        <View style={styles.row}>
-                        <View style={styles.circle}></View>
-                        <Text style={styles.informationKeyword1}>호호바오일</Text>    
-                    </View>
-               
-                        <Icon name="heart" size={30}> </Icon>
-                        </View>
-                        <View style={styles.information}>
-                        <View style={styles.row}>
-                        <View style={styles.circle}></View>
-                        <Text style={styles.informationKeyword1}>호호바오일</Text>    
-                    </View>
-               
-                        <Icon name="heart" size={30}> </Icon>
-                       </View>
+                        {cameraReport?cameraReport.elementList.map((e, index) => {
+                            return (
+                                <View style={styles.information}>
+                                <View style={styles.row}>
+                                        <View style={styles.circle}>
+                                            <Image style={styles.circle} source={{ uri: e.img }} resizeMode='contain'></Image>
+                                </View>
+                                        <Text style={styles.informationKeyword1}>{e.korName}</Text>    
+                            </View>
+                       
+                                <Icon name="heart" size={30}> </Icon>
+                            </View>
+                 ) 
+             }):<></>}       
+           
+                  
+                   
+                      
                
           
                 </View>
                 </View>
                 <View style={styles.row3}>
                 <CustomButton theme="gender" title="취소" onPress={()=>{navigation.navigate("MainPage")}}/>
-                    <CustomButton theme="gender" title="기록하기" color="red" onPress={() => { navigation.navigate("MainPage") }}/>
+                    <CustomButton theme="gender" title="확인" color="red" onPress={() => { navigation.navigate("MainPage") }}/>
                 </View>
                 <View style={{ height: top }}></View>
             </View>
             </ScrollView>
     )
+    if(!cameraReport)
+return (
+    <View></View>
+)
 }
 
 const styles = StyleSheet.create({
@@ -237,7 +252,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor:"gray",
+      
     },
     row1: {
         flexDirection: 'row',

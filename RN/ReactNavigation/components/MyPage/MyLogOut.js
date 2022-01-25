@@ -10,7 +10,7 @@ const MyLogOut = ({ navigation }) => {
             try {
                  await AsyncStorage.removeItem('token')
                 dispatch(signActions.checkLoginMD(true))
-                
+               
             } catch (e) {
                 console.log(e)
            }

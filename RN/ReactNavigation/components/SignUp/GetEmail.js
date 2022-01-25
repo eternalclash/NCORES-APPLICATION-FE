@@ -66,8 +66,11 @@ const GetEmail = ({ navigation, route }) => {
                     } style={styles.buttons}/>
                 </View>
                
-                <View style={{position:"absolute",bottom:-400}} >
-                <Text style={{fontSize:30,}}>PLALUVS</Text>
+                <View style={{ position: "absolute", bottom: -400,width: 160, height: 14 }} >
+                    <View  >
+                        <Image source={require('../../image/PLALUVS.png')} style={{width: 160, height: 25}}resizeMode='center'></Image>
+                </View>
+              
                 </View>  
             </View>   
             

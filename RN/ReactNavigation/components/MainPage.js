@@ -7,18 +7,19 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import { useDispatch,useSelector } from 'react-redux'
 import Carousel from './Carousel/Carousel'
 import ShopCarousel from './Carousel/Carousel'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { actionCreators as cosmeticActions } from '../redux/modules/cosmetics'
 const MainPage = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
     const dispatch = useDispatch();
     const mainCos = useSelector(state => state.cosmetics.main)
+    const [cos,setCos] = useState()
     useEffect(() => {
         dispatch (cosmeticActions.mainCosmeticAPI())
           // dispatch(cosmeticActions.categoryCosmeticAPI())
           // dispatch(cosmeticActions.simpleCosmeticAPI())
           // dispatch(cosmeticActions.elementCosmeticAPI())
-         
+         setCos(mainCos)
       }, [])
     console.log(mainCos)
     return (
@@ -52,7 +53,7 @@ const MainPage = ({ navigation }) => {
                 <Text style={styles.informationKeyword}>민감한 피부엔 이런 제품</Text>
                 <Text style={styles.informationSubKeyword}>비슷한 고민을 가진 고객님들은 이런 제품을 찜했어요</Text>
             </View>
-                <ShopCarousel mainCos={mainCos} />
+                {mainCos ? <ShopCarousel mainCos={mainCos} /> : <></>}
                 <Pressable style={styles.lowButton}>
                 <View >
                     <ImageBackground source={require("../image/mainBottom.png")} style={styles.bgImage}></ImageBackground>

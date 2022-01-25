@@ -31,6 +31,7 @@ import SkinReport from './Skin/SkinReport';
 import ShopList from './Report/ShopList';
 
 import BlueTooth from './BlueTooth';
+import GetHead from './SignUp/GetHead';
 
 
 // const get = async () => {
@@ -52,7 +53,9 @@ const RootStack = ({ navigation }) => {
         async function load() {
             try {
                 const raw = await AsyncStorage.getItem('token')
+                console.log(raw)
                 setLogin(raw)    
+                console.log("Root")
             } catch (e) {
                 console.log(e)
            }
@@ -60,36 +63,47 @@ const RootStack = ({ navigation }) => {
         load()
     }, [isLogin])
     const [login,setLogin] = useState()
-    // console.log(isLogin)
+ 
     const Stack = createNativeStackNavigator();
     
     return (
         <Stack.Navigator 
+        //  initialRouteName='GetHead'
         >
             {
           login?  
-              <>
+          <>
               <Stack.Screen
               name="MainPage"
               component={MainTab}
                             options={{ headerShown: false }}
                           
                         /> 
-                       
-                         
+                        <Stack.Screen
+                        name="GetHead"
+                        component={GetHead}
+                        options={{headerShown: false}}
+                    />     
+               </>          
                      
-                        </>
+                   
                     :
-                    <>
+              <>
                      <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{headerShown: false}}
                         />
-                         
-                    </>
+                       <Stack.Screen
+                        name="GetHead"
+                        component={GetHead}
+                        options={{headerShown: false}}
+                    />     
+                           
+              </>
 
             }
+            
               <Stack.Screen
                 name="MainReport"
                 component={MainReport}
@@ -97,6 +111,12 @@ const RootStack = ({ navigation }) => {
                     headerShown: false
                 }}
             />
+                   <Stack.Screen
+                        name="GetWorry"
+                        component={GetWorry}
+                        options={{headerShown: false}}
+            /> 
+            
               <Stack.Screen
                 name="BlueTooth"
                 component={BlueTooth}
@@ -190,11 +210,7 @@ const RootStack = ({ navigation }) => {
                 component={GetIndicate}
                 options={{headerShown: false}}
             />
-              <Stack.Screen
-                name="GetWorry"
-                component={GetWorry}
-                options={{headerShown: false}}
-            />
+         
                 <Stack.Screen
                 name="Upload"
                 component={UploadScreen}

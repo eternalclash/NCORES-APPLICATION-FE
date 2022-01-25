@@ -1,11 +1,11 @@
 import React from 'react'
 import { View } from 'react-native'
 import { BarChart, Grid } from 'react-native-svg-charts'
-import { Text,G,Path,Rect } from 'react-native-svg'
-
+import { Text,G,Path,Rect,XAxis } from 'react-native-svg'
+import * as scale from 'd3-scale'
 const MainSkin = () => {
 
-    const data = [ 10, 5, 25, 15, 20 ]
+    const data = [ 10, 5, 25, 15, 20,15,10 ]
 
     
     const Labels = ({ x, y, bandwidth, data }) => (
@@ -53,15 +53,23 @@ const MainSkin = () => {
                 style={{ flex:1}}
                 contentInset={{ top: 40, bottom: 10 }}
                 data={data}
-                svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
+                svg={{ fill: '#191A1A' }}
     
                 spacingInner={0.7}
                 spacing={0.2}
                 gridMin={0}
             >
               
-                <Labels/>
+                <Labels />
+              
             </BarChart>
+            {/* <XAxis
+                    style={{ marginTop: 10 }}
+                    data={ data }
+                    scale={scale.scaleBand}
+                    formatLabel={ (value, index) => index }
+                    labelStyle={ { color: 'black' } }
+                /> */}
         </View>
     )
 }

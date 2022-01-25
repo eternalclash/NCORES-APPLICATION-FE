@@ -3,10 +3,12 @@ import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 const MAINCOS = "MAINCOS";
+const SIMPLECOS = "SIMPLECOS"
 const mainCos=createAction(MAINCOS,(main)=>({main}))
-
+const simpleCos = createAction(SIMPLECOS,(simple)=>({simple}))
 const initialState = {
-   main:"",
+  main: "",
+  simple:"",
 }
 
 
@@ -25,7 +27,7 @@ const mainCosmeticAPI = (cosmetic) => {
       })
         .then(async(res) => { //바디 부분
          dispatch(mainCos(res.data.data))
-         
+
       
       })
          .catch(async (err) => {
@@ -76,9 +78,9 @@ const categoryCosmeticAPI = (cosmetic) => {
           },
         })
           .then(async(res) => { //바디 부분
+          dispatch(simpleCos(res.data.data))
            
-           
-          console.log(res.data)
+          console.log(res.data.data)
         })
            .catch(async (err) => {
              
@@ -119,6 +121,10 @@ export default handleActions(
         [MAINCOS]: (state, action) =>
         produce(state, (draft) => {
           draft.main = action.payload.main
+        }),
+        [SIMPLECOS]: (state, action) =>
+        produce(state, (draft) => {
+          draft.simple = action.payload.simple
         }),
        
         

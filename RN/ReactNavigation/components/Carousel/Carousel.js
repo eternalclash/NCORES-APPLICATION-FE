@@ -12,51 +12,16 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as markActions } from '../../redux/modules/mark';
 const {width: windowWidth} = Dimensions.get('window');
 
-const data = [
-  {
-    id: 'item2',
-    image: 'https://i.imgur.com/N3nQ9CS.jpg',
-    title: '화장품1',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
-  {
-    id: 'item3',
-    image: 'https://i.imgur.com/AzdYlDM.jpg',
-    title: '화장품2',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-  {
-    id: 'item1',
-    image: 'https://i.imgur.com/s7GgEa8.jpg',
-    title: '화장품3',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-  {
-    id: 'item6',
-    image: 'https://i.imgur.com/1O1Kd6T.jpg',
-    title: '화장품4',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
-  {
-    id: 'item4',
-    image: 'https://i.imgur.com/eNuhvpN.jpg',
-    title: '화장품5',
-    url: 'https://github.com/lehoangnam97/react-native-anchor-carousel',
-  },
 
-  {
-    id: 'item5',
-    image: 'https://i.imgur.com/jEiBmma.jpg',
-    title: '화장품6',
-    url: 'https://www.npmjs.com/package/react-native-anchor-carousel',
-  },
-];
 
 const ITEM_WIDTH = 0.4*windowWidth;
 const SEPARATOR_WIDTH = 10;
 export default function ShopCarousel(props) {
+  const dispatch = useDispatch();
   const {style} = props;
   const carouselRef = useRef(null);
   const mainCos = props.mainCos
@@ -71,7 +36,7 @@ export default function ShopCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, name, url} = item;
+    const {img, name, likeCheck,id} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -81,7 +46,13 @@ export default function ShopCarousel(props) {
         }}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
-        <Icon name="heart-o" size={20} style={styles.heart}></Icon>
+        {
+          likeCheck ? <Pressable style={styles.heart}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+          ><Icon name="heart-o" size={20} ></Icon></Pressable>
+            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id))}><Icon name="heart" size={20} ></Icon></Pressable>
+
+}
 
        
         <View style={styles.lowerContainer}>
@@ -148,7 +119,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    fontSize: 12,
+    fontSize: 15,
     color: '#1C2127',
   },
   descriptionText: {

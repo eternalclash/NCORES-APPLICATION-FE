@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleText: {
-    fontSize: 12,
+    fontSize: 15,
     color: '#1C2127',
   },
   descriptionText: {

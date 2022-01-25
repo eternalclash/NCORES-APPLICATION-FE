@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Image } from 'react-native'
 import CustomButton from '../CustomButton'
 
 const GetFinish = ({navigation, route}) => {
@@ -17,6 +17,11 @@ const GetFinish = ({navigation, route}) => {
                     <CustomButton title="로그인 하기" onPress={() => {
                       navigation.navigate("SignIn")
                     }} style={styles.buttons}/>
+                </View>
+                <View style={{ position: "absolute", bottom: 75,width: 160, height: 14 }} >
+                    <View  >
+                        <Image source={require('../../image/PLALUVS.png')} style={{width: 160, height: 25}}resizeMode='center'></Image>
+                    </View>
                     </View>
             </View>   
         </>

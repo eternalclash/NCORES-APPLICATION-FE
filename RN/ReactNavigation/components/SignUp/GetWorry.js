@@ -6,6 +6,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
 const GetWorry = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
+    const worry = useSelector((state) => state.sign.worryLogin)
     const [num1, setNum1] = useState(false)
     const [num2, setNum2] = useState(false)
     const [num3, setNum3] = useState(false)
@@ -16,7 +17,7 @@ const GetWorry = ({ navigation, route }) => {
         if (check)
         {   
             dispatch(signActions.check(false))
-            navigation.navigate("MainPage")
+            navigation.navigate("GetHead")
             }
     }, [check])
     const worryHandler = () => {
