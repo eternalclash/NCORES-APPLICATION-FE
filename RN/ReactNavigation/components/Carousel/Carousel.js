@@ -47,10 +47,20 @@ export default function ShopCarousel(props) {
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {
-          likeCheck ? <Pressable style={styles.heart}
+          likeCheck? <Pressable style={styles.heart}
             onPress={() => dispatch(markActions.markCosmeticAPI(id))}
-          ><Icon name="heart-o" size={20} ></Icon></Pressable>
-            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id))}><Icon name="heart" size={20} ></Icon></Pressable>
+
+          >
+       
+            <Image source={require('../../image/true.png')}
+            style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
+       
+         </Pressable>
+            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id))}>
+              <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
+              </Image>
+
+              </Pressable>
 
 }
 

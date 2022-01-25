@@ -42,7 +42,7 @@ const MainReport = ({ navigation }) => {
     if(cameraReport)
     return (
         
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}  nestedScrollEnabled >
         
         <View style={styles.main}>
             <View style={{ height: top }}></View>
@@ -221,7 +221,7 @@ const MainReport = ({ navigation }) => {
     )
     if(!cameraReport)
 return (
-    <View></View>
+    <View  nestedScrollEnabled ></View>
 )
 }
 

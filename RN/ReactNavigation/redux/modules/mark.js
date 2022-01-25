@@ -5,16 +5,18 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { actionCreators as cosActions} from "./cosmetics";
 import { actionCreators as myActions} from "./myPage";
 const MARK_COSMETIC = "MARK_COSMETIC";
+const MARK_CHECK = "MARK_CHECK"
 const markCosmetic=createAction(MARK_COSMETIC,(cosmetic)=>({cosmetic}))
 const markElement=createAction(MARK_COSMETIC,(element)=>({element}))
-
+const markCheck = createAction(MARK_CHECK, (markCheck)=>({markCheck}))
 const initialState = {
-    cosmetic: "",
-    element:"",
+  cosmetic: "",
+  element: "",
+  markCheck:"",
 }
 
 
-const markCosmeticAPI = (id) => {
+const markCosmeticAPI = (id,categoryId) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
@@ -28,16 +30,17 @@ const markCosmeticAPI = (id) => {
         },
       })
         .then(async(res) => { //바디 부분
-         await dispatch(cosActions.mainCosmeticAPI())
-         await dispatch(myActions.userCosmeticAPI())
+           dispatch(cosActions.mainCosmeticAPI())
+          await dispatch(cosActions.detailCosmeticAPI(categoryId))
+       dispatch(myActions.userCosmeticAPI())
          
       
       })
          .catch(async (err) => {
            
         console.log("홈 화장품 에러")
-      
-        throw new Error(err);
+        
+         dispatch(markCheck(Math.random()))
       });
   };
 };
@@ -73,6 +76,10 @@ export default handleActions(
         [MARK_COSMETIC]: (state, action) =>
         produce(state, (draft) => {
           draft.cosmetic = action.payload.cosmetic
+        }),
+        [MARK_CHECK]: (state, action) =>
+        produce(state, (draft) => {
+          draft.markCheck = action.payload.markCheck
         }),
        
         

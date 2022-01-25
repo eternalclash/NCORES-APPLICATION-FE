@@ -4,11 +4,17 @@ import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 const MAINCOS = "MAINCOS";
 const SIMPLECOS = "SIMPLECOS"
+const CATEGORY = "CATEGORY"
+const DETAIL = "DETAIL"
 const mainCos=createAction(MAINCOS,(main)=>({main}))
-const simpleCos = createAction(SIMPLECOS,(simple)=>({simple}))
+const simpleCos = createAction(SIMPLECOS, (simple) => ({ simple }))
+const category = createAction(CATEGORY, (category) => ({ category }))
+const detail = createAction(DETAIL, (detail)=>({detail}))
 const initialState = {
   main: "",
-  simple:"",
+  simple: "",
+  category: "",
+  detail:"",
 }
 
 
@@ -38,6 +44,34 @@ const mainCosmeticAPI = (cosmetic) => {
       });
   };
 };
+
+const categoryAllAPI = (cosmetic) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "GET",
+      url: "http://54.180.134.111/category",
+       data: {},
+         headers: {
+            // "Content-Type": "multipart/form-data",
+        //   Accept: "application/json",
+        //    "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => { //바디 부분
+         
+         dispatch(category(res.data.data))
+        console.log(res.data)
+      })
+         .catch(async (err) => {
+           
+        console.log("카테고리 화장품 에러")
+      
+        throw new Error(err);
+      });
+  };
+};
+
 const categoryCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
        await axios({
@@ -53,7 +87,7 @@ const categoryCosmeticAPI = (cosmetic) => {
         })
           .then(async(res) => { //바디 부분
            
-           
+          dispatch(detail(res.data.data))
           console.log(res.data)
         })
            .catch(async (err) => {
@@ -63,7 +97,33 @@ const categoryCosmeticAPI = (cosmetic) => {
           throw new Error(err);
         });
     };
+};
+const detailCosmeticAPI = (id) => {
+  return async function  (dispatch, navigation) {
+     await axios({
+      method: "GET",
+      url: `http://54.180.134.111/cosmetic/detail-recommends/${id}/0`,
+       data: {},
+         headers: {
+            // "Content-Type": "multipart/form-data",
+        //   Accept: "application/json",
+        //    "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then(async(res) => { //바디 부분
+          dispatch(detail(res.data.data))
+         
+        console.log(res.data)
+      })
+         .catch(async (err) => {
+           
+        console.log("디테일 화장품 에러")
+      
+        throw new Error(err);
+      });
   };
+};
   const simpleCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
        await axios({
@@ -122,6 +182,14 @@ export default handleActions(
         produce(state, (draft) => {
           draft.main = action.payload.main
         }),
+        [CATEGORY]: (state, action) =>
+        produce(state, (draft) => {
+          draft.category = action.payload.category
+        }),
+        [DETAIL]: (state, action) =>
+        produce(state, (draft) => {
+          draft.detail = action.payload.detail
+        }),
         [SIMPLECOS]: (state, action) =>
         produce(state, (draft) => {
           draft.simple = action.payload.simple
@@ -137,5 +205,7 @@ export default handleActions(
       mainCosmeticAPI,
       categoryCosmeticAPI,
       simpleCosmeticAPI,
-      elementCosmeticAPI,
+    elementCosmeticAPI,
+    categoryAllAPI,
+      detailCosmeticAPI,
   };
