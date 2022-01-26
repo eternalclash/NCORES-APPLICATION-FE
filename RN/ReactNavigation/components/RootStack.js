@@ -33,6 +33,7 @@ import ShopList from './Report/ShopList';
 import BlueTooth from './BlueTooth';
 import GetHead from './SignUp/GetHead';
 import ElementList from './Report/ElementList';
+import XAxisExample from './XAxisExample';
 
 
 // const get = async () => {
@@ -69,7 +70,7 @@ const RootStack = ({ navigation }) => {
     
     return (
         <Stack.Navigator 
-         initialRouteName='MainReport'
+        initialRouteName='MainSkinPage'
         >
             {
           login?  
@@ -112,18 +113,23 @@ const RootStack = ({ navigation }) => {
                     headerShown: false
                 }}
             />
-             <Stack.Screen
+            <Stack.Screen
+                        name="XAxisExample"
+                        component={XAxisExample}
+                        options={{headerShown: false}}
+            /> 
+                   <Stack.Screen
+                        name="GetWorry"
+                        component={GetWorry}
+                        options={{headerShown: false}}
+            /> 
+              <Stack.Screen
                 name="ElementList"
                 component={ElementList}
                 options={{
                     headerShown: false
                 }}
             />
-                   <Stack.Screen
-                        name="GetWorry"
-                        component={GetWorry}
-                        options={{headerShown: false}}
-            /> 
             
               <Stack.Screen
                 name="BlueTooth"

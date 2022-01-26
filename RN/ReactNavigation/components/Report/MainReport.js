@@ -7,6 +7,7 @@ import CustomButton from '../CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as reportActions } from '../../redux/modules/report'
 import { actionCreators as markActions } from '../../redux/modules/mark'
+import { actionCreators as cosActions } from '../../redux/modules/cosmetics'
 //삼항연산자 처리 차트 에러 걸리면~
 const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
@@ -40,206 +41,221 @@ const MainReport = ({ navigation }) => {
     },[] )
    
     console.log(dry)
-    if(cameraReport)
-    return (
+    if (cameraReport)
+    { 
+        return (
         
-        <ScrollView showsVerticalScrollIndicator={false}  nestedScrollEnabled >
-        
-        <View style={styles.main}>
-            <View style={{ height: top }}></View>
-            <View style={styles.main1}>
-         
-              
-                <View style={styles.row1}>
-                    <Text style={styles.profileText1}>진단 결과</Text>
-                    <Text style={styles.profileText1}>성분 추천</Text>
-                </View>
-           
-                <View style={styles.mainImage}>
-                
-            <Image
-                source={{ uri: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"}}
-                style={styles.cosmetic}
-                resizeMode="cover"
-                    />
-                    <Text style={styles.profileText2}>오늘의 피부점수</Text>
-                        <Text style={styles.profileText}>{cameraReport.totalScore}</Text>
-                        <Text style={styles.profileText3}>{cameraReport.content}</Text>
-                </View>
+            <ScrollView showsVerticalScrollIndicator={false}  nestedScrollEnabled >
+            
             <View style={styles.main}>
-             
-                            
-                        <View style={styles.chart}> 
-                            <View style={styles.filter2}>
-                            <Text style={styles.filter2}>수분</Text>
-                            </View>
-                         
-                            <View style={styles.filter1}>
-                            <Text style={styles.filter}>수분</Text> 
-                                <Text >{cameraReport.dry}점</Text>      
-                        </View>
-                            
-                            
-                                   
-                            <StackedBarChart
-                style={{ height: 80 }}
-                keys={keys}
-                colors={colors}
-                data={dry.apples ? dry : data}
-                showGrid={false}
-                                contentInset={{ top: 30, bottom: 30 }}
-                                horizontal="true"
-                            />          
-                     
-            </View>
-                    
-            <View style={styles.chart}> 
-                            <View style={styles.filter2}>
-                            <Text style={styles.filter2}>유분</Text>
-                            </View>
-                         
-                            <View style={styles.filter1}>
-                            <Text style={styles.filter}>유분</Text> 
-                                <Text >{cameraReport.oilIndicate}점</Text>      
-                        </View>
-                            
-                            
-                                   
-                            <StackedBarChart
-                style={{ height: 80 }}
-                keys={keys}
-                colors={colors}
-                data={oil.apples ? oil : data}
-                showGrid={false}
-                                contentInset={{ top: 30, bottom: 30 }}
-                                horizontal="true"
-                            />          
-                     
-                        </View>
-                        <View style={styles.chart}> 
-                            <View style={styles.filter2}>
-                            <Text style={styles.filter2}>색조성</Text>
-                            </View>
-                         
-                            <View style={styles.filter1}>
-                            <Text style={styles.filter}>색조성</Text> 
-                                <Text >{cameraReport.pigment}점</Text>      
-                        </View>
-                            
-                            
-                                   
-                            <StackedBarChart
-                style={{ height: 80 }}
-                keys={keys}
-                colors={colors}
-                data={pigment.apples? pigment: data}
-                showGrid={false}
-                                contentInset={{ top: 30, bottom: 30 }}
-                                horizontal="true"
-                            />          
-                     
-                        </View>
-                        <View style={styles.chart}> 
-                            <View style={styles.filter2}>
-                            <Text style={styles.filter2}>민감성</Text>
-                            </View>
-                         
-                            <View style={styles.filter1}>
-                            <Text style={styles.filter}>민감성</Text> 
-                                <Text >{cameraReport.sensitivity}점</Text>      
-                        </View>
-                            
-                            
-                                   
-                            <StackedBarChart
-                style={{ height: 80 }}
-                keys={keys}
-                colors={colors}
-                data={sense.apples ? sense : data}
-                showGrid={false}
-                                contentInset={{ top: 30, bottom: 30 }}
-                                horizontal="true"
-                            />          
-                     
-                        </View>
-                        
-                    
-                        <View style={styles.chart}> 
-                            <View style={styles.filter2}>
-                            <Text style={styles.filter2}>주름성</Text>
-                            </View>
-                         
-                            <View style={styles.filter1}>
-                            <Text style={styles.filter}>주름성</Text> 
-                                <Text >{cameraReport.winkle}점</Text>      
-                        </View>
-                            
-                            
-                                   
-                            <StackedBarChart
-                style={{ height: 80 }}
-                keys={keys}
-                colors={colors}
-                data={winkle.apples? winkle:data}
-                showGrid={false}
-                                contentInset={{ top: 30, bottom: 30 }}
-                                horizontal="true"
-                            />          
-                     
-            </View>
-            <View style={styles.information}>
-            <Pressable onPress={()=>navigation.navigate("ElementList")  }  style={styles.information} >
-                   
-                       
-                <Text style={styles.informationKeyword}>성분 찾기</Text>
-                            <Icon name="chevron-right" size={45} style={{marginRight:20}}></Icon>
-                          
-                       
-                        </Pressable>
-                    </View>
-                        {cameraReport?cameraReport.elementList.map((e, index) => {
-                            return (
-                                <View style={styles.information}>
-                                <View style={styles.row}>
-                                        <View style={styles.circle}>
-                                            <Image style={styles.circle} source={{ uri: e.img }} resizeMode='contain'></Image>
-                                </View>
-                                        <Text style={styles.informationKeyword1}>{e.korName}</Text>    
-                            </View>
-                       
-                                    {
-                                        e.likeCheck ?
-                                        <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}>
-                                         <Image source={require('../../image/true.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
-                                        </Pressable>    
-                                            
-                                           
-                                            :  
-                                             <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}><Image source={require('../../image/false.png')}  style={{ width: 28, height: 28,marginRight:20  }} resizeMode="cover"></Image>
-                                            </Pressable>   
-                                    }
-                            </View>
-                 ) 
-             }):<></>}       
-           
-                  
-                   
-                      
-               
-          
-                </View>
-                </View>
-                <View style={styles.row3}>
-                <CustomButton theme="gender" title="취소" onPress={()=>{navigation.navigate("MainPage")}}/>
-                    <CustomButton theme="gender" title="확인" color="red" onPress={() => { navigation.navigate("MainPage") }}/>
-                </View>
                 <View style={{ height: top }}></View>
-            </View>
-            </ScrollView>
-    )
+                <View style={styles.main1}>
+             
+                  
+                    <View style={styles.row1}>
+                        <Text style={styles.profileText1}>진단 결과</Text>
+                        <Text style={styles.profileText1}>성분 추천</Text>
+                    </View>
+               
+                    <View style={styles.mainImage}>
+                    
+                <Image
+                    source={{ uri: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"}}
+                    style={styles.cosmetic}
+                    resizeMode="cover"
+                        />
+                        <Text style={styles.profileText2}>오늘의 피부점수</Text>
+                            <Text style={styles.profileText}>{cameraReport.totalScore}</Text>
+                            <Text style={styles.profileText3}>{cameraReport.content}</Text>
+                    </View>
+                <View style={styles.main}>
+                 
+                                
+                            <View style={styles.chart}> 
+                                <View style={styles.filter2}>
+                                <Text style={styles.filter2}>수분</Text>
+                                </View>
+                             
+                                <View style={styles.filter1}>
+                                <Text style={styles.filter}>수분</Text> 
+                                    <Text >{cameraReport.dry}점</Text>      
+                            </View>
+                                
+                                
+                                       
+                                <StackedBarChart
+                    style={{ height: 80 }}
+                    keys={keys}
+                    colors={colors}
+                    data={dry.apples ? dry : data}
+                    showGrid={false}
+                                    contentInset={{ top: 30, bottom: 30 }}
+                                    horizontal="true"
+                                />          
+                         
+                </View>
+                        
+                <View style={styles.chart}> 
+                                <View style={styles.filter2}>
+                                <Text style={styles.filter2}>유분</Text>
+                                </View>
+                             
+                                <View style={styles.filter1}>
+                                <Text style={styles.filter}>유분</Text> 
+                                    <Text >{cameraReport.oilIndicate}점</Text>      
+                            </View>
+                                
+                                
+                                       
+                                <StackedBarChart
+                    style={{ height: 80 }}
+                    keys={keys}
+                    colors={colors}
+                    data={oil.apples ? oil : data}
+                    showGrid={false}
+                                    contentInset={{ top: 30, bottom: 30 }}
+                                    horizontal="true"
+                                />          
+                         
+                            </View>
+                            <View style={styles.chart}> 
+                                <View style={styles.filter2}>
+                                <Text style={styles.filter2}>색조성</Text>
+                                </View>
+                             
+                                <View style={styles.filter1}>
+                                <Text style={styles.filter}>색조성</Text> 
+                                    <Text >{cameraReport.pigment}점</Text>      
+                            </View>
+                                
+                                
+                                       
+                                <StackedBarChart
+                    style={{ height: 80 }}
+                    keys={keys}
+                    colors={colors}
+                    data={pigment.apples? pigment: data}
+                    showGrid={false}
+                                    contentInset={{ top: 30, bottom: 30 }}
+                                    horizontal="true"
+                                />          
+                         
+                            </View>
+                            <View style={styles.chart}> 
+                                <View style={styles.filter2}>
+                                <Text style={styles.filter2}>민감성</Text>
+                                </View>
+                             
+                                <View style={styles.filter1}>
+                                <Text style={styles.filter}>민감성</Text> 
+                                    <Text >{cameraReport.sensitivity}점</Text>      
+                            </View>
+                                
+                                
+                                       
+                                <StackedBarChart
+                    style={{ height: 80 }}
+                    keys={keys}
+                    colors={colors}
+                    data={sense.apples ? sense : data}
+                    showGrid={false}
+                                    contentInset={{ top: 30, bottom: 30 }}
+                                    horizontal="true"
+                                />          
+                         
+                            </View>
+                            
+                        
+                            <View style={styles.chart}> 
+                                <View style={styles.filter2}>
+                                <Text style={styles.filter2}>주름성</Text>
+                                </View>
+                             
+                                <View style={styles.filter1}>
+                                <Text style={styles.filter}>주름성</Text> 
+                                    <Text >{cameraReport.winkle}점</Text>      
+                            </View>
+                                
+                                
+                                       
+                                <StackedBarChart
+                    style={{ height: 80 }}
+                    keys={keys}
+                    colors={colors}
+                    data={winkle.apples? winkle:data}
+                    showGrid={false}
+                                    contentInset={{ top: 30, bottom: 30 }}
+                                    horizontal="true"
+                                />          
+                         
+                </View>
+                <View style={styles.information}>
+                <Pressable    style={styles.information} >
+                       
+                           
+                    <Text style={styles.informationKeyword}>성분 찾기</Text>
+                                <Icon name="chevron-right" size={45} style={{marginRight:20}}></Icon>
+                              
+                           
+                            </Pressable>
+                        </View>
+                            {cameraReport?cameraReport.elementList.map((e, index) => {
+                                return (
+                                    <View style={styles.information}>
+                                         <Pressable onPress={() => {
+
+                                                navigation.navigate("ElementList",{id:e.id,name:e.korName})
+                                            }}>
+                                        <View style={styles.row}>
+                                          
+                                            <View style={styles.circle}>
+                                                <Image style={styles.circle} source={{ uri: e.img }} resizeMode='contain'></Image>
+                                    </View>
+                                                <Text style={styles.informationKeyword1}>{e.korName}</Text>
+                                               
+                                </View>
+                                </Pressable>    
+                                 
+                           
+                                        {
+                                            e.likeCheck ?
+                                            <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}>
+                                             <Image source={require('../../image/true.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
+                                            </Pressable>    
+                                                
+                                               
+                                                :  
+                                                 <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}><Image source={require('../../image/false.png')}  style={{ width: 28, height: 28,marginRight:20  }} resizeMode="cover"></Image>
+                                                </Pressable>   
+                                        }
+                                </View>
+                     ) 
+                 }):<></>}       
+               
+                      
+                       
+                          
+                   
+              
+                    </View>
+                    </View>
+                    <View style={styles.row3}>
+                        <CustomButton theme="gender" title="취소" onPress={() => {
+                            
+                            navigation.navigate("MainPage")
+                            
+                        }}/>
+                        <CustomButton theme="gender" title="확인" color="red" onPress={() => { navigation.navigate("MainPage") }}/>
+                    </View>
+                    <View style={{ height: top }}></View>
+                </View>
+                </ScrollView>
+        )
+    }
+    
     if(!cameraReport)
 return (
-    <View  nestedScrollEnabled ></View>
+    <View ></View>
 )
 }
 

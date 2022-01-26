@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 import { StackedBarChart } from 'react-native-svg-charts'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as cosmeticsAction } from '../../redux/modules/cosmetics'
+import { actionCreators as skinAction } from '../../redux/modules/skin'
 import SimpleCarousel from '../Carousel/SimpleCarousel'
 const MainSkinPage = ({navigation}) => {
     const { top } = useSafeAreaInsets();
@@ -16,18 +17,38 @@ const MainSkinPage = ({navigation}) => {
     const data = [
         {
       
-            "1일전": 70,
-            "5일전":30,
-            "1주일전": 40,
-            peach:50,
+            "apples": 70,
+            "banana":30,
+            "orange": 40,
+            "peach":50,
         },
       
     ]
     const simpleCos = useSelector(state => state.cosmetics.simple)
-    console.log(simpleCos)
+    const getList = useSelector(state => state.skin.getList)
+    const getBouman = useSelector(state => state.skin.getBouman)
+    //바우만 별 셀렉터
+    const aquaScore = useSelector(state => state.skin.aquaScore)
+    const oillScore = useSelector(state => state.skin.oillScore)
+    const pigmentScore = useSelector(state => state.skin.pigmentScore)
+    const winkleScore = useSelector(state => state.skin.winkleScore)
+    const sensitiveScore = useSelector(state => state.skin.sensitiveScore)
+
+  
     useEffect(() => {
-       dispatch(cosmeticsAction.simpleCosmeticAPI())
-    },[])
+        dispatch(cosmeticsAction.simpleCosmeticAPI())
+        dispatch(skinAction.getListAPI())
+
+    }, [])
+    useEffect(() => {
+       
+        dispatch(skinAction.getBoumanAPI())
+    }, [])
+    console.log(getBouman)
+   
+   console.log(aquaScore)
+
+   if(aquaScore.data&&oillScore.data&&pigmentScore.data&&winkleScore.data&&sensitiveScore.data)
     return (
         <ScrollView style={{ flex: 1 }}>
             <View  >
@@ -40,9 +61,9 @@ const MainSkinPage = ({navigation}) => {
                 <View style={{width:"100%",borderBottomWidth:1,}}></View>    
                 <Text style={{fontSize:18,marginTop:30,marginLeft:10,fontWeight:"500",lineHeight:22,}}>최근 측정한 피부 점수의</Text>
             <Text style={{ fontSize:18,marginTop:3,marginLeft:10,fontWeight:"500" }}>평균은 60점이었어요</Text>
-                <Pressable onPress={()=>navigation.navigate("SkinReport")}>
+             
                 <MainSkin />
-                </Pressable>
+              
               
                 <View style={{ flexDirection: "row",justifyContent:"space-around" }}>
                     <Text>1일 전</Text>  
@@ -75,9 +96,9 @@ const MainSkinPage = ({navigation}) => {
                                    
                             <StackedBarChart
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
-                keys={keys}
-                colors={colors}
-                data={data}
+                keys={winkleScore.keys}
+                colors={winkleScore.color}
+                data={winkleScore.data}
                 showGrid={false}
                             
                                 horizontal="true"
@@ -111,9 +132,9 @@ const MainSkinPage = ({navigation}) => {
                                    
                             <StackedBarChart
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
-                keys={keys}
-                colors={colors}
-                data={data}
+                keys={sensitiveScore.keys}
+                colors={sensitiveScore.color}
+                data={sensitiveScore.data}
                 showGrid={false}
                             
                                 horizontal="true"
@@ -150,9 +171,9 @@ const MainSkinPage = ({navigation}) => {
                                    
                             <StackedBarChart
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
-                keys={keys}
-                colors={colors}
-                data={data}
+                keys={pigmentScore.keys}
+                colors={pigmentScore.color}
+                data={pigmentScore.data}
                 showGrid={false}
                             
                                 horizontal="true"
@@ -186,9 +207,9 @@ const MainSkinPage = ({navigation}) => {
                                    
                             <StackedBarChart
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
-                keys={keys}
-                colors={colors}
-                data={data}
+                keys={aquaScore.keys}
+                colors={aquaScore.color}
+                data={aquaScore.data}
                 showGrid={false}
                             
                                 horizontal="true"
@@ -222,9 +243,9 @@ const MainSkinPage = ({navigation}) => {
                                    
                             <StackedBarChart
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
-                keys={keys}
-                colors={colors}
-                data={data}
+                keys={oillScore.keys}
+                colors={oillScore.color}
+                data={oillScore.data}
                 showGrid={false}
                             
                                 horizontal="true"
@@ -275,6 +296,11 @@ const MainSkinPage = ({navigation}) => {
 
         </ScrollView>
     )
+   else {
+       return (
+           <></>
+       )
+   }
 }
 const styles = StyleSheet.create({
     filter2: {

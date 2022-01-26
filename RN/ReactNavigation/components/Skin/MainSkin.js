@@ -1,13 +1,11 @@
 import React from 'react'
 import { View } from 'react-native'
-import { BarChart, Grid } from 'react-native-svg-charts'
-import { Text,G,Path,Rect,XAxis } from 'react-native-svg'
+import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
+import { Text,G,Path,Rect } from 'react-native-svg'
 import * as scale from 'd3-scale'
 const MainSkin = () => {
 
-    const data = [ 10, 5, 25, 15, 20,15,10 ]
-
-    
+    const data = [ 14, 80, 100, 55,25,20,5 ]
     const Labels = ({ x, y, bandwidth, data }) => (
         data.map((value, index) => (
             <G key={index}>
@@ -27,25 +25,10 @@ const MainSkin = () => {
             </G>
         ))
     )
-    
 
     return (
        
        
-            // <View style={{ flexDirection: 'row', height: 200, paddingVertical: 16 }}>
-            //     <BarChart
-            //         bandwidth={4}
-            //         data={data}
-            //         svg={{ fill: 'rgba(134, 65, 244, 0.8)' ,strokeWidth: 1,}}
-            //         contentInset={{ top: 10, bottom: 10 }}
-            //         spacingInner={0.7}
-            //         // spacing={0.2}
-            //         // gridMin={0}
-            //     >   
-            //         {/* <Grid direction={Grid.Direction.HORIZONTAL}/> */}
-            //         <Labels/>
-            //     </BarChart>
-            // </View>
         <View style={{
             height: 200, flexDirection: 'row', justifyContent:'center',marginTop:40,marginHorizontal:15,
         }}>
@@ -63,14 +46,7 @@ const MainSkin = () => {
                 <Labels />
               
             </BarChart>
-            {/* <XAxis
-                    style={{ marginTop: 10 }}
-                    data={ data }
-                    scale={scale.scaleBand}
-                    formatLabel={ (value, index) => index }
-                    labelStyle={ { color: 'black' } }
-                /> */}
-        </View>
+            </View>
     )
 }
 

@@ -9,6 +9,7 @@ import cosmetics from "./modules/cosmetics";
 import myPage from "./modules/myPage";
 import mark from "./modules/mark";
 import report from "./modules/report";
+import skin from "./modules/skin";
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 const stack=createNativeStackNavigator()
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   myPage,
   mark,
   report,
+  skin,
 });
 
 const middlewares = [thunk.withExtraArgument()];

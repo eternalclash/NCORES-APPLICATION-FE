@@ -2,19 +2,23 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
+
 const MAINCOS = "MAINCOS";
 const SIMPLECOS = "SIMPLECOS"
 const CATEGORY = "CATEGORY"
 const DETAIL = "DETAIL"
+const ELEMENT = "ELEMENT"
 const mainCos=createAction(MAINCOS,(main)=>({main}))
 const simpleCos = createAction(SIMPLECOS, (simple) => ({ simple }))
 const category = createAction(CATEGORY, (category) => ({ category }))
 const detail = createAction(DETAIL, (detail)=>({detail}))
+const element = createAction(ELEMENT, (element)=>({element}))
 const initialState = {
   main: "",
   simple: "",
   category: "",
-  detail:"",
+  detail: "",
+  element: "",
 }
 
 
@@ -87,7 +91,8 @@ const categoryCosmeticAPI = (cosmetic) => {
         })
           .then(async(res) => { //바디 부분
            
-          dispatch(detail(res.data.data))
+            dispatch(detail(res.data.data))
+            dispatch(element(res.data.data))
           console.log(res.data)
         })
            .catch(async (err) => {
@@ -150,11 +155,11 @@ const detailCosmeticAPI = (id) => {
         });
     };
   };
-  const elementCosmeticAPI = (cosmetic) => {
+  const elementCosmeticAPI = (elementsId,categoryId) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "GET",
-        url: "http://54.180.134.111/cosmetic/elements-recommend/161/617/0",  //page 0부터 시작
+        url: `http://54.180.134.111/cosmetic/elements-recommend/${elementsId}/${categoryId}/0`,  //page 0부터 시작
          data: {},
            headers: {
               // "Content-Type": "multipart/form-data",
@@ -165,7 +170,7 @@ const detailCosmeticAPI = (id) => {
         })
           .then(async(res) => { //바디 부분
            
-           
+           dispatch(element(res.data.data))
           console.log(res.data)
         })
            .catch(async (err) => {
@@ -190,6 +195,10 @@ export default handleActions(
         produce(state, (draft) => {
           draft.detail = action.payload.detail
         }),
+        [ELEMENT]: (state, action) =>
+        produce(state, (draft) => {
+          draft.element = action.payload.element
+        }),
         [SIMPLECOS]: (state, action) =>
         produce(state, (draft) => {
           draft.simple = action.payload.simple
@@ -207,5 +216,6 @@ export default handleActions(
       simpleCosmeticAPI,
     elementCosmeticAPI,
     categoryAllAPI,
-      detailCosmeticAPI,
+    detailCosmeticAPI,
+      element
   };

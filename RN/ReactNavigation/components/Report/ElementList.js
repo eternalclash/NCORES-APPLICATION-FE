@@ -14,17 +14,20 @@ import {
   Pressable,
   Linking,
 } from "react-native";
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch,useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { actionCreators as cosActions } from "../../redux/modules/cosmetics";
 import { actionCreators as markActions } from "../../redux/modules/mark";
-export default function ElementList() {
+export default function ElementList({route}) {
   const [skin, setSkin] = useState(false)
-  const detail = useSelector(state=>state.cosmetics.detail)
+  const element = useSelector(state=>state.cosmetics.element)
   const category = useSelector(state => state.cosmetics.category)
-  const markCheck = useSelector(state=>state.mark.markCheck)
+  const markCheck = useSelector(state => state.mark.markCheck)
+  console.log(route.params)
   const [detailcos,setDetail] = useState()
   const dispatch = useDispatch();
+  const { top } = useSafeAreaInsets()
   const markHandler = (e) => {
     e.likecheck= !e.likeCheck
   }
@@ -33,14 +36,17 @@ export default function ElementList() {
 
   }, [])
   useEffect(() => {
-    dispatch(cosActions.categoryCosmeticAPI())
-     setDetail(detail)
+
+
+    dispatch(cosActions.elementCosmeticAPI(route.params.id,617))
+     setDetail(element)
   }, [markCheck])
-  console.log(detailcos)
-  
+  console.log(element)
+
   return (
       <ScrollView nestedScrollEnabled style={{backgroundColor:"#FEFEFE"}}> 
-          <View style={{marginTop:20}}>
+        <View style={{ height: top }}></View>   
+      <View style={{ marginTop: 20 }}>
               <View style={{flexDirection:"row", justifyContent:"space-between" ,marginHorizontal:5}}>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                       <Pressable onPress={() => setSkin(!skin)} style={{ flexDirection: "row", alignItems: "center" }}>
@@ -62,7 +68,7 @@ export default function ElementList() {
           {
  category.map((e, index) => {
   if(index<15)
-  return   <Pressable onPress={()=>{dispatch(cosActions.detailCosmeticAPI(e.id))}}>
+  return   <Pressable onPress={()=>{dispatch(cosActions.elementCosmeticAPI(route.params.id,e.id))}}>
     <Text style={styles.fontSize}>{e.name}</Text>        
  </Pressable>
 })    
@@ -71,7 +77,7 @@ export default function ElementList() {
                : <View></View>
         }
        
-      {detail?detail.map((e, index) => {
+      {element?element.map((e, index) => {
           if(index<15)
             return <View style={{ marginHorizontal: 20 }} nestedScrollEnabled >
             <Pressable onPress={()=>Linking.openURL(e.naverUrl)}>
@@ -93,10 +99,10 @@ export default function ElementList() {
                       <Text style={{ textAlign: "center" }}>{e.price} </Text>
                       {
                         e.likeCheck ?
-                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}>
+                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id,e.categoryId))}>
                         <Image source={require('../../image/true.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
-                          :<Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}>
+                          :<Pressable onPress={() => dispatch(markActions.markElementAPI(e.id,e.categoryId))}>
                         <Image source={require('../../image/false.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
                       }

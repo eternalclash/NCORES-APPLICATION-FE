@@ -46,7 +46,7 @@ const markCosmeticAPI = (id,categoryId) => {
       });
   };
 };
-const markElementAPI = (element) => {
+const markElementAPI = (element,elementId,categoryId) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
@@ -62,7 +62,8 @@ const markElementAPI = (element) => {
           .then(async(res) => { //바디 부분
            
             dispatch(reportActions.cameraReportAPI())
-       
+            dispatch(cosActions.elementCosmeticAPI(elementId, categoryId))
+            dispatch(myActions.userElementsAPI())
         })
            .catch(async (err) => {
              
