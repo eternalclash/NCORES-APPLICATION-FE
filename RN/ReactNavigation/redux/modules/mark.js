@@ -3,7 +3,8 @@ import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 import { actionCreators as cosActions} from "./cosmetics";
-import { actionCreators as myActions} from "./myPage";
+import { actionCreators as myActions } from "./myPage";
+import { actionCreators as reportActions } from "./report";
 const MARK_COSMETIC = "MARK_COSMETIC";
 const MARK_CHECK = "MARK_CHECK"
 const markCosmetic=createAction(MARK_COSMETIC,(cosmetic)=>({cosmetic}))
@@ -30,10 +31,11 @@ const markCosmeticAPI = (id,categoryId) => {
         },
       })
         .then(async(res) => { //바디 부분
-           dispatch(cosActions.mainCosmeticAPI())
-          await dispatch(cosActions.detailCosmeticAPI(categoryId))
+          dispatch(cosActions.mainCosmeticAPI())
+          if(categoryId!=0)
+          dispatch(cosActions.detailCosmeticAPI(categoryId))
        dispatch(myActions.userCosmeticAPI())
-         
+       dispatch(cosActions.simpleCosmeticAPI())
       
       })
          .catch(async (err) => {
@@ -59,12 +61,12 @@ const markElementAPI = (element) => {
         })
           .then(async(res) => { //바디 부분
            
-           
+            dispatch(reportActions.cameraReportAPI())
        
         })
            .catch(async (err) => {
              
-          console.log("카테고리 화장품 에러")
+          console.log("성분 에러")
         
           throw new Error(err);
         });

@@ -16,9 +16,9 @@ const MainSkinPage = ({navigation}) => {
     const data = [
         {
       
-            apples: 70,
-            banana:30,
-            orange: 40,
+            "1일전": 70,
+            "5일전":30,
+            "1주일전": 40,
             peach:50,
         },
       

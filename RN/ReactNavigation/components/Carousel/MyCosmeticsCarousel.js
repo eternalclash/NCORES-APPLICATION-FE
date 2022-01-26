@@ -32,7 +32,7 @@ export default function MyCosmeticsCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, korName, url} = item;
+    const {img, korName, url,likeCheck} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -42,7 +42,24 @@ export default function MyCosmeticsCarousel(props) {
         }}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
-        <Icon name="heart-o" size={20} style={styles.heart}></Icon>
+        {
+          likeCheck? <Pressable style={styles.heart}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+
+          >
+       
+            <Image source={require('../../image/true.png')}
+            style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
+       
+         </Pressable>
+            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,0))}>
+              <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
+              </Image>
+
+              </Pressable>
+
+}
+
 
        
         <View style={styles.lowerContainer}>

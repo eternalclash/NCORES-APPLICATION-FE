@@ -32,6 +32,7 @@ import ShopList from './Report/ShopList';
 
 import BlueTooth from './BlueTooth';
 import GetHead from './SignUp/GetHead';
+import ElementList from './Report/ElementList';
 
 
 // const get = async () => {
@@ -68,7 +69,7 @@ const RootStack = ({ navigation }) => {
     
     return (
         <Stack.Navigator 
-        //  initialRouteName='GetHead'
+         initialRouteName='MainReport'
         >
             {
           login?  
@@ -107,6 +108,13 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="MainReport"
                 component={MainReport}
+                options={{
+                    headerShown: false
+                }}
+            />
+             <Stack.Screen
+                name="ElementList"
+                component={ElementList}
                 options={{
                     headerShown: false
                 }}

@@ -6,6 +6,7 @@ import { StackedBarChart } from 'react-native-svg-charts'
 import CustomButton from '../CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as reportActions } from '../../redux/modules/report'
+import { actionCreators as markActions } from '../../redux/modules/mark'
 //삼항연산자 처리 차트 에러 걸리면~
 const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
@@ -187,7 +188,14 @@ const MainReport = ({ navigation }) => {
                      
             </View>
             <View style={styles.information}>
-                <Text style={styles.informationKeyword}>성분 추천</Text>
+            <Pressable onPress={()=>navigation.navigate("ElementList")  }  style={styles.information} >
+                   
+                       
+                <Text style={styles.informationKeyword}>성분 찾기</Text>
+                            <Icon name="chevron-right" size={45} style={{marginRight:20}}></Icon>
+                          
+                       
+                        </Pressable>
                     </View>
                         {cameraReport?cameraReport.elementList.map((e, index) => {
                             return (
@@ -199,7 +207,17 @@ const MainReport = ({ navigation }) => {
                                         <Text style={styles.informationKeyword1}>{e.korName}</Text>    
                             </View>
                        
-                                <Icon name="heart" size={30}> </Icon>
+                                    {
+                                        e.likeCheck ?
+                                        <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}>
+                                         <Image source={require('../../image/true.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
+                                        </Pressable>    
+                                            
+                                           
+                                            :  
+                                             <Pressable onPress={()=>dispatch(markActions.markElementAPI(e.id))}><Image source={require('../../image/false.png')}  style={{ width: 28, height: 28,marginRight:20  }} resizeMode="cover"></Image>
+                                            </Pressable>   
+                                    }
                             </View>
                  ) 
              }):<></>}       
@@ -329,7 +347,8 @@ const styles = StyleSheet.create({
         marginVertical: 13,
         justifyContent: "space-between",
         alignItems:"center",
-        paddingLeft: 20,
+        marginLeft:10,
+        width:"100%",
       
     },
     informationKeyword: {
