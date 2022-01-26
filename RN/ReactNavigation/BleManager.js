@@ -291,6 +291,7 @@ class BleManager {
         if (error != null) {
           reject(error);
         } else {
+          console.log("Scan stopped")
           fulfill();
         }
       });

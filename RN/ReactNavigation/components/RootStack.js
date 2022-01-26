@@ -70,7 +70,7 @@ const RootStack = ({ navigation }) => {
     
     return (
         <Stack.Navigator 
-        initialRouteName='MainSkinPage'
+        initialRouteName='BlueTooth'
         >
             {
           login?  
