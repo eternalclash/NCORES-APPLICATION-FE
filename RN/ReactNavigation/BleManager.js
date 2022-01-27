@@ -125,6 +125,7 @@ class BleManager {
         if (error) {
           reject(error);
         } else {
+          
           fulfill();
         }
       });
@@ -268,7 +269,7 @@ class BleManager {
       if (scanningOptions.reportDelay == null) {
         scanningOptions.reportDelay = 0;
       }
-
+     console.log("스캔때림")
       bleManager.scan(
         serviceUUIDs,
         seconds,
@@ -344,13 +345,18 @@ class BleManager {
 
   getDiscoveredPeripherals() {
     return new Promise((fulfill, reject) => {
+    
       bleManager.getDiscoveredPeripherals((error, result) => {
+        console.log("디스커버")
         if (error) {
           reject(error);
         } else {
           if (result != null) {
+            console.log("352")
+            console.log(result)
             fulfill(result);
           } else {
+            console.log("355")
             fulfill([]);
           }
         }
