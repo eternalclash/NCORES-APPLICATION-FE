@@ -24,18 +24,15 @@ const initialState = {
 
 const mainCosmeticAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-     await axios({
-      method: "GET",
-      url: "http://54.180.134.111/cosmetic/worry-recommends",
-       data: {},
-         headers: {
-            // "Content-Type": "multipart/form-data",
-        //   Accept: "application/json",
-        //    "Access-Control-Allow-Origin": "*",
-          "Authorization": await AsyncStorage.getItem("token"),
-        },
-      })
-        .then(async(res) => { //바디 부분
+    await axios.get("http://54.180.134.111/cosmetic/worry-recommends", {
+      headers: {
+        // "Content-Type": "multipart/form-data",
+    //   Accept: "application/json",
+    //    "Access-Control-Allow-Origin": "*",
+      "Authorization": await AsyncStorage.getItem("token"),
+   },
+    })
+        .then((res) => { //바디 부분
          dispatch(mainCos(res.data.data))
 
       

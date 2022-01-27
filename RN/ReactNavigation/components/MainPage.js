@@ -20,7 +20,7 @@ const MainPage = ({ navigation }) => {
           // dispatch(cosmeticActions.simpleCosmeticAPI())
           // dispatch(cosmeticActions.elementCosmeticAPI())
          setCos(mainCos)
-      }, [])
+      }, [cos])
     console.log(mainCos)
     return (
     
@@ -55,13 +55,14 @@ const MainPage = ({ navigation }) => {
             </View>
                 {mainCos ? <ShopCarousel mainCos={mainCos} /> : <></>}
                 <Pressable style={styles.lowButton}>
-                <View >
+                    <View >
+                        <Pressable style={styles.bgImage} onPress={()=>navigation.navigate("BlueTooth")}>
                     <ImageBackground source={require("../image/mainBottom.png")} style={styles.bgImage}></ImageBackground>
                         <View style={styles.onText}>
                         <Text>차원이 다른 뷰티 디바이스</Text>
                         <Text  style={styles.fontSize}>플라럽스 기기 연결하기</Text>
                         </View>
-                       
+                        </Pressable>
                    
                     </View>
                     </Pressable>

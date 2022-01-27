@@ -70,7 +70,7 @@ const RootStack = ({ navigation }) => {
     
     return (
         <Stack.Navigator 
-        initialRouteName='BlueTooth'
+    
         >
             {
           login?  
@@ -118,6 +118,7 @@ const RootStack = ({ navigation }) => {
                         component={XAxisExample}
                         options={{headerShown: false}}
             /> 
+           
                    <Stack.Screen
                         name="GetWorry"
                         component={GetWorry}
@@ -134,9 +135,7 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="BlueTooth"
                 component={BlueTooth}
-                options={{
-                    headerShown: false
-                }}
+                options={{ title:"기기연결" }}
             />
                <Stack.Screen
                 name="ShopList"

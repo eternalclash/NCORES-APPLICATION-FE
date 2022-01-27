@@ -22,16 +22,19 @@ import {
   NativeModules,
   NativeEventEmitter,
   Button,
+  Image,
   Platform,
   PermissionsAndroid,
   FlatList,
   TouchableHighlight,
+  Pressable,
+  ImageBackground,
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-
+import CustomButton from './CustomButton';
 import BleManager from '../BleManager';
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -46,6 +49,9 @@ const BlueTooth = () => {
   const [isScanning, setIsScanning] = useState(false);
   const peripherals = new Map();
   const [list, setList] = useState([]);
+  const [connect, setConnect] = useState();
+
+
 
 
   const startScan = () => {
@@ -168,68 +174,99 @@ const BlueTooth = () => {
         }, 2000)
         
        }>
-        <View style={[styles.row, {backgroundColor: color}]}>
-          <Text style={{fontSize: 12, textAlign: 'center', color: '#333333', padding: 10}}>{item.name}</Text>
-          <Text style={{fontSize: 10, textAlign: 'center', color: '#333333', padding: 2}}>RSSI: {item.rssi}</Text>
-          <Text style={{fontSize: 8, textAlign: 'center', color: '#333333', padding: 2, paddingBottom: 20}}>{item.id}</Text>
+        <View style={{ borderWidth: 0.7, backgroundColor: color, height: 80, justifyContent: 'center', alignItems:'center',width:'90%',marginLeft:20}}>
+          <Text style={{fontSize: 15, textAlign: 'center', color: '#333333', padding: 10}}>{item.name}</Text>
+         
         </View>
       </TouchableHighlight>
     );
   }
-
+  
   return (
     <>
-      <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
+     
+          
+          <View >
             
-            <View style={{margin: 10}}>
-              <Button 
-                title={'Scan Bluetooth (' + (isScanning ? 'on' : 'off') + ')'}
-                onPress={() => startScan() } 
-              />            
-            </View>
+        
+          <View >
+          <ImageBackground style={{height:200}} source={require('../image/blueToothTag.png')} resizeMode='cover'>
+            <View style={{ justifyContent:'center',alignItems:'center',paddingTop:120}}>
+            <Image source={require('../image/text.png')} style={{width:98.45,height:14,}}></Image>
+          <Text style={{textAlign:'center',fontSize:22,marginTop:35}}>플라럽스로 시작하는</Text>
+                <Text style={{ textAlign: 'center', fontSize:22}}>마법과 같은 변화</Text>
+             </View>
+             </ImageBackground>
+           </View>
+       
+          <View></View>
 
-            <View style={{margin: 10}}>
-              <Button title="Retrieve connected peripherals" onPress={() => retrieveConnected() } />
-            </View>
-
-            {(list.length == 0) &&
-              <View style={{flex:1, margin: 20}}>
-                <Text style={{textAlign: 'center'}}>No peripherals</Text>
-              </View>
-            }
+          
           
           </View>              
-        </ScrollView>
-        <FlatList
-            data={list}
-            renderItem={({ item }) => renderItem(item) }
-            keyExtractor={item => item.id}
-          />              
+      
+       
       </SafeAreaView>
+     
     </>
   );
+  // return (
+  //   <>
+  //     <SafeAreaView>
+  //       <ScrollView
+  //         contentInsetAdjustmentBehavior="automatic"
+  //         style={styles.scrollView}>
+          
+  //         <View style={styles.body}>
+            
+           
+
+         
+
+  //           {(list.length == 0) &&
+  //             <View style={{flex:1, margin: 20}}>
+  //               <Text style={{ textAlign: 'center', fontSize: 15 }}>플라럽스 기기를 찾지 못했습니다.</Text>
+               
+  //               <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+  //                 <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:20,marginRight:10, }}/>
+  //                 <Text style={{ textAlign: 'center', fontSize: 15, marginTop: 20 }}>핸드폰의 블루투스를 켰나요?</Text>
+  //               </View>
+  //               <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+  //                 <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:10,marginRight:10,marginLeft:4 }}/>
+  //                 <Text style={{textAlign: 'center',fontSize:15,marginTop:10}}>플라럽스 기기가 켜져 있나요?</Text>
+  //               </View>
+  
+   
+  //             </View>
+  //           }
+          
+  //         </View>              
+  //       </ScrollView>
+  //       <FlatList
+  //           data={list}
+  //           renderItem={({ item }) => renderItem(item) }
+  //           keyExtractor={item => item.id}
+  //       />  
+       
+  //     </SafeAreaView>
+  //     <Image source={require('../image/bluetooth.png')} style={{ width: 375, height: 202, position: "absolute", bottom: 80 }} resizeMode='stretch' />
+  //     <Pressable  onPress={() => startScan() } style={{position:"absolute", bottom:40,width:'90%', marginHorizontal:20,height:56,backgroundColor:"black",justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+  //     <View > 
+  //         <Text style={{color:"white",fontSize:15}}>플라럽스 기기 찾기</Text>
+  //       </View>
+  //     </Pressable>     
+  //   </>
+  // );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
+ 
   body: {
-    backgroundColor: Colors.white,
+     marginTop:60,
   },
   sectionContainer: {
     marginTop: 32,
