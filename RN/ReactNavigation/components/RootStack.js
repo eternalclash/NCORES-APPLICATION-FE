@@ -72,7 +72,7 @@ const RootStack = ({ navigation }) => {
      
      return (
          <Stack.Navigator 
-         initialRouteName='Upload'
+     initialRouteName='Upload'
          >
              {
            login?  
@@ -153,17 +153,7 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="ElementList"
                 component={ElementList}
-                options={{
-                    title: "",
-                    headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
-                    headerShadowVisible: false, // applied here
-                    headerBackTitleVisible: false,
-            
-                }}
+                options={{headerShown: false}}
             />
             
               <Stack.Screen

@@ -13,12 +13,12 @@ const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
     const dispatch = useDispatch();
     const cameraReport = useSelector(state => state.report.cameraReport)
-   
-    const [dry,setDry] = useState([{apples:cameraReport.dry,banana:100-cameraReport.dry}])
-    const [oil,setOil] = useState("")
-    const [winkle,setWinkle] = useState([{apples:cameraReport.winkle,banana:100-cameraReport.winkle}])
-    const [sense,setSense] = useState("")
-    const [pigment,setPigment] = useState("")
+    const aqua = useSelector(state=>state.report.aquaScore)
+    const oill = useSelector(state=>state.report.oillScore)
+    const pigment = useSelector(state=>state.report.pigmentScore)
+    const sensitive = useSelector(state=>state.report.sensitiveScore)
+    const winkle = useSelector(state=>state.report.winkleScore)
+    const [info, setInfo] = useState("")
     const data = [
         {
       
@@ -28,21 +28,17 @@ const MainReport = ({ navigation }) => {
         },
       
     ]
-    const colors = ['black', 'lightgray']
+    const colors = ['#323632', '#F0DFDE']
     const keys = ['apples','banana']
-  
+    console.log(aqua)
     useEffect( () => {
        
             dispatch(reportActions.cameraReportAPI())
-            setDry([{apples:cameraReport.dry,banana:100-cameraReport.dry}])
-            setOil([{apples:cameraReport.oilIndicate,banana:100-cameraReport.oilIndicate}])
-            setSense([{apples:cameraReport.sensitivity,banana:100-cameraReport.sensitivity}])
-            setWinkle([{apples:cameraReport.winkle,banana:100-cameraReport.winkle}])
-            setPigment([{apples:cameraReport.pigment,banana:100-cameraReport.pigment}])
+         
     
-    },[sense[0]] )
+    },[] )
    
-    console.log(dry)
+ 
     if (cameraReport)
     { 
         return (
@@ -90,7 +86,7 @@ const MainReport = ({ navigation }) => {
                     contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={dry[0].apples ? dry : data}
+                    data={aqua ? aqua: data}
                     showGrid={false}
                                   
                                     horizontal="true"
@@ -115,7 +111,7 @@ const MainReport = ({ navigation }) => {
                     contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={oil[0].apples ? oil : data}
+                    data={aqua ? oill : data}
                     showGrid={false}
                                    
                                     horizontal="true"
@@ -139,7 +135,7 @@ const MainReport = ({ navigation }) => {
                     contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={pigment[0].apples? pigment: data}
+                    data={aqua? pigment: data}
                     showGrid={false}
                                   
                                     horizontal="true"
@@ -163,7 +159,7 @@ const MainReport = ({ navigation }) => {
                                     contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={sense[0].apples ? sense : data}
+                    data={aqua ? sensitive : data}
                     showGrid={false}
                                    
                                     horizontal="true"
@@ -189,23 +185,38 @@ const MainReport = ({ navigation }) => {
                    contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={winkle[0].apples? winkle:data}
+                    data={aqua? winkle:data}
                     showGrid={false}
                                  
                                     horizontal="true"
                                 />          
                          
                 </View>
-                <View style={styles.information}>
-                <Pressable    style={styles.information} >
-                       
-                           
-                    <Text style={styles.informationKeyword}>성분 찾기</Text>
-                                <Icon name="chevron-right" size={45} style={{marginRight:20}}></Icon>
-                              
-                           
-                            </Pressable>
-                        </View>
+               
+                <View style={styles.information1}>
+                        <Pressable onPress={()=>setInfo(true)}>
+                        <View style={{flexDirection:"row",alignContent:"center"}}>
+                                <Text style={styles.informationKeyword}>내가 고른 성분</Text> 
+                            <Image source={require("../../image/info.png")} style={{width:18,height:18,marginTop:4,marginLeft:4}}/>    
+                </View>                           
+                    </Pressable>
+                      <Icon name="chevron-right" size={45}></Icon>
+                    </View>
+                    {
+                        info?  <View style={{justifyContent:"center",alignItems:"flex-start",marginHorizontal:20,height:100,backgroundColor:"#F0DFDE"}}>
+                        <View style={styles.info}>
+                        <Text style={{textAlign:'left'}}>EWG의 성분 안전성 지표를 제공합니다 </Text>
+                        <Text style={{textAlign:'left'}}>녹색:비교적 안전</Text>
+                        <Text style={{textAlign:'left'}}>황색:일부 성분 주의</Text>
+                                <Text style={{ textAlign: 'left' }}>적색:비교적 위험</Text>
+                               
+                                
+                            </View>  
+                            <Pressable onPress={()=>setInfo(false)} style={{width:30,height:30,position:"absolute",top:5,right:5}}>
+                                <Image style={{width:30,height:30,position:"absolute",top:5,right:5}} source={require("../../image/close.png")}></Image>
+                                </Pressable>
+                        </View> : <></>
+                    }
                             {cameraReport?cameraReport.elementList.map((e, index) => {
                                 return (
                                     <View style={styles.information}>
@@ -374,6 +385,16 @@ const styles = StyleSheet.create({
         width:"100%",
       
     },
+    information1: {
+        flexDirection: "row",
+        marginTop: 50,
+        justifyContent: "space-between",
+        alignItems:"center",
+        marginLeft: 15,
+        
+       
+      
+    },
     informationKeyword: {
 
         fontSize: 20,
@@ -381,12 +402,12 @@ const styles = StyleSheet.create({
     },
     informationKeyword1: {
         marginLeft:20,
-         fontSize: 20,
-         fontWeight: "500",
+         fontSize: 18,
+   
      },
     informationSubKeyword: {
         marginVertical: 7,
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: "300",
     },
     

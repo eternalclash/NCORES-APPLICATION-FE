@@ -172,7 +172,7 @@ const detailCosmeticAPI = (id) => {
         })
            .catch(async (err) => {
              
-          console.log("simple 화장품 에러")
+          console.log("니면상 화장품 에러")
         
           throw new Error(err);
         });

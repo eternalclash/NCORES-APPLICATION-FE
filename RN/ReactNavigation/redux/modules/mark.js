@@ -17,7 +17,7 @@ const initialState = {
 }
 
 
-const markCosmeticAPI = (id,categoryId) => {
+const markCosmeticAPI = (id,elementId,categoryId) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
@@ -29,14 +29,15 @@ const markCosmeticAPI = (id,categoryId) => {
         //    "Access-Control-Allow-Origin": "*",
           "Authorization": await AsyncStorage.getItem("token"),
         },
-      })
+     })
+       
         .then(async(res) => { //바디 부분
           dispatch(cosActions.mainCosmeticAPI())
           if(categoryId!=0)
           dispatch(cosActions.detailCosmeticAPI(categoryId))
        dispatch(myActions.userCosmeticAPI())
        dispatch(cosActions.simpleCosmeticAPI())
-      
+       dispatch(cosActions.elementCosmeticAPI(elementId, categoryId))
       })
          .catch(async (err) => {
            
@@ -62,7 +63,7 @@ const markElementAPI = (element,elementId,categoryId) => {
           .then(async(res) => { //바디 부분
            
             dispatch(reportActions.cameraReportAPI())
-            dispatch(cosActions.elementCosmeticAPI(elementId, categoryId))
+            // dispatch(cosActions.elementCosmeticAPI(elementId, categoryId))
             dispatch(myActions.userElementsAPI())
         })
            .catch(async (err) => {

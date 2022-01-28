@@ -104,13 +104,13 @@ const MyPage = ({ navigation }) => {
                                
                                                 {
                                                     e.likeCheck ?
-                                                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id))}>
+                                                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}>
                                                             <Image source={require('../../image/true.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
                                                         </Pressable>
                                                     
                                                    
                                                         :
-                                                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id))}><Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
+                                                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}><Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
                                                         </Pressable>
                                                 }
                                             </View>

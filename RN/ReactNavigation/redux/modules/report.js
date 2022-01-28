@@ -19,11 +19,11 @@ const winkleScore = createAction(WINKLE_SCORE,(winkleScore)=>({winkleScore}))
 const initialState = {
     cameraReport:"",
   element: "",
-  aquaScore: [],
-  oillScore: [],
-  pigmentScore: [],
-  sensitiveScore: [],
-  winkleScore: [],
+  aquaScore: "",
+  oillScore: "",
+  pigmentScore: "",
+  sensitiveScore: "",
+  winkleScore: "",
 }
 
 
@@ -48,7 +48,7 @@ const cameraReportAPI = (id) => {
           dispatch(sensitiveScore([{apples:res.data.sensitivity,banana:100-res.data.sensitivity}]))
           dispatch(winkleScore([{apples:res.data.winkle,banana:100-res.data.winkle}]))
          dispatch(getCameraReport(res.data))
-      
+         
       })
          .catch(async (err) => {
            

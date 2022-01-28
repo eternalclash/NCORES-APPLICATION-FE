@@ -19,7 +19,8 @@ import { useDispatch,useSelector } from "react-redux";
 import Icon from 'react-native-vector-icons/EvilIcons'
 import { actionCreators as cosActions } from "../../redux/modules/cosmetics";
 import { actionCreators as markActions } from "../../redux/modules/mark";
-export default function ElementList({route}) {
+
+export default function ElementList({route,navigation}) {
   const [skin, setSkin] = useState(false)
   const element = useSelector(state=>state.cosmetics.element)
   const category = useSelector(state => state.cosmetics.category)
@@ -31,6 +32,7 @@ export default function ElementList({route}) {
   const markHandler = (e) => {
     e.likecheck= !e.likeCheck
   }
+  console.log(route.params.id)
   useEffect(() => {
     dispatch(cosActions.categoryAllAPI())
 
@@ -40,12 +42,21 @@ export default function ElementList({route}) {
 
     dispatch(cosActions.elementCosmeticAPI(route.params.id,617))
      setDetail(element)
-  }, [markCheck])
+  }, [])
   console.log(element)
 
   return (
-      <ScrollView nestedScrollEnabled style={{backgroundColor:"#FEFEFE"}}> 
-    
+    <ScrollView nestedScrollEnabled style={{ backgroundColor: "#FEFEFE" }}> 
+       <View style={{
+                height:top
+            }}></View>
+      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                <Pressable onPress={()=>navigation.navigate("MainReport")}>
+                    <Icon name="chevron-left" size={50}></Icon>
+        </Pressable>
+        <Text style={{fontSize:18,marginRight:40}}>{route.params.name}</Text>
+        <View></View>
+             </View>
       <View style={{ marginTop: 20 }}>
               <View style={{flexDirection:"row", justifyContent:"space-between" ,marginHorizontal:5}}>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -99,10 +110,10 @@ export default function ElementList({route}) {
                       <Text style={{ textAlign: "center" }}>{e.price} </Text>
                       {
                         e.likeCheck ?
-                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id,e.categoryId))}>
+                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,route.params.id,e.categoryId))}>
                         <Image source={require('../../image/true.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
-                          :<Pressable onPress={() => dispatch(markActions.markElementAPI(e.id,e.categoryId))}>
+                          :<Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,route.params.id,e.categoryId))}>
                         <Image source={require('../../image/false.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
                       }
