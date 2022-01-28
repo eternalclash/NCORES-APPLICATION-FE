@@ -12,9 +12,11 @@ import { actionCreators as cosActions } from '../../redux/modules/cosmetics'
 const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
     const dispatch = useDispatch();
-    const [dry,setDry] = useState("")
+    const cameraReport = useSelector(state => state.report.cameraReport)
+   
+    const [dry,setDry] = useState([{apples:cameraReport.dry,banana:100-cameraReport.dry}])
     const [oil,setOil] = useState("")
-    const [winkle,setWinkle] = useState("")
+    const [winkle,setWinkle] = useState([{apples:cameraReport.winkle,banana:100-cameraReport.winkle}])
     const [sense,setSense] = useState("")
     const [pigment,setPigment] = useState("")
     const data = [
@@ -28,7 +30,7 @@ const MainReport = ({ navigation }) => {
     ]
     const colors = ['black', 'lightgray']
     const keys = ['apples','banana']
-    const cameraReport = useSelector(state=>state.report.cameraReport)
+  
     useEffect( () => {
        
             dispatch(reportActions.cameraReportAPI())
@@ -38,7 +40,7 @@ const MainReport = ({ navigation }) => {
             setWinkle([{apples:cameraReport.winkle,banana:100-cameraReport.winkle}])
             setPigment([{apples:cameraReport.pigment,banana:100-cameraReport.pigment}])
     
-    },[] )
+    },[sense[0]] )
    
     console.log(dry)
     if (cameraReport)
@@ -53,8 +55,8 @@ const MainReport = ({ navigation }) => {
              
                   
                     <View style={styles.row1}>
-                        <Text style={styles.profileText1}>진단 결과</Text>
-                        <Text style={styles.profileText1}>성분 추천</Text>
+                        <Text style={styles.profileText1}>피부 점수</Text>
+                        <Text style={styles.profileText1}>추천 화장품</Text>
                     </View>
                
                     <View style={styles.mainImage}>
@@ -84,12 +86,13 @@ const MainReport = ({ navigation }) => {
                                 
                                        
                                 <StackedBarChart
-                    style={{ height: 80 }}
+                    style={{ height: 25 }}
+                    contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={dry.apples ? dry : data}
+                    data={dry[0].apples ? dry : data}
                     showGrid={false}
-                                    contentInset={{ top: 30, bottom: 30 }}
+                                  
                                     horizontal="true"
                                 />          
                          
@@ -108,12 +111,13 @@ const MainReport = ({ navigation }) => {
                                 
                                        
                                 <StackedBarChart
-                    style={{ height: 80 }}
+                    style={{ height: 25 }}
+                    contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={oil.apples ? oil : data}
+                    data={oil[0].apples ? oil : data}
                     showGrid={false}
-                                    contentInset={{ top: 30, bottom: 30 }}
+                                   
                                     horizontal="true"
                                 />          
                          
@@ -131,12 +135,13 @@ const MainReport = ({ navigation }) => {
                                 
                                        
                                 <StackedBarChart
-                    style={{ height: 80 }}
+                    style={{ height: 25 }}
+                    contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={pigment.apples? pigment: data}
+                    data={pigment[0].apples? pigment: data}
                     showGrid={false}
-                                    contentInset={{ top: 30, bottom: 30 }}
+                                  
                                     horizontal="true"
                                 />          
                          
@@ -154,12 +159,13 @@ const MainReport = ({ navigation }) => {
                                 
                                        
                                 <StackedBarChart
-                    style={{ height: 80 }}
+                                    style={{ height: 25 }}
+                                    contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={sense.apples ? sense : data}
+                    data={sense[0].apples ? sense : data}
                     showGrid={false}
-                                    contentInset={{ top: 30, bottom: 30 }}
+                                   
                                     horizontal="true"
                                 />          
                          
@@ -179,12 +185,13 @@ const MainReport = ({ navigation }) => {
                                 
                                        
                                 <StackedBarChart
-                    style={{ height: 80 }}
+                   style={{ height: 25 }}
+                   contentInset={{ top: 30, bottom: 20 }}
                     keys={keys}
                     colors={colors}
-                    data={winkle.apples? winkle:data}
+                    data={winkle[0].apples? winkle:data}
                     showGrid={false}
-                                    contentInset={{ top: 30, bottom: 30 }}
+                                 
                                     horizontal="true"
                                 />          
                          
@@ -336,7 +343,7 @@ const styles = StyleSheet.create({
     main: {
         position:"relative",
         flex: 1,
- 
+        backgroundColor:"#F5EBE8"
     },
     main1: {
         flex: 1,

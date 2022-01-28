@@ -154,7 +154,15 @@ const RootStack = ({ navigation }) => {
                 name="ElementList"
                 component={ElementList}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
             

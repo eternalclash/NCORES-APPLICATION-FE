@@ -45,7 +45,7 @@ export default function ElementList({route}) {
 
   return (
       <ScrollView nestedScrollEnabled style={{backgroundColor:"#FEFEFE"}}> 
-        <View style={{ height: top }}></View>   
+    
       <View style={{ marginTop: 20 }}>
               <View style={{flexDirection:"row", justifyContent:"space-between" ,marginHorizontal:5}}>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
