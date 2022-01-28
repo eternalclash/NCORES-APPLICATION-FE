@@ -18,6 +18,7 @@ const LOG_IN = "LOG_IN";
 const CHECK="CHECK"
 const LOGIN = "LOGIN"
 const ERROR = "ERROR"
+const DELETE_USER = "DELETE_USER"
 const LOGIN_ERROR = "LOGIN_ERROR"
 const EMAIL_ERROR = "EMAIL_ERROR"
 const PASSWORD_ERROR = "PASSWORD_ERROR"
@@ -26,6 +27,7 @@ const GENDER_ERROR = "GENDER_ERROR"
 const AGE_ERROR = "AGE_ERROR"
 const WORRY_ERROR = "WORRY_ERROR"
 const INDICATE_ERROR = "INDICATE_ERROR" 
+const DELETE_ERROR = "DELETE_ERROR"
 const HEAD_ERROR = "HEAD_ERROR"
 const initialState = {
   worryLogin:"",
@@ -44,7 +46,9 @@ const initialState = {
   ageError: "",
   worryError: "",
   indicateError: "",
-  checkLogin:false,
+  checkLogin: false,
+  deleteUser: false,
+  deleteError: false,
 }
 const worryLogin = createAction(WORRY_LOGIN,(worryLogin)=>({worryLogin}))
 const checkL = createAction(CHECKL, (checkL)=>({checkL}))
@@ -62,7 +66,9 @@ const genderError =createAction(GENDER_ERROR, (genderError)=>({genderError}))
 const ageError = createAction(AGE_ERROR, (ageError) => ({ ageError }))
 const indicateError = createAction(INDICATE_ERROR, (indicateError)=>({indicateError}))
 const worryError = createAction(WORRY_ERROR, (worryError) => ({ worryError }))
-const checkLogin = createAction(CHECK_LOGIN, (checkLogin)=>({checkLogin}))
+const checkLogin = createAction(CHECK_LOGIN, (checkLogin) => ({ checkLogin }))
+const deleteUser = createAction(DELETE_USER, (deleteUser) => ({ deleteUser }))
+const deleteError = createAction(DELETE_ERROR, (deleteError)=>({deleteError}))
 // const signUp=createAction(CHECK_EMAIL,(email)=>({email}))
 // const logIn=createAction(CHECK_EMAIL,(email)=>({email}))
 const checkLoginMD = (check) => {
@@ -82,6 +88,33 @@ const worryLoginMD = (check) => {
 };
 
 
+const deleteUserAPI = (password) => {
+  return async function  (dispatch, navigation) {
+    await axios({
+      method: "POST",
+      url: "http://54.180.134.111/user/delete",
+       data: { password },
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+          "Authorization": await AsyncStorage.getItem("token"),
+        },
+      })
+        .then((res) => { //바디 부분
+        dispatch(deleteUser(true))
+      
+      })
+         .catch(async (err) => {
+          dispatch(deleteError(err.response.data))  
+        console.log("회원 탈퇴 에러")
+      
+        throw new Error(err);
+      });
+  };
+};
+
+
+
 const checkEmailAPI = (email) => {
     return function (dispatch, { navigation }) {
       axios({
@@ -96,12 +129,13 @@ const checkEmailAPI = (email) => {
         .then((res) => {
             dispatch(checkEmail(email));
             dispatch(check(true))
-            console.log(email)
+       
           
         })
         .catch((err) => {
+           console.log(err)
             dispatch(emailError(err.response.data))
-            dispatch(check(false))
+       
            
         });
     };
@@ -393,6 +427,14 @@ export default handleActions(
       produce(state, (draft) => {
         draft.worryLogin = action.payload.worryLogin
       }),
+      [DELETE_USER]: (state, action) =>
+      produce(state, (draft) => {
+        draft.deleteUser = action.payload.deleteUser
+      }),
+      [DELETE_ERROR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.deleteError = action.payload.deleteError
+      }),
     [CHECK_LOGIN]: (state, action) =>
       produce(state, (draft) => {
         draft.checkLogin= action.payload.checkLogin
@@ -416,7 +458,9 @@ export const actionCreators = {
     setIndicateAPI,
     setWorryAPI,
     check,
-      
+    deleteUser,
+    deleteUserAPI,
+
     //에러
     loginError,
     emailError,

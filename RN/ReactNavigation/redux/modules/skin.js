@@ -94,7 +94,7 @@ const getListAPI = (id) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "GET",
-      url: `http://54.180.134.111/skin/status/list/0`,
+      url: `http://54.180.134.111/skin/status/list`,
        data: {},
          headers: {
             // "Content-Type": "multipart/form-data",
@@ -131,12 +131,12 @@ const getBoumanAPI = (element) => {
         })
            .then(async (res) => { //바디 부분
             console.log(res.data)
-        await  dispatch(getBouman(res.data))
-        await   dispatch(aquaScore(changeChart(res.data.aquaScore,100)))
-        await   dispatch(oillScore(changeChart(res.data.oilScore,100)))
-        await   dispatch(sensitiveScore(changeChart(res.data.sensitiveScore,100)))
-        await   dispatch(pigmentScore(changeChart(res.data.pigmentScore,100)))
-        await   dispatch(winkleScore(changeChart(res.data.winkleScore,100)))
+        // await  dispatch(getBouman(res.data))
+        // await   dispatch(aquaScore(changeChart(res.data.aquaScore,100)))
+        // await   dispatch(oillScore(changeChart(res.data.oilScore,100)))
+        // await   dispatch(sensitiveScore(changeChart(res.data.sensitiveScore,100)))
+        // await   dispatch(pigmentScore(changeChart(res.data.pigmentScore,100)))
+        // await   dispatch(winkleScore(changeChart(res.data.winkleScore,100)))
               
        
         })

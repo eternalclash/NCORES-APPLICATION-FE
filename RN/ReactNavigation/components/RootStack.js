@@ -34,6 +34,8 @@ import BlueTooth from './BlueTooth';
 import GetHead from './SignUp/GetHead';
 import ElementList from './Report/ElementList';
 import XAxisExample from './XAxisExample';
+import GetOut from './MyPage/GetOut';
+import Thank from './MyPage/Thank';
 
 
 // const get = async () => {
@@ -48,63 +50,64 @@ const RootStack = ({ navigation }) => {
    
 
     useEffect(()=>{
-       dispatch(signActions.checkLoginMD())
-    }, [])
-   
-    useEffect(()=>{
-        async function load() {
-            try {
-                const raw = await AsyncStorage.getItem('token')
-                console.log(raw)
-                setLogin(raw)    
-                console.log("Root")
-            } catch (e) {
-                console.log(e)
-           }
-        }
-        load()
-    }, [isLogin])
-    const [login,setLogin] = useState()
- 
-    const Stack = createNativeStackNavigator();
+        dispatch(signActions.checkLoginMD())
+     }, [])
     
-    return (
-        <Stack.Navigator 
-    
-        >
-            {
-          login?  
-          <>
-              <Stack.Screen
-              name="MainPage"
-              component={MainTab}
-                            options={{ headerShown: false }}
-                          
-                        /> 
-                        <Stack.Screen
-                        name="GetHead"
-                        component={GetHead}
-                        options={{headerShown: false}}
-                    />     
-               </>          
-                     
-                   
-                    :
-              <>
-                     <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{headerShown: false}}
-                        />
-                       <Stack.Screen
-                        name="GetHead"
-                        component={GetHead}
-                        options={{headerShown: false}}
-                    />     
-                           
-              </>
-
+     useEffect(()=>{
+         async function load() {
+             try {
+                 const raw = await AsyncStorage.getItem('token')
+                 console.log(raw)
+                 setLogin(raw)    
+                 console.log("Root")
+             } catch (e) {
+                 console.log(e)
             }
+         }
+         load()
+     }, [isLogin])
+     const [login,setLogin] = useState()
+  
+     const Stack = createNativeStackNavigator();
+     
+     return (
+         <Stack.Navigator 
+     
+         >
+             {
+           login?  
+           <>
+               <Stack.Screen
+               name="MainPage"
+               component={MainTab}
+                             options={{ headerShown: false }}
+                           
+                         /> 
+                         <Stack.Screen
+                         name="GetHead"
+                         component={GetHead}
+                         options={{headerShown: false}}
+                     />     
+                </>          
+                      
+                    
+                     :
+               <>
+                      <Stack.Screen
+           name="SignIn"
+           component={SignInScreen}
+           options={{headerShown: false}}
+                         />
+                        <Stack.Screen
+                         name="GetHead"
+                         component={GetHead}
+                         options={{headerShown: false}}
+                     />     
+                            
+               </>
+ 
+             }
+        
             
               <Stack.Screen
                 name="MainReport"
@@ -112,6 +115,29 @@ const RootStack = ({ navigation }) => {
                 options={{
                     headerShown: false
                 }}
+            />
+        <Stack.Screen
+                name="Thank"
+                component={Thank}
+                options={{
+                    headerShown: false
+                }}
+            />
+             <Stack.Screen
+                name="GetOut"
+                component={GetOut}
+                options={{
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
+                }}
+                
             />
             <Stack.Screen
                         name="XAxisExample"
@@ -148,42 +174,90 @@ const RootStack = ({ navigation }) => {
                 name="CameraInfo"
                 component={CameraInfo}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
             <Stack.Screen
                 name="CameraCheck"
                 component={CameraCheck}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
               <Stack.Screen
                 name="CameraConcern"
                 component={CameraConcern}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
              <Stack.Screen
                 name="CameraIndicate"
                 component={CameraIndicate}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
               <Stack.Screen
                 name="CameraPage"
                 component={CameraPage}
                 options={{
-                    headerShown: false
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
              <Stack.Screen
                 name="CameraRating"
                 component={CameraRating}
-                options={{
-                    headerShown: false
+                 options={{
+                    title: "",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
                 }}
             />
             
@@ -222,7 +296,12 @@ const RootStack = ({ navigation }) => {
                 name="GetIndicate"
                 component={GetIndicate}
                 options={{headerShown: false}}
-            />
+             />
+              <Stack.Screen
+           name="SignUp"
+           component={SignInScreen}
+           options={{headerShown: false}}
+                         />
          
                 <Stack.Screen
                 name="Upload"

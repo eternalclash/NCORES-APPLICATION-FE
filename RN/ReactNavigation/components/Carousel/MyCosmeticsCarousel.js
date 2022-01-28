@@ -11,7 +11,8 @@ import {
   Alert,
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as markActions } from '../../redux/modules/mark';
 const {width: windowWidth} = Dimensions.get('window');
 
 
@@ -19,6 +20,7 @@ const {width: windowWidth} = Dimensions.get('window');
 const ITEM_WIDTH = 0.4*windowWidth;
 const SEPARATOR_WIDTH = 10;
 export default function MyCosmeticsCarousel(props) {
+  const dispatch = useDispatch();
   const {style} = props;
   const carouselRef = useRef(null);
   const myCosmetics = props.myCosmetics
@@ -32,7 +34,7 @@ export default function MyCosmeticsCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, korName, url,likeCheck} = item;
+    const {img, korName, url,likeCheck,id,categoryId} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -44,7 +46,7 @@ export default function MyCosmeticsCarousel(props) {
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {
           likeCheck? <Pressable style={styles.heart}
-            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id,categoryId))}
 
           >
        
@@ -52,7 +54,7 @@ export default function MyCosmeticsCarousel(props) {
             style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
        
          </Pressable>
-            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,0))}>
+            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,categoryId))}>
               <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
               </Image>
 

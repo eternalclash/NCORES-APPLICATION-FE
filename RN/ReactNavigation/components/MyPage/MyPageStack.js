@@ -28,7 +28,18 @@ function MyPageStack({navigation,route}) {
       <Stack.Screen
         name="MyLogOut"
         component={MyLogOut}
-        options={{title: ''}}
+        options={{
+          title: "",
+          headerTintColor: 'black',
+          headerStyle: {
+         
+            headerHideShadow: true
+          
+          },
+          headerShadowVisible: false, // applied here
+          headerBackTitleVisible: false,
+        
+      }}
           />
          
     </Stack.Navigator>

@@ -36,7 +36,7 @@ export default function ShopCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, name, likeCheck,id} = item;
+    const {img, name, likeCheck,id,categoryId} = item;
     return (
       <Pressable
         activeOpacity={1}
@@ -48,7 +48,7 @@ export default function ShopCarousel(props) {
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {
           likeCheck? <Pressable style={styles.heart}
-            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id,categoryId))}
 
           >
        

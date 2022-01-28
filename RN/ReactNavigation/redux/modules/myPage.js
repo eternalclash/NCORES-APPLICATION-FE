@@ -5,11 +5,14 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const GET_COSMETICS = "GET_COSMETICS"
 const GET_ELEMENTS = "GET_ELEMENTS"
+const GET_INFO = "GET_INFO"
 const getCosmetics = createAction(GET_COSMETICS, (cosmetics) => ({ cosmetics }))
 const getElements = createAction(GET_ELEMENTS, (elements) => ({ elements }))
+const getInfo = createAction(GET_INFO, (info) => ({ info }))
 const initialState = {
   cosmetics: "",
-  elements:"",
+  elements: "",
+  info:"",
 }
 
 
@@ -17,7 +20,7 @@ const userElementsAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "GET",
-      url: "http://54.180.134.111/user/elements/0",
+      url: "http://54.180.134.111/user/elements",
        data: {},
          headers: {
             // "Content-Type": "multipart/form-data",
@@ -28,7 +31,7 @@ const userElementsAPI = (cosmetic) => {
       })
         .then(async(res) => { //바디 부분
          
-         dispatch(getElements(res.data.data))
+         dispatch(getElements(res.data))
         console.log(res.data.data)
       })
          .catch(async (err) => {
@@ -39,11 +42,34 @@ const userElementsAPI = (cosmetic) => {
       });
   };
 };
+const userInfoAPI = (cosmetic) => {
+  return async function  (dispatch, navigation) {
+    await axios.get("http://54.180.134.111/user/info", {
+      headers: {
+        // "Content-Type": "multipart/form-data",
+    //   Accept: "application/json",
+    //    "Access-Control-Allow-Origin": "*",
+      "Authorization": await AsyncStorage.getItem("token"),
+   },
+    })
+        .then((res) => { //바디 부분
+
+         dispatch(getInfo(res.data.nickname))
+      
+      })
+         .catch(async (err) => {
+           
+        console.log("userInfoAPI 에러")
+      
+        throw new Error(err);
+      });
+  };
+};
 const userCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "GET",
-        url: "http://54.180.134.111/user/cosmetics/0",
+        url: "http://54.180.134.111/user/cosmetic",
          data: {},
            headers: {
               // "Content-Type": "multipart/form-data",
@@ -54,8 +80,8 @@ const userCosmeticAPI = (cosmetic) => {
         })
           .then(async(res) => { //바디 부분
            
-            dispatch(getCosmetics(res.data.data))
-            console.log(res.data.data)
+            dispatch(getCosmetics(res.data))
+         
         })
            .catch(async (err) => {
              
@@ -76,7 +102,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.elements = action.payload.elements
       }),
-       
+      [GET_INFO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.info = action.payload.info
+      }),
         
     },
   
@@ -85,5 +114,6 @@ export default handleActions(
 
   export const actionCreators = {
       userCosmeticAPI,
-      userElementsAPI
+    userElementsAPI,
+    userInfoAPI,
   };

@@ -14,14 +14,14 @@ const GetHead = ({ navigation, route }) => {
     const [num5, setNum5] = useState(false)
     const dispatch = useDispatch();
     useEffect(() => {
-     dispatch(signActions.checkLoginMD(false))
-    }, [check])
-    const worryHandler = () => {
-   navigation.navigate("MainPage")
-        // navigation.navigate("GetAge")
-        // if (check)
-        //     navigation.navigate("GetAge")
-    }
+        dispatch(signActions.checkLoginMD(false))
+       }, [check])
+       const worryHandler = () => {
+      navigation.navigate("MainPage")
+           // navigation.navigate("GetAge")
+           // if (check)
+           //     navigation.navigate("GetAge")
+       }
 
    
     return (

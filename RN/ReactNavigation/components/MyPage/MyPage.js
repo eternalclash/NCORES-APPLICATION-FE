@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useMemo} from 'react'
-import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, StatusBar, SafeAreaView, Pressable, ScrollView } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { actionCreators as myActions } from '../../redux/modules/myPage'
 import Icon from 'react-native-vector-icons/EvilIcons'
@@ -7,13 +7,15 @@ import { useDispatch,useSelector } from 'react-redux'
 import ShopCarousel from '../Carousel/Carousel'
 import MyCosmeticsCarousel from '../Carousel/MyCosmeticsCarousel'
 import MyElementsCarousel from '../Carousel/MyElementsCarousel'
-import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
+import { actionCreators as markActions } from '../../redux/modules/mark'
 const MyPage = ({ navigation }) => {
     const dispatch = useDispatch();
     const myCosmetics = useSelector(state=>state.myPage.cosmetics)
     const myElements = useSelector(state => state.myPage.elements)
+    const myInfo = useSelector(state => state.myPage.info)
     const [cosmetic,setCosmetic] = useState("")
-    const [element,setElement] = useState("")
+    const [element, setElement] = useState("")
+    const [info, setInfo] = useState("")
     useMemo(() => {
         // dispatch(cosmeticActions.mainCosmeticAPI())
         // dispatch(cosmeticActions.categoryCosmeticAPI())
@@ -22,6 +24,7 @@ const MyPage = ({ navigation }) => {
         setCosmetic(myCosmetics)
         dispatch(myActions.userElementsAPI())
         setElement(myElements)
+        dispatch(myActions.userInfoAPI())
     }, [cosmetic,element])
     const {top} = useSafeAreaInsets()
     return (
@@ -40,25 +43,95 @@ const MyPage = ({ navigation }) => {
                 <View style={styles.mainImage}>
                 
             <Image
-                source={{ uri: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"}}
+                source={require("../../image/null.png")}
                 style={styles.cosmetic}
                 resizeMode="cover"
                     />
-                    <Text style={styles.profileText}>홍길동님</Text>
+                    <Text style={styles.profileText}>{myInfo}</Text>
                 </View>
             <View style={styles.main}>
-            <View style={styles.information}>
-                <Text style={styles.informationKeyword}>내가 고른 성분</Text>
+                    <View style={styles.information}>
+                        <Pressable onPress={()=>setInfo(true)}>
+                        <View style={{flexDirection:"row",alignContent:"center"}}>
+                                <Text style={styles.informationKeyword}>내가 고른 성분</Text> 
+                            <Image source={require("../../image/info.png")} style={{width:18,height:18,marginTop:4,marginLeft:4}}/>    
+                </View>                           
+                    </Pressable>
+
+
                       <Icon name="chevron-right" size={45}></Icon>
-            </View>
-            <MyElementsCarousel myElements={myElements} />
+                    </View>
+                    {
+                        info?  <View style={{justifyContent:"center",alignItems:"center",marginHorizontal:10,}}>
+                        <View style={styles.info}>
+                        <Text style={{textAlign:'center'}}>EWG의 성분 안전성 지표를 제공합니다 </Text>
+                        <Text style={{textAlign:'center'}}>녹색:비교적 안전</Text>
+                        <Text style={{textAlign:'center'}}>황색:일부 성분 주의</Text>
+                                <Text style={{ textAlign: 'center' }}>적색:비교적 위험</Text>
+                                <Pressable onPress={()=>setInfo(false)} style={{width:30,height:30,position:"absolute",top:5,right:5}}>
+                                <Image style={{width:30,height:30,position:"absolute",top:5,right:5}} source={require("../../image/close.png")}></Image>
+                                </Pressable>
+                                
+                            </View>  
+                       
+                        </View> : <></>
+                    }
+                   
+                   
+                    {myElements[0] ?
+                        
+                        
+                        <ScrollView>
+                            {
+                                   myElements.map((e, index) => {
+                                    return (
+                                     
+                                            <View style={styles.information1}>
+                                                <Pressable onPress={() => {
+    
+                                                    navigation.navigate("ElementList", { id: e.id, name: e.korName })
+                                                }}>
+                                                    <View style={styles.row}>
+                                              
+                                                        <View style={styles.circle}>
+                                                            <Image style={styles.circle} source={{ uri: e.img }} resizeMode='contain'></Image>
+                                                        </View>
+                                                        <Text style={styles.informationKeyword1}>{e.korName}</Text>
+                                                   
+                                                    </View>
+                                                </Pressable>
+                                     
+                               
+                                                {
+                                                    e.likeCheck ?
+                                                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id))}>
+                                                            <Image source={require('../../image/true.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
+                                                        </Pressable>
+                                                    
+                                                   
+                                                        :
+                                                        <Pressable onPress={() => dispatch(markActions.markElementAPI(e.id))}><Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginRight: 20 }} resizeMode="cover"></Image>
+                                                        </Pressable>
+                                                }
+                                            </View>
+                                        
+                                    )
+                                    
+                     })
+                        }
+                         
+                            </ScrollView>:<><Text style={{marginLeft:20}}>찜한 성분이 없습니다.</Text></>}       
           
                
              <View style={styles.information}>
                 <Text style={styles.informationKeyword}>내가 찜한 화장품</Text>
                 <Icon name="chevron-right" size={45}></Icon>
-            </View>
-            <MyCosmeticsCarousel myCosmetics={myCosmetics}  />
+                    </View>
+                    {
+                        myCosmetics[0] ? <MyCosmeticsCarousel myCosmetics={myCosmetics} /> : 
+                        <><Text style={{marginLeft:20}}>찜한 성분이 없습니다.</Text></>
+                    }
+            
                 </View>
                 </View>
             </View>
@@ -67,6 +140,31 @@ const MyPage = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+    info: {
+        height: 100,
+        width: '100%',
+        backgroundColor: "#F0DFDE",
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "flex-start",
+        paddingLeft:10
+    },
+    informationKeyword1: {
+        marginLeft:10,
+         fontSize: 15,
+         fontWeight: "500",
+     },
+    informationKeyword: {
+
+        fontSize: 20,
+        fontWeight: "500",
+    },
+    circle: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+      
+    },
     profileText: {
         fontSize: 20,
         marginTop:15,
@@ -95,7 +193,7 @@ const styles = StyleSheet.create({
     main: {
         position:"relative",
         flex: 1,
- 
+        backgroundColor: "white",
     },
     main1: {
         flex: 1,
@@ -103,18 +201,27 @@ const styles = StyleSheet.create({
     },
     mainImage: {
         flex: 0.5,
-        backgroundColor: "lightgray",
+        backgroundColor: "#F5EBE8",
         alignItems: "center",
         justifyContent:"center",
     },
     cosmetic: {
-        width: 150,
-        height: 150,
+        width: 72,
+        height: 72,
         borderRadius:75,
     },
     information: {
         flexDirection: "row",
-        marginVertical: 13,
+        marginVertical: 25,
+        justifyContent: "space-between",
+        alignItems:"center",
+        marginRight:5,
+        paddingLeft: 15,
+        
+    },
+    information1: {
+        flexDirection: "row",
+        marginVertical: 6,
         justifyContent: "space-between",
         alignItems:"center",
         paddingLeft: 10,

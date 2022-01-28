@@ -37,7 +37,7 @@ const MainPage = ({ navigation }) => {
                     <Pressable onPress={()=>{navigation.navigate("CameraInfo")}} style={styles.right}>              
                     <View >
                     
-                            <Image source={require('../image/cameraPlus.png')} style={{ width: 22,
+                            <Image source={require('../image/Cal.png')} style={{ width: 22,
         height:22,marginRight:10,}} resizeMode='center'/>
                      
                     </View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
- 
+        backgroundColor:"white"
     },
     mainImage: {
         width: 375,
