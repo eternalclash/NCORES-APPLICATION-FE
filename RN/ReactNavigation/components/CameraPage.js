@@ -1,24 +1,31 @@
 import React from 'react'
-import { Text, View, StyleSheet,Image,useWindowDimensions } from 'react-native'
+import { Text, View, StyleSheet,Image,useWindowDimensions, ImageBackground } from 'react-native'
 
 import CameraButton from './Camera/CameraButton'
 const CameraPage = () => {
     const { width } = useWindowDimensions();
     return (
-        <>
-            <View style={styles.main}>
-            <Image
-                source={{ uri: "https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"}}
-                style={[styles.image, { height: width }]}
-                resizeMode="cover"
-            />
-            </View>  
-            <Text style={styles.step}>사진 찍기 전 안내사항</Text>
-            <Text style={styles.info}>화면 안에 얼굴 정면을 맞춰주세요</Text>
+        
+            <View style={{ flex: 1, justifyContent: 'center', alignItems:'center',}}>
+            <ImageBackground source={require("../image/face.png")} style={{ height: 800, width: '100%' }} resizeMode='cover' >
+                
+                <View style={{marginTop:550,justifyContent:'center',alignItems:'center'}}>
+                <Text style={styles.step}>너무 밝거나 어두운 곳을 피하고</Text>
+            <Text style={styles.info}>얼굴 정면이 다 나오도록 찍어주세요</Text>
+          
+                </View>
+              
+           
+            </ImageBackground>
+            <View>
+                
+            </View>
             <CameraButton/>
+           </View>
+           
            
           
-        </>
+       
     )
 }
 const styles = StyleSheet.create({
@@ -29,17 +36,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         height:600,
     },
-    main1: {
-     
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'yellow',
-        flex:1,
-    },
+ 
     step: {
-        marginTop: 20,
-        marginHorizontal:'23%',
-        flexDirection: 'row',
+        
+       
+   
         fontSize:24,
         justifyContent: 'center',
         alignItems:'center'
@@ -47,8 +48,8 @@ const styles = StyleSheet.create({
     info: {
         
             marginTop: 20,
-            marginHorizontal:60,
-            flexDirection: 'row',
+        
+         
             fontSize:20,
             justifyContent: 'center',
             alignItems:'center'

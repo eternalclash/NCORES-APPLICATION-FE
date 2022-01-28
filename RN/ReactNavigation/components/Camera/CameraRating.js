@@ -17,7 +17,7 @@ const CameraRating = ({ navigation }) => {
             }
     }, [cameraCheck])
     function ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
+        console.log( rating)
         setRate(rating)
     }
     const rateHandler = () => {
@@ -31,8 +31,9 @@ const CameraRating = ({ navigation }) => {
 
     return (
         <View style={styles.main}> 
-            <Text style={styles.font}>자가 점수 체크</Text>
+            <Text style={styles.font}>오늘의 피부 몇 점인가요?</Text>
             <View style={styles.main1}>
+                <Text style={styles.font1}>{rate}점</Text>
             <Rating
                 type='custom'
                 jumpValue={1/2}
@@ -40,8 +41,8 @@ const CameraRating = ({ navigation }) => {
                 tintColor='#ffffff'
                 jumpValue={1}
                 ratingCount={5}
-                imageSize={60}
-                showRating
+                imageSize={50}
+                
                 startingValue={2}
                 onFinishRating={ratingCompleted}
             />
@@ -62,16 +63,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    
+        backgroundColor:"white"
     },
     font: {
         fontSize: 30,
         position: 'absolute',
         top:150,
     },
+    font1: {
+        fontSize: 30,
+        marginBottom:30
+    },  
     main1: {
         position: 'absolute',
-        top:250,
+        top: 250,
+        justifyContent: "center",
+        alignItems:"center"
     },
     textMedium: {
         color:"white",
@@ -80,9 +87,10 @@ const styles = StyleSheet.create({
     },
     form: {
         backgroundColor:"black",
-        width: '90%',
+        width: '100%',
         height:60,
-        marginTop:40,
+        position: 'absolute',
+        bottom:0,
         justifyContent: "center",
         alignItems:"center",
       

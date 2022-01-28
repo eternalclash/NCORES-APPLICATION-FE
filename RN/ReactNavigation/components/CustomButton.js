@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         borderRadius: 4,
-        height: 48,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 0.7,
     },
     text: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: 'bold',
         color: 'white'
     },

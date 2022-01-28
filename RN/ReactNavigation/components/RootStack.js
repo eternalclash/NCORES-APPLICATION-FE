@@ -72,7 +72,7 @@ const RootStack = ({ navigation }) => {
      
      return (
          <Stack.Navigator 
-     
+         initialRouteName='Upload'
          >
              {
            login?  

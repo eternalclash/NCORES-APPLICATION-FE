@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import { View,StyleSheet,TextInput,Image,useWindowDimensions,Text,Button } from 'react-native'
+import { View,StyleSheet,Pressable,TextInput,Image,useWindowDimensions,Text,Button } from 'react-native'
 import { NavigationContainer, useRoute } from '@react-navigation/native';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
@@ -8,20 +8,20 @@ const UploadScreen = ({navigation}) => {
     const route = useRoute();
     const { res } = route.params || {};
     const { width } = useWindowDimensions();
-    console.log(res.assets[0])
+    // console.log(res.assets[0])
     const dispatch = useDispatch();
     const PhotoHandler = () => {
      
         const formData = new FormData();
-        formData.append("image", {
-            uri: res.assets[0].uri, type: res.assets[0].type, name: res.assets[0].fileName
-        })
+        // formData.append("image", {
+        //     uri: res.assets[0].uri, type: res.assets[0].type, name: res.assets[0].fileName
+        // })
         dispatch(photoActions.postImageAPI(formData))
     }
     return (
         <View style={styles.block}>
             <Image
-                source={{ uri: res.assets[0]?.uri }}
+                // source={{ uri: res.assets[0]?.uri }}
                 style={[styles.image]}
                 resizeMode="cover"
             />
@@ -31,7 +31,25 @@ const UploadScreen = ({navigation}) => {
                 <CustomButton theme="gender" title="다시하기" onPress={()=>{navigation.pop()}}/>
             <CustomButton theme="gender" title="진단하기" color="red" onPress={()=>navigation.navigate("MainReport")}/>
             </View>
-           
+            <View style={styles.row}>
+            <Pressable style={styles.form} onPress={()=>navigation.navigate("CameraPage")}>   
+            <View >     
+                   
+                    <Text style={styles.textMedium1}>다시하기</Text>    
+                   
+                    </View>
+            </Pressable>
+            
+            <Pressable style={styles.form1} onPress={()=>navigation.navigate("MainReport")}>   
+            <View >     
+                   
+                    <Text style={styles.textMedium}>결과보기</Text>    
+                   
+                    </View>
+                    </Pressable>
+
+            </View>
+        
         </View>
     )
 }
@@ -78,10 +96,38 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         position: 'absolute',
-        bottom: 30,
+        bottom: 0,
         justifyContent: 'space-around'
         
-    }
+    }, 
+     textMedium: {
+        color:"white",
+        fontSize: 20,
+     
+    },
+    textMedium1: {
+        color:"black",
+        fontSize: 20,
+       
+    },
+    form: {
+        backgroundColor:"white",
+        width: '50%',
+        height:60,
+        
+        justifyContent: "center",
+        alignItems:"center",
+        borderWidth:1
+    },
+    form1: {
+        backgroundColor:"black",
+        width: '50%',
+        height:60,
+        
+        justifyContent: "center",
+        alignItems:"center",
+      
+    },
 });
 
 export default UploadScreen

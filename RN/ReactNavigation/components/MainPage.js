@@ -34,7 +34,7 @@ const MainPage = ({ navigation }) => {
                     <Image source={require('../image/PLALUVS.png' )} style={{width:105,height:14,marginLeft:10,}} resizeMode='stretch'></Image>
                       
                         
-                    <Pressable onPress={()=>{navigation.navigate("CameraInfo")}} style={styles.right}>              
+                    <Pressable onPress={()=>{navigation.navigate("CameraCheck")}} style={styles.right}>              
                     <View >
                     
                             <Image source={require('../image/Cal.png')} style={{ width: 22,

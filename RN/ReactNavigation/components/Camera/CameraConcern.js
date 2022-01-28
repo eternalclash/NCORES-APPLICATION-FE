@@ -46,8 +46,8 @@ const CameraConcern = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
-                <Text style={styles.text}>오늘 피부 자극 여부</Text>
-                <Text style={styles.textMedium}>다중 선택 가능</Text>
+                <Text style={styles.text}>피부에 자극이 되는 일이 있었나요?</Text>
+                <Text style={styles.textMedium}>해당하는 항목을 모두 골라주세요</Text>
                 <View style={styles.form}>
                 { num1==true
                          ?<CustomButton color="red"
@@ -123,11 +123,13 @@ const CameraConcern = ({ navigation, route }) => {
                     }
                
                    
-                    <View style={styles.buttons}/>
+                 
+                </View>
+                <View style={styles.buttons}>
                     <CustomButton title="다음" onPress={
                         worryHandler
-                    } style={styles.buttons}/>
-                    </View>
+                    } style={styles.buttons} />
+                        </View>
             </View>   
         </>
     )
@@ -136,15 +138,18 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+        paddingTop: 52,
+        backgroundColor:"white"
     },
     text: {
-        fontSize: 32,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: '500',
+        textAlign:'center'
     },
     textMedium: {
         marginTop:20,
-        fontSize:20,
+        fontSize: 18,
+        textAlign:'center'
     },
     form: {
         marginTop: 44,
@@ -152,7 +157,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     buttons: {
-        marginTop: 82,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+
     },
     row: {
         flexDirection: 'row',

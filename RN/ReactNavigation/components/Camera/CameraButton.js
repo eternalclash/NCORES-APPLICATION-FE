@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Platform,
   ActionSheetIOS,
+  Text,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -77,7 +78,7 @@ function CameraButton() {
           }}
           style={styles.circle}
           onPress={onPress}>
-      
+        <Text style={{fontSize:18,color:'white'}}>사진 기록하기</Text>
         </Pressable>
       </View>
       <ActionSheetModal
@@ -103,16 +104,12 @@ function CameraButton() {
 const styles = StyleSheet.create({
   wrapper: {
     zIndex: 5,
-    borderRadius: 36,
-    height: 72,
-    width: 72,
-    position: 'absolute',
-    left: '50%',
-    transform: [
-      {
-        translateX: -37,
-      },
-    ],
+    width:'100%',
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+   
     ...Platform.select({
       ios: {
         shadowColor: '#4d4d4d',
@@ -125,9 +122,9 @@ const styles = StyleSheet.create({
   },
   circle: {
     backgroundColor: 'black',
-    borderRadius: 36,
-    height: 72,
-    width: 72,
+
+    height: 60,
+     width:'100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
