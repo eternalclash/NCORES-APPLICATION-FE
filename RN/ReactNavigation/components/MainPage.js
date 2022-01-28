@@ -22,6 +22,7 @@ const MainPage = ({ navigation }) => {
          setCos(mainCos)
       }, [cos])
     console.log(mainCos)
+
     return (
     
         <View style={styles.main}>

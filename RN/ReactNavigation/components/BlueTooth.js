@@ -36,6 +36,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import CustomButton from './CustomButton';
 import BleManager from '../BleManager';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+import { is } from 'immer/dist/internal';
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 function ASC(value) {
@@ -50,8 +52,13 @@ const BlueTooth = () => {
   const peripherals = new Map();
   const [list, setList] = useState([]);
   const [connect, setConnect] = useState();
-
-
+  
+  const [working, setWorking] = useState();
+  const [time, setTime] = useState();
+  const [mode, setMode] = useState();
+  const [level, setLevel] = useState();
+  
+  console.log(working,time,mode,level)
 
 
   const startScan = () => {
@@ -115,17 +122,33 @@ const BlueTooth = () => {
        {
      await BleManager.disconnect(peripheral.id)
       await  BleManager.connect(peripheral.id).then(async() => {
-          let p = peripherals.get(peripheral.id);
-          if (p) {
-            p.connected = true;
-            peripherals.set(peripheral.id, p);
-            setList(Array.from(peripherals.values()));
-          }
-           
+      
          await   BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
           
-              const k =peripheralData.characteristics[0].value.bytes.map((e, index) => { return String.fromCharCode(e) })
-              console.log( k.join(""));
+              const k =peripheralData.characteristics[0].value.bytes.map((e, index) => { return String.fromCharCode(e) }).join("")
+                console.log(k)
+              if (k.split(",")[1].split(":")[0] == "Level")
+                  setWorking(stopped)
+              
+              if (k.split(":")[1].split(",")[0])
+              {
+                  if (k.split(":")[1].split(",")[0] == "working")
+                      setWorking("동작")
+                  else if (k.split(":")[1].split(",")[0] == "charging")
+                      setWorking("충전 중")
+                  else {
+                      setWorking("정지")       
+                  }
+                 //나머지 처리
+                 setTime(Number(k.split(":")[2].split(",")[0].split(" ")[0]))
+                 setMode(k.split(":")[3].split(",")[0])
+                 setLevel(k.split(":")[4].split(" ")[0])
+                  }
+              
+              // console.log(k.split(":")[1].split(",")[0])  //working
+              // console.log(Number(k.split(":")[2].split(",")[0].split(" ")[0]))  // 0020,20
+              // console.log(k.split(":")[3].split(",")[0]) //Face
+              // console.log(k.split(":")[4].split(" ")[0])
               BleManager.readRSSI(peripheral.id).then((rssi) => {
              
                 let p = peripherals.get(peripheral.id);
@@ -169,9 +192,13 @@ const BlueTooth = () => {
     const color = item.connected ? 'green' : '#fff';
     return (
       <TouchableHighlight onPress={() =>
+      {
+        setConnect(true)
         setInterval(() => {
           testPeripheral(item)   
         }, 2000)
+        }
+      
         
        }>
         <View style={{ borderWidth: 0.7, backgroundColor: color, height: 80, justifyContent: 'center', alignItems:'center',width:'90%',marginLeft:20}}>
@@ -181,10 +208,10 @@ const BlueTooth = () => {
       </TouchableHighlight>
     );
   }
-  
+  if(connect)
   return (
     <>
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor:"white"}}>
      
           
           <View >
@@ -194,13 +221,58 @@ const BlueTooth = () => {
           <ImageBackground style={{height:200}} source={require('../image/blueToothTag.png')} resizeMode='cover'>
             <View style={{ justifyContent:'center',alignItems:'center',paddingTop:120}}>
             <Image source={require('../image/text.png')} style={{width:98.45,height:14,}}></Image>
-          <Text style={{textAlign:'center',fontSize:22,marginTop:35}}>플라럽스로 시작하는</Text>
+          <Text style={{textAlign:'center',fontSize:22,marginTop:15}}>플라럽스로 시작하는</Text>
                 <Text style={{ textAlign: 'center', fontSize:22}}>마법과 같은 변화</Text>
              </View>
              </ImageBackground>
            </View>
        
-          <View></View>
+          <View style={{ flexDirection: "row",justifyContent:'center',alignItems:'center',marginTop:50,marginHorizontal:30 }}>
+            <Pressable style={{ width: "50%", borderWidth: 0.7, height: 100, borderRadius: 4, borderColor: "gba(153, 153, 153, 0.5)",justifyContent:'center',alignItems:'center',marginRight:20}}>
+              <Image source={require("../image/Alarm2.png")} style={{ width: 25, height: 25 }} resizeMode='cover'></Image>   
+              <Text style={{ marginTop: 5 }}>{time ? time : "00초"}</Text>
+          </Pressable>
+            <Pressable style={{ width: "50%", borderWidth: 0.7, height: 100, borderRadius: 4, borderColor: "gba(153, 153, 153, 0.5)",justifyContent:'center',alignItems:'center' }} >
+            <Image source={require("../image/stop.png")} style={{ width: 16, height: 25 }} resizeMode='cover'></Image>   
+              <Text style={{ marginTop: 5 }}>{ mode? mode: "정지"}</Text>
+            </Pressable>
+
+          </View>
+          <View style={{ backgroundColor:"rgba(240, 223, 222, 0.5)", height:220,borderWidth:0.7,marginHorizontal:20,marginTop:50,borderRadius:4,justifyContent:"center",alignItems:"center"}}>
+            <Text style={{fontSize:20}}>플라럽스가</Text>
+            <Text style={{fontSize:20}}>피부를 관리중이에요</Text>
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
+              {
+                level=="Low"?   <View style={{color:"white",backgroundColor:"black", width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                <Text style={{fontSize:14,color:"white"}}>약</Text>
+                </View>
+                  :
+                  <View style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                  <Text style={{fontSize:14}}>약</Text>
+                </View>
+              }
+              {
+                level=="Middle"?   <View style={{backgroundColor:"black", width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                <Text style={{fontSize:14,color:"white"}}>중</Text>
+                </View>
+                  :
+                  <View style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                  <Text style={{fontSize:14}}>중</Text>
+                </View>
+              }
+              {
+                level=="High"?   <View style={{color:"white",backgroundColor:"black", width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                <Text style={{fontSize:14,color:"white"}}>강</Text>
+                </View>
+                  :
+                  <View style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 0.7, justifyContent: "center", alignItems: "center",marginRight:10 }}>
+                  <Text style={{fontSize:14}}>강</Text>
+                </View>
+              }
+           
+              
+            </View>
+          </View>
 
           
           
@@ -211,53 +283,56 @@ const BlueTooth = () => {
      
     </>
   );
-  // return (
-  //   <>
-  //     <SafeAreaView>
-  //       <ScrollView
-  //         contentInsetAdjustmentBehavior="automatic"
-  //         style={styles.scrollView}>
-          
-  //         <View style={styles.body}>
+  else {
+    return (
+      <>
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
             
-           
-
-         
-
-  //           {(list.length == 0) &&
-  //             <View style={{flex:1, margin: 20}}>
-  //               <Text style={{ textAlign: 'center', fontSize: 15 }}>플라럽스 기기를 찾지 못했습니다.</Text>
-               
-  //               <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-  //                 <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:20,marginRight:10, }}/>
-  //                 <Text style={{ textAlign: 'center', fontSize: 15, marginTop: 20 }}>핸드폰의 블루투스를 켰나요?</Text>
-  //               </View>
-  //               <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-  //                 <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:10,marginRight:10,marginLeft:4 }}/>
-  //                 <Text style={{textAlign: 'center',fontSize:15,marginTop:10}}>플라럽스 기기가 켜져 있나요?</Text>
-  //               </View>
+            <View style={styles.body}>
+              
+             
   
-   
-  //             </View>
-  //           }
-          
-  //         </View>              
-  //       </ScrollView>
-  //       <FlatList
-  //           data={list}
-  //           renderItem={({ item }) => renderItem(item) }
-  //           keyExtractor={item => item.id}
-  //       />  
-       
-  //     </SafeAreaView>
-  //     <Image source={require('../image/bluetooth.png')} style={{ width: 375, height: 202, position: "absolute", bottom: 80 }} resizeMode='stretch' />
-  //     <Pressable  onPress={() => startScan() } style={{position:"absolute", bottom:40,width:'90%', marginHorizontal:20,height:56,backgroundColor:"black",justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
-  //     <View > 
-  //         <Text style={{color:"white",fontSize:15}}>플라럽스 기기 찾기</Text>
-  //       </View>
-  //     </Pressable>     
-  //   </>
-  // );
+           
+  
+              {(list.length == 0) && !isScanning &&
+                <View style={{flex:1, margin: 20}}>
+                  <Text style={{ textAlign: 'center', fontSize: 15 }}>플라럽스 기기를 찾지 못했습니다.</Text>
+                 
+                  <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                    <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:20,marginRight:10, }}/>
+                    <Text style={{ textAlign: 'center', fontSize: 15, marginTop: 20 }}>핸드폰의 블루투스를 켰나요?</Text>
+                  </View>
+                  <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                    <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:10,marginRight:10,marginLeft:4 }}/>
+                    <Text style={{textAlign: 'center',fontSize:15,marginTop:10}}>플라럽스 기기가 켜져 있나요?</Text>
+                  </View>
+    
+     
+                </View>
+              }
+            
+            </View>              
+          </ScrollView>
+          <FlatList
+              data={list}
+              renderItem={({ item }) => renderItem(item) }
+              keyExtractor={item => item.id}
+          />  
+         
+        </SafeAreaView>
+        <Image source={require('../image/bluetooth.png')} style={{ width: 375, height: 202, position: "absolute", bottom: 80,zIndex:-1 }} resizeMode='stretch' />
+        <Pressable  onPress={() => startScan() } style={{position:"absolute", bottom:40,width:'90%', marginHorizontal:20,height:56,backgroundColor:"black",justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+        <View > 
+            <Text style={{color:"white",fontSize:15}}>플라럽스 기기 찾기</Text>
+          </View>
+        </Pressable>     
+      </>
+    );
+  }
+ 
 };
 
 const styles = StyleSheet.create({
