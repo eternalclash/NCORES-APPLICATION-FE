@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { actionCreators as cosmeticActions } from '../redux/modules/cosmetics'
-
+import { HeaderBackButton } from '@react-navigation/stack';
 import SignInScreen from './SignInScreen';
 import GetEmail from './SignUp/GetEmail';
 import GetPassword from './SignUp/GetPassword';
@@ -15,7 +15,7 @@ import GetWorry from './SignUp/GetWorry';
 import UploadScreen from './UploadScreen';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as signActions } from '../redux/modules/sign';
-import { TouchableOpacity,Text,View, Image } from 'react-native';
+import { TouchableOpacity,Text,View, Image, Button, Pressable } from 'react-native';
 import CameraPage from './CameraPage';
 import AsyncStorage from '@react-native-community/async-storage';
 import MainTab from './Tab/MainTab';
@@ -29,7 +29,7 @@ import MainReport from './Report/MainReport';
 import HairCheck from './Skin/HairCheck';
 import SkinReport from './Skin/SkinReport';
 import ShopList from './Report/ShopList';
-
+import Icon from 'react-native-vector-icons/EvilIcons'
 import BlueTooth from './BlueTooth';
 import GetHead from './SignUp/GetHead';
 import ElementList from './Report/ElementList';
@@ -42,7 +42,14 @@ import MyElementList from './Report/MyElementList';
 // const get = async () => {
 //     return await AsyncStorage.getItem('token')
 // }
-
+function LogoTitle() {
+    return (
+      <Image
+        style={{ width: 50, height: 50 }}
+        source={require('../image/Left.png')}
+      />
+    );
+  }
 const RootStack = ({ navigation }) => {
 
     const dispatch = useDispatch();
@@ -205,75 +212,80 @@ const RootStack = ({ navigation }) => {
                 name="CameraCheck"
                 component={CameraCheck}
                 options={{
-                    title: "",
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.navigate("MainPage")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
               <Stack.Screen
                 name="CameraConcern"
                 component={CameraConcern}
                 options={{
-                    title: "",
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.navigate("CameraCheck")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
              <Stack.Screen
                 name="CameraIndicate"
                 component={CameraIndicate}
                 options={{
-                    title: "",
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.navigate("CameraConcern")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
               <Stack.Screen
                 name="CameraPage"
                 component={CameraPage}
                 options={{
-                    title: "",
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.navigate("CameraRating")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
              <Stack.Screen
                 name="CameraRating"
                 component={CameraRating}
-                 options={{
-                    title: "",
+                options={{
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.navigate("CameraIndicate")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
             

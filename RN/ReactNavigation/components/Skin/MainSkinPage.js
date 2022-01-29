@@ -47,6 +47,7 @@ const MainSkinPage = ({navigation}) => {
         dispatch(skinAction.getBoumanAPI())
     }, [])
   
+    console.log(getList)
 
    if(aquaScore.data&&oillScore.data&&pigmentScore.data&&winkleScore.data&&sensitiveScore.data)
     return (
@@ -66,14 +67,15 @@ const MainSkinPage = ({navigation}) => {
               
               
                     <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                        {}
-                        <Text>{getList.data[0].date}</Text>  
-                        <Text>{getList.data[1].date}</Text>  
-                        <Text>{getList.data[2].date}</Text>  
-                        <Text>{getList.data[3].date}</Text>  
-                        <Text>{getList.data[4].date}</Text>  
-                        <Text>{getList.data[5].date}</Text>  
-                        <Text>{getList.data[6].date}</Text>  
+                        {getList.data[0].type=="common"?<Text style={{color:"#999999"}}>{getList.data[0].date}</Text> : <Text>{getList.data[0].date}</Text>}
+                        {getList.data[1].type=="common"?<Text style={{color:"#999999"}}>{getList.data[1].date}</Text> : <Text>{getList.data[1].date}</Text>}
+                        {getList.data[2].type=="common"?<Text style={{color:"#999999"}}>{getList.data[2].date}</Text> : <Text>{getList.data[2].date}</Text>}
+                        {getList.data[3].type=="common"?<Text style={{color:"#999999"}}>{getList.data[3].date}</Text> : <Text>{getList.data[3].date}</Text>}
+                        {getList.data[4].type=="common"?<Text style={{color:"#999999"}}>{getList.data[4].date}</Text> : <Text>{getList.data[4].date}</Text>}
+                        {getList.data[5].type=="common"?<Text style={{color:"#999999"}}>{getList.data[5].date}</Text> : <Text>{getList.data[5].date}</Text>}
+                        {getList.data[6].type=="common"?<Text style={{color:"#999999"}}>{getList.data[6].date}</Text> : <Text>{getList.data[6].date}</Text>}
+                        
+                        
                   
                 </View>
               
