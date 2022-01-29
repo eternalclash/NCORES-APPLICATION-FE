@@ -26,6 +26,8 @@ const MainSkinPage = ({navigation}) => {
     ]
     const simpleCos = useSelector(state => state.cosmetics.simple)
     const getList = useSelector(state => state.skin.getList)
+    const getScore = useSelector(state => state.skin.getScore)
+  
     const getBouman = useSelector(state => state.skin.getBouman)
     //바우만 별 셀렉터
     const aquaScore = useSelector(state => state.skin.aquaScore)
@@ -44,9 +46,7 @@ const MainSkinPage = ({navigation}) => {
        
         dispatch(skinAction.getBoumanAPI())
     }, [])
-    console.log(getBouman)
-   
-   console.log(aquaScore)
+  
 
    if(aquaScore.data&&oillScore.data&&pigmentScore.data&&winkleScore.data&&sensitiveScore.data)
     return (
@@ -59,29 +59,44 @@ const MainSkinPage = ({navigation}) => {
                     <Text style={styles.profileText2}>추천화장품</Text>
                     </View> 
                 <View style={{width:"100%",borderBottomWidth:1,}}></View>    
-                <Text style={{fontSize:18,marginTop:30,marginLeft:10,fontWeight:"500",lineHeight:22,}}>최근 측정한 피부 점수의</Text>
-            <Text style={{ fontSize:18,marginTop:3,marginLeft:10,fontWeight:"500" }}>평균은 60점이었어요</Text>
+                    <Text style={{ fontSize: 18, marginTop: 30, marginLeft: 10, fontWeight: "500", lineHeight: 22, }}>{getList.text}</Text>
+          
              
-                <MainSkin />
+                    <MainSkin getScore={getScore.data}/>
               
               
-                <View style={{ flexDirection: "row",justifyContent:"space-around" }}>
-                    <Text>1일 전</Text>  
-                    <Text>5일 전</Text>
-                    <Text>1주 전</Text>
-                    <Text>2주 전</Text>
-                    <Text>2주 전</Text>
-                    <Text>2달 전</Text>
-                    <Text>3달 전</Text>
+                    <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                        {}
+                        <Text>{getList.data[0].date}</Text>  
+                        <Text>{getList.data[1].date}</Text>  
+                        <Text>{getList.data[2].date}</Text>  
+                        <Text>{getList.data[3].date}</Text>  
+                        <Text>{getList.data[4].date}</Text>  
+                        <Text>{getList.data[5].date}</Text>  
+                        <Text>{getList.data[6].date}</Text>  
+                  
                 </View>
               
          
-            <View style={styles.lowButton1}>
-                    <Pressable>
-                        <Text>오늘의 피부 진단 하기</Text>
-                       
-                    </Pressable>
-                    </View>
+
+                        {
+                            getList.status == 1 ?
+                           
+                            <Pressable>
+                                 <Text style={{position:'absolute',color:"black",left:120,top:40}}>오늘의 피부는 몇점인가요</Text>
+                                <View style={styles.lowButton1}>
+                                    
+                            <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>
+                            </View>
+                            </Pressable> : 
+                                <Pressable>
+                                <View style={styles.lowButton2}>
+                     <Text>오늘의 피부 진단 하기</Text>
+                     </View>
+                     </Pressable>
+                        }
+                   
+                  
                     <View style={styles.chart}> 
                             <View style={styles.filter2}>
                             <Text style={styles.filter2}>주름성</Text>
@@ -102,19 +117,20 @@ const MainSkinPage = ({navigation}) => {
                 showGrid={false}
                             
                                 horizontal="true"
-                        />    
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
+                        />   
+                         {getBouman.winkleScore[0]&&  <View style={styles.row2}>
+                <View style={{width:20,height:20,backgroundColor:"#323632",borderRadius:10}}></View>            
+                            <Text style={{ fontSize: 15, marginLeft: 10 }}>이번 주엔 {getBouman.winkleScore[0].score}점이었어요</Text>
+                        </View>}
+                        {getBouman.winkleScore[1]&& <View style={styles.row2}>
                 <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
+                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 {getBouman.winkleScore[1].score}점이었어요</Text>
+                        </View>}
+                        {getBouman.winkleScore[2]&& <View style={styles.row2}>
                 <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
-                        </View>
+                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 {getBouman.winkleScore[2].score}점이었어요</Text>
+                        </View>}
+               
                      
                     </View>
                     
@@ -134,23 +150,23 @@ const MainSkinPage = ({navigation}) => {
                 style={{ height: 20,borderRadius:2,marginTop:10 }}
                 keys={sensitiveScore.keys}
                 colors={sensitiveScore.color}
-                data={sensitiveScore.data}
+                data={sensitiveScore.data}   
                 showGrid={false}
                             
                                 horizontal="true"
                         />    
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
-                        </View>
+               {getBouman.sensitiveScore[0]&&  <View style={styles.row2}>
+     <View style={{width:20,height:20,backgroundColor:"#323632",borderRadius:10}}></View>            
+            <Text style={{ fontSize: 15, marginLeft: 10 }}>이번 주엔 {getBouman.sensitiveScore[0].score}점이었어요</Text>
+        </View>}
+        {getBouman.sensitiveScore[1]&& <View style={styles.row2}>
+     <View style={{width:20,height:20,backgroundColor:"#607060",borderRadius:10}}></View>            
+     <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 {getBouman.sensitiveScore[1].score}점이었어요</Text>
+        </View>}
+        {getBouman.sensitiveScore[2]&& <View style={styles.row2}>
+    <View style={{width:20,height:20,backgroundColor:"#8D998D",borderRadius:10}}></View>            
+     <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 {getBouman.sensitiveScore[2].score}점이었어요</Text>
+        </View>}
                      
                     </View>
                     
@@ -178,18 +194,18 @@ const MainSkinPage = ({navigation}) => {
                             
                                 horizontal="true"
                         />    
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
-                        </View>
+               {getBouman.pigmentScore[0]&&  <View style={styles.row2}>
+             <View style={{width:20,height:20,backgroundColor:"#323632",borderRadius:10}}></View>            
+            <Text style={{ fontSize: 15, marginLeft: 10 }}>이번 주엔 {getBouman.pigmentScore[0].score}점이었어요</Text>
+             </View>}
+        {getBouman.pigmentScore[1]&& <View style={styles.row2}>
+         <View style={{width:20,height:20,backgroundColor:"#607060",borderRadius:10}}></View>            
+        <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 {getBouman.pigmentScore[1].score}점이었어요</Text>
+        </View>}
+        {getBouman.pigmentScore[2]&& <View style={styles.row2}>
+        <View style={{width:20,height:20,backgroundColor:"#8D998D",borderRadius:10}}></View>            
+        <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 {getBouman.pigmentScore[2].score}점이었어요</Text>
+        </View>}
                      
                 </View>
                 
@@ -214,18 +230,18 @@ const MainSkinPage = ({navigation}) => {
                             
                                 horizontal="true"
                         />    
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
-                        </View>
+                {getBouman.aquaScore[0]&&  <View style={styles.row2}>
+        <View style={{width:20,height:20,backgroundColor:"#323632",borderRadius:10}}></View>            
+            <Text style={{ fontSize: 15, marginLeft: 10 }}>이번 주엔 {getBouman.aquaScore[0].score}점이었어요</Text>
+        </View>}
+        {getBouman.aquaScore[1]&& <View style={styles.row2}>
+        <View style={{width:20,height:20,backgroundColor:"#607060",borderRadius:10}}></View>            
+        <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 {getBouman.aquaScore[1].score}점이었어요</Text>
+        </View>}
+        {getBouman.aquaScore[2]&& <View style={styles.row2}>
+        <View style={{width:20,height:20,backgroundColor:"#8D998D",borderRadius:10}}></View>            
+         <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 {getBouman.aquaScore[2].score}점이었어요</Text>
+        </View>}
                      
                 </View>
                 
@@ -250,18 +266,18 @@ const MainSkinPage = ({navigation}) => {
                             
                                 horizontal="true"
                         />    
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#EFC2C2",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 40점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"#C14242",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>한달 전엔 60점이었어요</Text>
-                        </View>
-                <View style={styles.row2}>
-                <View style={{width:20,height:20,backgroundColor:"gray",borderRadius:10}}></View>            
-                <Text style={{fontSize:15,marginLeft:10}}>이번 주엔 90점이었어요</Text>
-                        </View>
+                     {getBouman.oilScore[0]&&  <View style={styles.row2}>
+<View style={{width:20,height:20,backgroundColor:"#323632",borderRadius:10}}></View>            
+            <Text style={{ fontSize: 15, marginLeft: 10 }}>이번 주엔 {getBouman.oilScore[0].score}점이었어요</Text>
+        </View>}
+        {getBouman.oilScore[1]&& <View style={styles.row2}>
+<View style={{width:20,height:20,backgroundColor:"#607060",borderRadius:10}}></View>            
+<Text style={{fontSize:15,marginLeft:10}}>일주일 전엔 {getBouman.oilScore[1].score}점이었어요</Text>
+        </View>}
+        {getBouman.oilScore[2]&& <View style={styles.row2}>
+<View style={{width:20,height:20,backgroundColor:"#8D998D",borderRadius:10}}></View>            
+<Text style={{fontSize:15,marginLeft:10}}>한달 전엔 {getBouman.oilScore[2].score}점이었어요</Text>
+        </View>}
                      
                 </View>
                 
@@ -274,20 +290,8 @@ const MainSkinPage = ({navigation}) => {
                         </View>
                         </Pressable>
                 <SimpleCarousel simpleCos={simpleCos} />
-                <View style={styles.information}>
-                <Text style={styles.informationKeyword}>헤어 제품 찾기</Text>
-                <Icon name="chevron-right" size={45}></Icon>
-            </View>
-            <View style={styles.lowButton2}>
-                    <Pressable onPress={()=>navigation.navigate("HairCheck")}>
-                        <View style={{justifyContent:'center',alignItems:'center'}}>
-                        <Text>길동님을 위한</Text>
-                        <Text style={styles.fontSize}>헤어 제품을 찾아드릴게요</Text>
-                            <View style={{ width: 100, height: 33, borderWidth:1,borderRadius:30,justifyContent:'center',alignItems:'center'}}><Text>퀴즈 풀기</Text></View>
-                        </View>
-                        
-                    </Pressable>
-                    </View>
+               
+           
                     <View style={{height:30}}>
 
 </View>
@@ -346,6 +350,18 @@ const styles = StyleSheet.create({
         fontWeight:"200"
     },
     lowButton1: {
+        height:56,
+        backgroundColor:"black",
+        marginHorizontal:20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+      
+    
+        marginTop: 60,
+        marginBottom:36,
+    },
+    lowButton2: {
         height:56,
         backgroundColor:"#F5EBE8",
         marginHorizontal:20,

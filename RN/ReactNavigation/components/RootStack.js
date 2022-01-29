@@ -36,6 +36,7 @@ import ElementList from './Report/ElementList';
 import XAxisExample from './XAxisExample';
 import GetOut from './MyPage/GetOut';
 import Thank from './MyPage/Thank';
+import MyElementList from './Report/MyElementList';
 
 
 // const get = async () => {
@@ -72,7 +73,7 @@ const RootStack = ({ navigation }) => {
      
      return (
          <Stack.Navigator 
-     initialRouteName='Upload'
+
          >
              {
            login?  
@@ -122,6 +123,13 @@ const RootStack = ({ navigation }) => {
                 options={{
                     headerShown: false
                 }}
+             />
+              <Stack.Screen
+                name="MyElementList"
+                component={MyElementList}
+                options={{
+                    headerShown: false
+                }}
             />
              <Stack.Screen
                 name="GetOut"
@@ -159,7 +167,17 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="BlueTooth"
                 component={BlueTooth}
-                options={{ title:"기기연결" }}
+                options={{
+                    title: "기기연결",
+                    headerTintColor: 'black',
+                    headerStyle: {
+                   
+                        headerHideShadow: true
+                    },
+                    headerShadowVisible: false, // applied here
+                    headerBackTitleVisible: false,
+            
+                }}
             />
                <Stack.Screen
                 name="ShopList"

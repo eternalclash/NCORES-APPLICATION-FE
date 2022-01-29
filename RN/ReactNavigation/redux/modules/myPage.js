@@ -18,17 +18,14 @@ const initialState = {
 
 const userElementsAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-     await axios({
-      method: "GET",
-      url: "http://54.180.134.111/user/elements",
-       data: {},
-         headers: {
-            // "Content-Type": "multipart/form-data",
-        //   Accept: "application/json",
-        //    "Access-Control-Allow-Origin": "*",
-          "Authorization": await AsyncStorage.getItem("token"),
-        },
-      })
+    await axios.get("http://54.180.134.111/user/elements", {
+      headers: {
+        // "Content-Type": "multipart/form-data",
+    //   Accept: "application/json",
+    //    "Access-Control-Allow-Origin": "*",
+      "Authorization": await AsyncStorage.getItem("token"),
+   },
+    })
         .then(async(res) => { //바디 부분
          
          dispatch(getElements(res.data))
@@ -67,17 +64,14 @@ const userInfoAPI = (cosmetic) => {
 };
 const userCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
-       await axios({
-        method: "GET",
-        url: "http://54.180.134.111/user/cosmetic",
-         data: {},
-           headers: {
-              // "Content-Type": "multipart/form-data",
-          //   Accept: "application/json",
-          //    "Access-Control-Allow-Origin": "*",
-            "Authorization": await AsyncStorage.getItem("token"),
-          },
-        })
+      await axios.get("http://54.180.134.111/user/cosmetic", {
+    headers: {
+      // "Content-Type": "multipart/form-data",
+  //   Accept: "application/json",
+  //    "Access-Control-Allow-Origin": "*",
+    "Authorization": await AsyncStorage.getItem("token"),
+ },
+  })
           .then(async(res) => { //바디 부분
            
             dispatch(getCosmetics(res.data))

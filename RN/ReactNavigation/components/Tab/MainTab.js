@@ -15,7 +15,7 @@ const MainTab = () => {
     return (
         <Tab.Navigator
             screenOptions={{
-              
+                
                 headerShown: false,
                
         }}

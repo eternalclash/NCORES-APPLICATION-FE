@@ -286,7 +286,7 @@ const BlueTooth = () => {
   else {
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView >
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -299,7 +299,7 @@ const BlueTooth = () => {
   
               {(list.length == 0) && !isScanning &&
                 <View style={{flex:1, margin: 20}}>
-                  <Text style={{ textAlign: 'center', fontSize: 15 }}>플라럽스 기기를 찾지 못했습니다.</Text>
+                  <Text style={{ textAlign: 'center', fontSize: 15 }}>플라럽스 기기를 연결해봅시다</Text>
                  
                   <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                     <Image source={require('../image/dot.png')} style={{width:10,height:10,marginTop:20,marginRight:10, }}/>

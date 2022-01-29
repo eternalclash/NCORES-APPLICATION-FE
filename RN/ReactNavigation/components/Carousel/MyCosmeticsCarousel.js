@@ -34,14 +34,12 @@ export default function MyCosmeticsCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, korName, url,likeCheck,id,categoryId} = item;
+    const {img, korName, naverUrl,likeCheck,id,categoryId} = item;
     return (
       <Pressable
         activeOpacity={1}
         style={styles.item}
-        onPress={() => {
-          carouselRef.current.scrollToIndex(index);
-        }}>
+      onPress={()=>Linking.openURL(naverUrl)}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {

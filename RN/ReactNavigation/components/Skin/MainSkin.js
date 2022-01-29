@@ -1,12 +1,17 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import { View } from 'react-native'
 import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
-import { Text,G,Path,Rect } from 'react-native-svg'
+import { Text, G, Path, Rect } from 'react-native-svg'
+import { useSelector,useDispatch } from 'react-redux'
 import * as scale from 'd3-scale'
-const MainSkin = () => {
-
-    const data = [ 14, 80, 100, 55,25,20,5 ]
+const MainSkin = ({getScore}) => {
+    const data = useSelector(state=>state.skin.getScore)
+    // const data = getScore
+    useEffect(() => {
+        
+    },[])
     const Labels = ({ x, y, bandwidth, data }) => (
+        
         data.map((value, index) => (
             <G key={index}>
                
@@ -19,13 +24,13 @@ const MainSkin = () => {
                 alignmentBaseline={ 'hanging' }
                 textAnchor={'middle'}
             >
-                 {`${value}점`}
+                 {value>1?`${value}점`:'0점'}
                 </Text>
                
             </G>
         ))
     )
-
+   
     return (
        
        
@@ -35,7 +40,7 @@ const MainSkin = () => {
             <BarChart
                 style={{ flex:1}}
                 contentInset={{ top: 40, bottom: 10 }}
-                data={data}
+                data={getScore?getScore:data}
                 svg={{ fill: '#191A1A' }}
     
                 spacingInner={0.7}

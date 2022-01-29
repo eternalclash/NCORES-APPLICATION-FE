@@ -59,7 +59,7 @@ const MyPage = ({ navigation }) => {
                     </Pressable>
 
 
-                      <Icon name="chevron-right" size={45}></Icon>
+                      
                     </View>
                     {
                         info?  <View style={{justifyContent:"center",alignItems:"center",marginHorizontal:10,}}>
@@ -81,7 +81,7 @@ const MyPage = ({ navigation }) => {
                     {myElements[0] ?
                         
                         
-                        <ScrollView>
+                        <ScrollView style={{height:259}}>
                             {
                                    myElements.map((e, index) => {
                                     return (
@@ -89,7 +89,7 @@ const MyPage = ({ navigation }) => {
                                             <View style={styles.information1}>
                                                 <Pressable onPress={() => {
     
-                                                    navigation.navigate("ElementList", { id: e.id, name: e.korName })
+                                                    navigation.navigate("MyElementList", { id: e.id, name: e.korName })
                                                 }}>
                                                     <View style={styles.row}>
                                               
@@ -125,7 +125,7 @@ const MyPage = ({ navigation }) => {
                
              <View style={styles.information}>
                 <Text style={styles.informationKeyword}>내가 찜한 화장품</Text>
-                <Icon name="chevron-right" size={45}></Icon>
+             
                     </View>
                     {
                         myCosmetics[0] ? <MyCosmeticsCarousel myCosmetics={myCosmetics} /> : 
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     },
     main1: {
         flex: 1,
-       
+        height:20,
     },
     mainImage: {
         flex: 0.5,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     },
     information: {
         flexDirection: "row",
-        marginVertical: 25,
+        marginVertical: 10,
         justifyContent: "space-between",
         alignItems:"center",
         marginRight:5,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     },
     information1: {
         flexDirection: "row",
-        marginVertical: 6,
+        marginVertical: 5,
         justifyContent: "space-between",
         alignItems:"center",
         paddingLeft: 10,

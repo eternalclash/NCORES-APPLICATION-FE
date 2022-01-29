@@ -3,13 +3,15 @@ import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 const GET_LIST = "GET_LIST";
+const GET_SCORE = "GET_SCORE"
 const GET_BOUMAN = "GET_BOUMAN"
 const AQUA_SCORE = "AQUA_SCORE"
 const OILL_SCORE = "OILL_SCORE"
 const PIGMENT_SCORE = "PIGMENT_SCORE"
 const SENSITIVE_SCORE = "SENSITIVE_SCORE"
 const WINKLE_SCORE = "WINKLE_SCORE"
-const getList=createAction(GET_LIST,(getList)=>({getList}))
+const getList = createAction(GET_LIST, (getList) => ({ getList }))
+const getScore = createAction(GET_SCORE, (getScore)=>({getScore}))
 const getBouman = createAction(GET_BOUMAN,(getBouman)=>({getBouman}))
 
 const aquaScore = createAction(AQUA_SCORE,(aquaScore)=>({aquaScore}))
@@ -44,6 +46,15 @@ const winkleScore = createAction(WINKLE_SCORE,(winkleScore)=>({winkleScore}))
 //     console.log(aqua)
 //     return aqua
 // }
+
+function getS(score)
+{
+  let num = [];
+  for (let i = 0; i < score.data.length; i++)
+    num.push(score.data[i].score)
+  return num;
+}
+
 function changeChart(score,sum)
 {
  const aqua = {
@@ -53,18 +64,18 @@ function changeChart(score,sum)
  };
  const aquaData = {};
 
-   
- for (let i = 0; i < 3; i++)
+  
+ for (let i = 0; i < score.length; i++)
  {   
      aqua.color.push(`#`+score[i].color)
      aqua.keys.push(score[i].tag)
-     aquaData[`${score[i].tag}`] = score[i].rate
+     aquaData[`${score[0].tag}`] = score[i].rate
      sum -= score[i].rate
      console.log(sum)
-     if (i == 2)
+     if (i == score.length-1)
      {  
          if (sum > 0)
-         {   aqua.color.push('#C4C4C4')
+         {   aqua.color.push('#F0DFDE')
              aqua.keys.push('all')
              aquaData['all'] = sum
            }
@@ -72,13 +83,13 @@ function changeChart(score,sum)
          }
        
  }
-    console.log(score)
+    
     return aqua
 }
 
 
 const initialState = {
-    
+    getScore:"",
     getList: "",
     getBouman: "",
     aquaScore: {},
@@ -92,21 +103,19 @@ const initialState = {
 
 const getListAPI = (id) => {
   return async function  (dispatch, navigation) {
-     await axios({
-      method: "GET",
-      url: `http://54.180.134.111/skin/status/list`,
-       data: {},
-         headers: {
-            // "Content-Type": "multipart/form-data",
-        //   Accept: "application/json",
-        //    "Access-Control-Allow-Origin": "*",
-          "Authorization": await AsyncStorage.getItem("token"),
-        },
-      })
+    await axios.get("http://54.180.134.111/skin/status/list", {
+    headers: {
+      // "Content-Type": "multipart/form-data",
+  //   Accept: "application/json",
+  //    "Access-Control-Allow-Origin": "*",
+    "Authorization": await AsyncStorage.getItem("token"),
+ },
+  })
         .then(async(res) => { //바디 부분
         //  console.log(res.data)
-         dispatch(getList(res.data))
-      
+          dispatch(getList(res.data))
+          dispatch(getScore(getS(res.data)))
+          console.log(getS(res.data))
       })
          .catch(async (err) => {
            
@@ -118,25 +127,22 @@ const getListAPI = (id) => {
 };
 const getBoumanAPI = (element) => {
     return async function  (dispatch, navigation) {
-       await axios({
-        method: "GET",
-        url: `http://54.180.134.111/skin/status/bouman`,
-         data: {},
-           headers: {
-              // "Content-Type": "multipart/form-data",
-          //   Accept: "application/json",
-          //    "Access-Control-Allow-Origin": "*",
-            "Authorization": await AsyncStorage.getItem("token"),
-          },
-        })
+      await axios.get("http://54.180.134.111/skin/status/bouman", {
+    headers: {
+      // "Content-Type": "multipart/form-data",
+  //   Accept: "application/json",
+  //    "Access-Control-Allow-Origin": "*",
+    "Authorization": await AsyncStorage.getItem("token"),
+ },
+  })
            .then(async (res) => { //바디 부분
-            console.log(res.data)
-        // await  dispatch(getBouman(res.data))
-        // await   dispatch(aquaScore(changeChart(res.data.aquaScore,100)))
-        // await   dispatch(oillScore(changeChart(res.data.oilScore,100)))
-        // await   dispatch(sensitiveScore(changeChart(res.data.sensitiveScore,100)))
-        // await   dispatch(pigmentScore(changeChart(res.data.pigmentScore,100)))
-        // await   dispatch(winkleScore(changeChart(res.data.winkleScore,100)))
+       
+         dispatch(getBouman(res.data))
+         dispatch(aquaScore(changeChart(res.data.aquaScore,100)))
+         dispatch(oillScore(changeChart(res.data.oilScore,100)))
+         dispatch(sensitiveScore(changeChart(res.data.sensitiveScore,100)))
+         dispatch(pigmentScore(changeChart(res.data.pigmentScore,100)))
+         dispatch(winkleScore(changeChart(res.data.winkleScore,100)))
               
        
         })
@@ -178,6 +184,10 @@ export default handleActions(
         [WINKLE_SCORE]: (state, action) =>
         produce(state, (draft) => {
           draft.winkleScore= action.payload.winkleScore
+        }),
+        [GET_SCORE]: (state, action) =>
+        produce(state, (draft) => {
+          draft.getScore= action.payload.getScore
         }),
     
        
