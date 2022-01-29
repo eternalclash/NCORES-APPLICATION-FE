@@ -12,6 +12,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2855867AD2C867461BCF88A1 /* libPods-ReactNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6E561EAEA9D79C0CCD4915 /* libPods-ReactNavigation.a */; };
+		3C844CA527A5B65D0007895B /* BridgingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C844CA427A5B65D0007895B /* BridgingHeader.swift */; };
+		3C844CA727A5BE050007895B /* KakaoOpenSDK-1.23.9 in Resources */ = {isa = PBXBuildFile; fileRef = 3C844CA627A5BE050007895B /* KakaoOpenSDK-1.23.9 */; };
+		3C844CA927A5FA8A0007895B /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C844CA827A5FA8A0007895B /* Header.swift */; };
 		4EB2C5DDE1A0B7C37A6DAAAB /* libPods-ReactNavigation-ReactNavigationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E6EBCB4C515B35EABAF4D8B /* libPods-ReactNavigation-ReactNavigationTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -36,6 +39,10 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ReactNavigation/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ReactNavigation/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNavigation/main.m; sourceTree = "<group>"; };
+		3C26CEE727A5ABBB00311A52 /* ReactNavigation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNavigation-Bridging-Header.h"; sourceTree = "<group>"; };
+		3C844CA427A5B65D0007895B /* BridgingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgingHeader.swift; sourceTree = "<group>"; };
+		3C844CA627A5BE050007895B /* KakaoOpenSDK-1.23.9 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "KakaoOpenSDK-1.23.9"; path = "../../../../../../Downloads/KakaoOpenSDK-1.23.9"; sourceTree = "<group>"; };
+		3C844CA827A5FA8A0007895B /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		7B6E561EAEA9D79C0CCD4915 /* libPods-ReactNavigation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNavigation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNavigation/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E6EBCB4C515B35EABAF4D8B /* libPods-ReactNavigation-ReactNavigationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNavigation-ReactNavigationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +99,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				3C844CA427A5B65D0007895B /* BridgingHeader.swift */,
+				3C844CA827A5FA8A0007895B /* Header.swift */,
 			);
 			name = ReactNavigation;
 			sourceTree = "<group>";
@@ -99,6 +108,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C844CA627A5BE050007895B /* KakaoOpenSDK-1.23.9 */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				7B6E561EAEA9D79C0CCD4915 /* libPods-ReactNavigation.a */,
 				8E6EBCB4C515B35EABAF4D8B /* libPods-ReactNavigation-ReactNavigationTests.a */,
@@ -122,6 +132,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				FE9A64B0ED560015AA2302E5 /* Pods */,
+				3C26CEE727A5ABBB00311A52 /* ReactNavigation-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -207,7 +218,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -243,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				3C844CA727A5BE050007895B /* KakaoOpenSDK-1.23.9 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,8 +422,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C844CA927A5FA8A0007895B /* Header.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				3C844CA527A5B65D0007895B /* BridgingHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +444,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C074CDF6BC790DF21CE177AE /* Pods-ReactNavigation-ReactNavigationTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HH2KUKCYC7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -458,6 +473,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A33A669B283C8DE8F19E2FA0 /* Pods-ReactNavigation-ReactNavigationTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = HH2KUKCYC7;
@@ -493,15 +509,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = NCORES;
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ncores.test;
 				PRODUCT_NAME = ReactNavigation;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNavigation-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -524,9 +538,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = NCORES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ncores.test;
 				PRODUCT_NAME = ReactNavigation;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNavigation-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -587,8 +603,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/lib/swift\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
