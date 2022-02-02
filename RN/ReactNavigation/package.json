@@ -9,10 +9,11 @@
     "test": "jest",
     "lint": "eslint .",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
-
   },
   "dependencies": {
+    "@actbase/react-kakaosdk": "^0.9.19",
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-seoul/kakao-login": "^3.4.3",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
@@ -21,6 +22,8 @@
     "history": "4.10.1",
     "immer": "^9.0.7",
     "ios": "^0.0.1",
+    "lottie-ios": "^3.2.3",
+    "lottie-react-native": "^5.0.1",
     "react": "17.0.2",
     "react-native": "^0.66.4",
     "react-native-anchor-carousel": "^4.0.1",
@@ -28,6 +31,7 @@
     "react-native-cli": "^2.0.1",
     "react-native-image-picker": "^4.7.0",
     "react-native-paper": "^4.11.1",
+    "react-native-progress": "^5.0.0",
     "react-native-ratings": "^8.1.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",

@@ -21,7 +21,7 @@ const markCosmeticAPI = (id,elementId,categoryId) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: `http://54.180.134.111/cosmetic/mark/${id}`,
+      url: `https://plaluvs-backend.me/cosmetic/mark/${id}`,
        data: {},
          headers: {
             // "Content-Type": "multipart/form-data",
@@ -36,7 +36,8 @@ const markCosmeticAPI = (id,elementId,categoryId) => {
           if(categoryId!=0)
           dispatch(cosActions.detailCosmeticAPI(categoryId))
        dispatch(myActions.userCosmeticAPI())
-       dispatch(cosActions.simpleCosmeticAPI())
+          dispatch(cosActions.simpleCosmeticAPI())
+        if(elementId!=100000)
        dispatch(cosActions.elementCosmeticAPI(elementId, categoryId))
       })
          .catch(async (err) => {
@@ -51,7 +52,7 @@ const markElementAPI = (element,elementId,categoryId) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
-        url: `http://54.180.134.111/elements/mark/${element}`,
+        url: `https://plaluvs-backend.me/elements/mark/${element}`,
          data: {},
            headers: {
               // "Content-Type": "multipart/form-data",

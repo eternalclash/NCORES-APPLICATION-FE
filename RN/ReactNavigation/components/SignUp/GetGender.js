@@ -4,10 +4,12 @@ import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as signActions } from '../../redux/modules/sign'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 const GetGender = ({ navigation, route }) => {
     const check = useSelector((state) => state.sign.check); 
     const genderError = useSelector(state => state.sign.genderError)
     const [gender, setGender] = useState("")
+    const { top } = useSafeAreaInsets();
     const dispatch = useDispatch();
     useEffect(() => {
         if (check)
@@ -31,6 +33,9 @@ const GetGender = ({ navigation, route }) => {
     return (
         <>
             <View style={styles.fullscreen}>
+            <View style={{
+                height:100,backgroundColor:"white"
+            }}></View>
                 <Text style={styles.text}>이제 플라롭스로 관리하세요</Text>
                 <Text style={styles.text1}>성별을 선택해주세요</Text>
                 <View style={styles.form}>
@@ -76,7 +81,8 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+        
+        backgroundColor:"white"
     },
     text: {
         fontSize: 18,

@@ -120,7 +120,7 @@ const MyPage = ({ navigation }) => {
                      })
                         }
                          
-                            </ScrollView>:<><Text style={{marginLeft:20}}>찜한 성분이 없습니다.</Text></>}       
+                            </ScrollView>:<><Text style={{marginLeft:20,marginVertical:40,fontSize:30}}>찜한 성분이 없습니다.</Text></>}       
           
                
              <View style={styles.information}>
@@ -129,7 +129,7 @@ const MyPage = ({ navigation }) => {
                     </View>
                     {
                         myCosmetics[0] ? <MyCosmeticsCarousel myCosmetics={myCosmetics} /> : 
-                        <><Text style={{marginLeft:20}}>찜한 성분이 없습니다.</Text></>
+                        <><Text style={{marginLeft:20,marginVertical:40,fontSize:30}}>찜한 성분이 없습니다.</Text></>
                     }
             
                 </View>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
          fontWeight: "500",
      },
     informationKeyword: {
-
+        
         fontSize: 20,
         fontWeight: "500",
     },

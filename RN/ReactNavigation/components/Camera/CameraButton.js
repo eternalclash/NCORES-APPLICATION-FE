@@ -18,7 +18,7 @@ const imagePickerOption = {
   mediaType: 'photo',
   maxWidth: 768,
   maxHeight: 768,
-
+  cameraType:'front',
 };
 
 function CameraButton() {

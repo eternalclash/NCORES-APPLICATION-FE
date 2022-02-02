@@ -5,13 +5,15 @@ import { Rating } from 'react-native-ratings'
 import { actionCreators as checkActions } from '../../redux/modules/check'
 import { useDispatch,useSelector } from 'react-redux'
 import CustomButton from '../CustomButton'
+import CameraLoading from '../CameraLottie'
 const CameraRating = ({ navigation }) => {
     const dispatch = useDispatch();
     const cameraCheck = useSelector(state => state.check.cameraCheck)
-    const [rate,setRate] = useState(2)
+    const [rate, setRate] = useState(2)
+    const [loading,setLoading] = useState(false)
     useEffect(() => {
         if (cameraCheck)
-        {   
+        {   setLoading(false)
             dispatch(checkActions.cameraCheck(false))
             navigation.navigate("CameraPage")
             }
@@ -21,14 +23,14 @@ const CameraRating = ({ navigation }) => {
         setRate(rating)
     }
     const rateHandler = () => {
-         
+         setLoading(true)
         dispatch(checkActions.ratingAPI(rate))
         // dispatch(signActions.setWorryAPI())
 
         // if (check)
         //     navigation.navigate("GetAge")
     }
-
+    if(!loading)
     return (
         <View style={styles.main}> 
             <Text style={styles.font}>오늘의 피부 몇 점인가요?</Text>
@@ -57,6 +59,10 @@ const CameraRating = ({ navigation }) => {
 
         </View>
     )
+    if (loading)
+        return (
+            <CameraLoading/>
+        )
 }
 const styles = StyleSheet.create({
     main: {

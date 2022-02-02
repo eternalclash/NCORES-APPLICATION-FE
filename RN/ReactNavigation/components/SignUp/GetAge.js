@@ -33,8 +33,8 @@ const GetAge = ({ navigation, route }) => {
     const [age1, setAge1] = useState('');
     const [age2, setAge2] = useState('');
     const [age3, setAge3] = useState('');
-
-    const ageHandler0 = (value) => {
+    const [all,setAll] = useState('')
+     const ageHandler0 = (value) => {
         setAge(value)
         if(value.length>0)
         number1.current.focus()
@@ -56,14 +56,19 @@ const GetAge = ({ navigation, route }) => {
             Keyboard.dismiss();
     }
     const ageHandler = () => {
-        console.log(age+age1+age2+age3)
+
+        setAll(age + age1 + age2 + age3)
+        console.log(all)
         dispatch(signActions.setAgeAPI(age+age1+age2+age3))
-        setAge("")
+     
     }
 
     return (
         <>
             <View style={styles.fullscreen}>
+            <View style={{
+                height:100,backgroundColor:"white"
+            }}></View>
                 <Text style={styles.text}>언제 태어나셨나요?</Text>
                 <Text style={styles.text1}>태어난 년도를 입력해주세요</Text>
                 <View style= {styles.form}>
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+       backgroundColor:"white",
     },
     text: {
         fontSize: 18,

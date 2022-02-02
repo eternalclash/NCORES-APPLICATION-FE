@@ -29,7 +29,7 @@ const initialState = {
 
 const cameraReportAPI = (id) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/skin/status", {
+    await axios.get("https://plaluvs-backend.me/skin/status", {
       headers: {
         // "Content-Type": "multipart/form-data",
     //   Accept: "application/json",
@@ -59,7 +59,7 @@ const markElementAPI = (element) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
-        url: `http://54.180.134.111/elements/mark/${element}`,
+        url: `https://plaluvs-backend.me/elements/mark/${element}`,
          data: {},
            headers: {
               // "Content-Type": "multipart/form-data",

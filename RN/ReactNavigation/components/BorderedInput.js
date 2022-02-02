@@ -3,7 +3,7 @@ import { TextInput } from 'react-native'
 import { StyleSheet } from 'react-native'
 const BorderedInput = ({hasMarginBottom, ...rest},ref) => {
     return (
-        <TextInput style={[styles.input, hasMarginBottom && styles.margin]}
+        <TextInput  placeholderTextColor="gray" style={[styles.input, hasMarginBottom && styles.margin]}
             ref={ref}
             {...rest}
         />
@@ -15,8 +15,9 @@ const styles = StyleSheet.create({
         borderColor: '#bdbdbd',
         borderWidth: 1,
         borderRadius: 4,
-        height: 48,
+        height: 60,
         backgroundColor: 'white',
+        
     },
     margin: {
         marginBottom: 16,

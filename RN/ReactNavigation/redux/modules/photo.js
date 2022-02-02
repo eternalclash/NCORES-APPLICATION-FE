@@ -2,10 +2,13 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
-
+import { actionCreators as CosmeticActions } from "./cosmetics";
+import { actionCreators as ReportActions } from "./report"
+ const CHECK_PHOTO = "CHECK_PHOTO"
+const checkPhoto = createAction(CHECK_PHOTO,(checkPhoto)=>({checkPhoto}))
 
 const initialState = {
-   
+   checkPhoto:""
 }
 
 
@@ -13,8 +16,8 @@ const postImageAPI = (image) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/photo",
-       data: {image: image},
+      url: "https://plaluvs-backend.me/photo",
+       data: image,
          headers: {
             "Content-Type": "multipart/form-data",
         //   Accept: "application/json",
@@ -23,14 +26,15 @@ const postImageAPI = (image) => {
         },
       })
         .then(async(res) => { //바디 부분
-         console.log(await AsyncStorage.getItem("token"))
-         
-         console.log("사진 성공!")
+
+          dispatch(checkPhoto("success"))
+         dispatch(ReportActions.cameraReportAPI())
+         dispatch(CosmeticActions.mainCosmeticAPI())
       })
          .catch(async (err) => {
             console.log(await AsyncStorage.getItem("token"))
-        console.log("사진 전송 실패")
-      
+
+         dispatch(checkPhoto("fail"))
         throw new Error(err);
       });
   };
@@ -40,7 +44,10 @@ const postImageAPI = (image) => {
 export default handleActions(
     {
       
-       
+      [CHECK_PHOTO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.checkPhoto = action.payload.checkPhoto
+      }),
         
     },
   
@@ -49,4 +56,5 @@ export default handleActions(
 
   export const actionCreators = {
     postImageAPI,
+    checkPhoto,
   };

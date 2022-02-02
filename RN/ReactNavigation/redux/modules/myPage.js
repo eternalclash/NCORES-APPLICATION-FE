@@ -18,7 +18,7 @@ const initialState = {
 
 const userElementsAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/user/elements", {
+    await axios.get("https://plaluvs-backend.me/user/elements", {
       headers: {
         // "Content-Type": "multipart/form-data",
     //   Accept: "application/json",
@@ -41,7 +41,7 @@ const userElementsAPI = (cosmetic) => {
 };
 const userInfoAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/user/info", {
+    await axios.get("https://plaluvs-backend.me/user/info", {
       headers: {
         // "Content-Type": "multipart/form-data",
     //   Accept: "application/json",
@@ -64,7 +64,7 @@ const userInfoAPI = (cosmetic) => {
 };
 const userCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
-      await axios.get("http://54.180.134.111/user/cosmetic", {
+      await axios.get("https://plaluvs-backend.me/user/cosmetic", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",

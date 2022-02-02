@@ -36,10 +36,10 @@ const GetEmail = ({ navigation, route }) => {
     return (
         <>
             <View style={{
-                height:top
+                height:top,backgroundColor:"white"
             }}></View>
          
-            <View>
+            <View style={{backgroundColor:"white"}}>
                 <Pressable onPress={()=>navigation.navigate("SignIn")}>
                     <Icon name="chevron-left" size={60}></Icon>
                 </Pressable>
@@ -79,7 +79,7 @@ const GetEmail = ({ navigation, route }) => {
 }
 const styles = StyleSheet.create({
     fullscreen: {
-      
+        backgroundColor:"white",
         alignItems: 'center',
     
     },

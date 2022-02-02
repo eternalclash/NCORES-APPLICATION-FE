@@ -75,8 +75,8 @@ export default function ShopList() {
                       <Text style={{fontSize:15,marginLeft:20}}>스킨케어</Text> 
                           <Icon name="chevron-down" size={30} /> 
                           </Pressable>
-                      <Text style={{fontSize:15,marginLeft:10}}>헤어케어</Text> 
-                      <Icon name="chevron-down" size={30}/>   
+                    
+                   
                   </View>
                   <View style={{justifyContent:"center",alignItems:"center",marginRight:20}}>
                  <Text style={{fontSize:15}}>가격순</Text>
@@ -121,10 +121,10 @@ export default function ShopList() {
                       <Text style={{ textAlign: "center" }}>{e.price} </Text>
                       {
                         e.likeCheck ?
-                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}>
+                        <Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,100000,e.categoryId))}>
                         <Image source={require('../../image/true.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
-                          :<Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,e.categoryId))}>
+                          :<Pressable onPress={() => dispatch(markActions.markCosmeticAPI(e.id,100000,e.categoryId))}>
                         <Image source={require('../../image/false.png')}   style={{width:28,height:28,marginBottom:10}} resizeMode="stretch"/>
                         </Pressable>  
                       }

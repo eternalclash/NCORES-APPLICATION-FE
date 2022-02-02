@@ -79,6 +79,35 @@ const checkLoginMD = (check) => {
 
 };
 
+
+const kakaoLoginAPI = (email,password,nickname) => {
+  return async function  (dispatch, navigation) {
+  
+    await axios({
+      method: "POST",
+      url: "https://plaluvs-backend.me/user/kakao/login",
+       data: { email,password,nickname },
+       headers: {
+          Accept: "application/json",
+           "Access-Control-Allow-Origin": "*",
+         
+        },
+      })
+        .then(async(res) => { //바디 부분
+          console.log(res.data)
+          dispatch(loginError(""))
+          await AsyncStorage.setItem('token',res.data.token)
+          await dispatch(login(res.data.ageExist && res.data.genderExist))  
+          await dispatch(check(true))
+      })
+         .catch(async (err) => {
+           
+        console.log("카카오 에러")
+      
+        throw new Error(err);
+      });
+  };
+};
 const worryLoginMD = (check) => {
   return async function (dispatch) {
    dispatch(worryLogin(check))
@@ -92,7 +121,7 @@ const deleteUserAPI = (password) => {
   return async function  (dispatch, navigation) {
     await axios({
       method: "POST",
-      url: "http://54.180.134.111/user/delete",
+      url: "https://plaluvs-backend.me/user/delete",
        data: { password },
        headers: {
           Accept: "application/json",
@@ -119,7 +148,7 @@ const checkEmailAPI = (email) => {
     return function (dispatch, { navigation }) {
       axios({
         method: "POST",
-        url: "http://54.180.134.111/user/email/check",
+        url: "https://plaluvs-backend.me/user/email/check",
         data: { email },
         headers: {
           Accept: "application/json",
@@ -145,7 +174,7 @@ const checkPasswordAPI = (password,confirmPassword) => {
     return function (dispatch, navigation) {
       axios({
         method: "POST",
-        url: "http://54.180.134.111/user/password/check",
+        url: "https://plaluvs-backend.me/user/password/check",
         data: { password,confirmPassword },
         headers: {
           Accept: "application/json",
@@ -168,7 +197,7 @@ const setGenderAPI = (gender) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "PATCH",
-        url: "http://54.180.134.111/user/gender",
+        url: "https://plaluvs-backend.me/user/gender",
          data: { gender },
          headers: {
             Accept: "application/json",
@@ -193,7 +222,7 @@ const setAgeAPI = (age) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "PATCH",
-      url: "http://54.180.134.111/user/age",
+      url: "https://plaluvs-backend.me/user/age",
        data: { age },
        headers: {
           Accept: "application/json",
@@ -217,7 +246,7 @@ const setIndicateAPI = (indicate) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/skin/now/status",
+      url: "https://plaluvs-backend.me/skin/now/status",
        data: { skinId:indicate },
        headers: {
           Accept: "application/json",
@@ -241,7 +270,7 @@ const setWorryAPI = (worry) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/skin/worry",
+      url: "https://plaluvs-backend.me/skin/worry",
        data: {id:worry},
        headers: {
           Accept: "application/json",
@@ -265,7 +294,7 @@ const setHeadAPI = (worry) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/skin/worry",
+      url: "https://plaluvs-backend.me/skin/worry",
        data: {id:worry},
        headers: {
           Accept: "application/json",
@@ -289,7 +318,7 @@ const signUpAPI = (email,password,confirmPassword,nickname) => {
     return function (dispatch) {
       axios({
         method: "POST",
-        url: "http://54.180.134.111/user",
+        url: "https://plaluvs-backend.me/user",
         data: { email,password,confirmPassword,nickname},
         headers: {
           Accept: "application/json",
@@ -314,7 +343,7 @@ const logInAPI =   (email,password) => {
   return function(dispatch) {
     axios({
       method: "POST",
-      url: "http://54.180.134.111/user/login",
+      url: "https://plaluvs-backend.me/user/login",
       data: { email,password},
       headers: {
         Accept: "application/json",
@@ -446,7 +475,8 @@ export default handleActions(
   );
 
 export const actionCreators = {
-    worryLoginMD,
+  worryLoginMD,
+  kakaoLoginAPI,
    //로그인 체크
       checkLoginMD,
       checkEmailAPI,

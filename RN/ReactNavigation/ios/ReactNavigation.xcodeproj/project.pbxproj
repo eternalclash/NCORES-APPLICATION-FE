@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2855867AD2C867461BCF88A1 /* libPods-ReactNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6E561EAEA9D79C0CCD4915 /* libPods-ReactNavigation.a */; };
+		3C32274C27A66DCD00446616 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C32274B27A66DCD00446616 /* Assets.xcassets */; };
 		3C844CA527A5B65D0007895B /* BridgingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C844CA427A5B65D0007895B /* BridgingHeader.swift */; };
 		3C844CA727A5BE050007895B /* KakaoOpenSDK-1.23.9 in Resources */ = {isa = PBXBuildFile; fileRef = 3C844CA627A5BE050007895B /* KakaoOpenSDK-1.23.9 */; };
 		3C844CA927A5FA8A0007895B /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C844CA827A5FA8A0007895B /* Header.swift */; };
@@ -40,6 +41,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ReactNavigation/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNavigation/main.m; sourceTree = "<group>"; };
 		3C26CEE727A5ABBB00311A52 /* ReactNavigation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNavigation-Bridging-Header.h"; sourceTree = "<group>"; };
+		3C32274B27A66DCD00446616 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../../Downloads/AppIcons/Assets.xcassets; sourceTree = "<group>"; };
 		3C844CA427A5B65D0007895B /* BridgingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgingHeader.swift; sourceTree = "<group>"; };
 		3C844CA627A5BE050007895B /* KakaoOpenSDK-1.23.9 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "KakaoOpenSDK-1.23.9"; path = "../../../../../../Downloads/KakaoOpenSDK-1.23.9"; sourceTree = "<group>"; };
 		3C844CA827A5FA8A0007895B /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3C32274B27A66DCD00446616 /* Assets.xcassets */,
 				13B07FAE1A68108700A75B9A /* ReactNavigation */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ReactNavigationTests */,
@@ -255,6 +258,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				3C844CA727A5BE050007895B /* KakaoOpenSDK-1.23.9 in Resources */,
+				3C32274C27A66DCD00446616 /* Assets.xcassets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +504,7 @@
 			baseConfigurationReference = AF8035E3587BA266BF4CFF13 /* Pods-ReactNavigation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HH2KUKCYC7;
@@ -525,6 +530,7 @@
 			baseConfigurationReference = BE86E600334674A857D074E0 /* Pods-ReactNavigation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HH2KUKCYC7;

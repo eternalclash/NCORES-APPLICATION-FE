@@ -2,26 +2,42 @@ import React, {useEffect, useRef, useState} from 'react'
 import { View,StyleSheet,Pressable,TextInput,Image,useWindowDimensions,Text,Button } from 'react-native'
 import { NavigationContainer, useRoute } from '@react-navigation/native';
 import CustomButton from './CustomButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { actionCreators as photoActions } from '../redux/modules/photo';
+import CameraLoading from './CameraLottie';
 const UploadScreen = ({navigation}) => {
     const route = useRoute();
     const { res } = route.params || {};
     const { width } = useWindowDimensions();
-    // console.log(res.assets[0])
+    console.log(res.assets[0])
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false)
+    const cameraCheck = useSelector(state => state.photo.checkPhoto)
+    useEffect(() => {
+        if (cameraCheck=="success")
+        {   setLoading(false)
+            dispatch(photoActions.checkPhoto(0))
+            navigation.navigate("MainReport")
+        }
+        if (cameraCheck=="fail")
+        {   setLoading(false)
+            dispatch(photoActions.checkPhoto(0))
+            navigation.navigate("ErrorUploadScreen")
+            }
+    }, [cameraCheck])
     const PhotoHandler = () => {
-     
+        setLoading(true)
         const formData = new FormData();
-        // formData.append("image", {
-        //     uri: res.assets[0].uri, type: res.assets[0].type, name: res.assets[0].fileName
-        // })
+        formData.append("image", {
+            uri: res.assets[0].uri.replace('file://', ''), type: res.assets[0].type, name: res.assets[0].fileName
+        })
         dispatch(photoActions.postImageAPI(formData))
     }
+    if(!loading)
     return (
         <View style={styles.block}>
             <Image
-                // source={{ uri: res.assets[0]?.uri }}
+                source={{ uri: res.assets[0]?.uri }}
                 style={[styles.image]}
                 resizeMode="cover"
             />
@@ -40,10 +56,10 @@ const UploadScreen = ({navigation}) => {
                     </View>
             </Pressable>
             
-            <Pressable style={styles.form1} onPress={()=>navigation.navigate("MainReport")}>   
+            <Pressable style={styles.form1} onPress={PhotoHandler}>   
             <View >     
                    
-                    <Text style={styles.textMedium}>결과보기</Text>    
+                    <Text style={styles.textMedium}>진단하기</Text>    
                    
                     </View>
                     </Pressable>
@@ -52,6 +68,11 @@ const UploadScreen = ({navigation}) => {
         
         </View>
     )
+
+    if (loading)
+        return (
+            <CameraLoading/>
+        )
 }
 
 const styles = StyleSheet.create({

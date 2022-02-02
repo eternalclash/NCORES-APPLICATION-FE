@@ -103,7 +103,7 @@ const initialState = {
 
 const getListAPI = (id) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/skin/status/list", {
+    await axios.get("https://plaluvs-backend.me/skin/status/list", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",
@@ -127,7 +127,7 @@ const getListAPI = (id) => {
 };
 const getBoumanAPI = (element) => {
     return async function  (dispatch, navigation) {
-      await axios.get("http://54.180.134.111/skin/status/bouman", {
+      await axios.get("https://plaluvs-backend.me/skin/status/bouman", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",

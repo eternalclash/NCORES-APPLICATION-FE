@@ -1,11 +1,12 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, isValidElement} from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as checkActions } from '../../redux/modules/check'
+import CameraLoading from '../CameraLottie'
 const CameraConcern = ({ navigation, route }) => {
-
+    const [loading,setLoading] = useState(false)
     const [num1, setNum1] = useState(false)
     const [num2, setNum2] = useState(false)
     const [num3, setNum3] = useState(false)
@@ -16,7 +17,7 @@ const CameraConcern = ({ navigation, route }) => {
     const cameraCheck = useSelector(state => state.check.cameraCheck)
     useEffect(() => {
         if (cameraCheck)
-        {   
+        {   setLoading(false)
             dispatch(checkActions.cameraCheck(false))
             navigation.navigate("CameraIndicate")
             }
@@ -34,7 +35,8 @@ const CameraConcern = ({ navigation, route }) => {
         if (num5)
             arr.push(5)
          if (num6)
-            arr.push(6)
+             arr.push(6)
+        setLoading(true)
         dispatch(checkActions.check2API(arr))
         // dispatch(signActions.setWorryAPI())
 
@@ -42,7 +44,7 @@ const CameraConcern = ({ navigation, route }) => {
         //     navigation.navigate("GetAge")
     }
 
-   
+   if(!loading)
     return (
         <>
             <View style={styles.fullscreen}>
@@ -113,12 +115,12 @@ const CameraConcern = ({ navigation, route }) => {
                          ?<CustomButton color="red"
                          title="없음" theme="secondary" hasMarginBottom
                          onPress={() => {
-                                         setNum5(!num5)
+                                         setNum6(!num6)
                             }} />:
                             <CustomButton
                             title="없음" theme="secondary" hasMarginBottom
                             onPress={() => {
-                                setNum5(!num5)
+                                setNum6(!num6)
                         }} />
                     }
                
@@ -133,6 +135,11 @@ const CameraConcern = ({ navigation, route }) => {
             </View>   
         </>
     )
+
+    if (loading)
+        return (
+            <CameraLoading/>
+        )
 }
 const styles = StyleSheet.create({
     fullscreen: {

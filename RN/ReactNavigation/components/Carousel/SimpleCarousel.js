@@ -36,19 +36,17 @@ export default function SimpleCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, name, likeCheck,id} = item;
+    const {img, name, likeCheck,id,naverUrl,categoryId} = item;
     return (
       <Pressable
         activeOpacity={1}
         style={styles.item}
-        onPress={() => {
-          carouselRef.current.scrollToIndex(index);
-        }}>
+        onPress={()=>Linking.openURL(naverUrl)}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {
           likeCheck? <Pressable style={styles.heart}
-            onPress={() => dispatch(markActions.markCosmeticAPI(id))}
+            onPress={() => dispatch(markActions.markCosmeticAPI(id,100000,categoryId))}
 
           >
        
@@ -56,7 +54,7 @@ export default function SimpleCarousel(props) {
             style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
        
          </Pressable>
-            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,0))}>
+            : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,100000,categoryId))}>
               <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
               </Image>
 

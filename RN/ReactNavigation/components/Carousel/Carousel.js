@@ -13,7 +13,10 @@ import {
 import Carousel from 'react-native-anchor-carousel';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useDispatch, useSelector } from 'react-redux';
+import {WithLocalSvg} from 'react-native-svg'
 import { actionCreators as markActions } from '../../redux/modules/mark';
+import trueSvg from '../../image/true.svg'
+import falseSvg from '../../image/false.svg'
 const {width: windowWidth} = Dimensions.get('window');
 
 
@@ -36,14 +39,12 @@ export default function ShopCarousel(props) {
   }
 
   function renderItem({item, index}) {
-    const {img, name, likeCheck,id,categoryId} = item;
+    const {img, name, likeCheck,id,categoryId,naverUrl} = item;
     return (
       <Pressable
         activeOpacity={1}
         style={styles.item}
-        onPress={() => {
-          carouselRef.current.scrollToIndex(index);
-        }}>
+        onPress={()=>Linking.openURL(naverUrl)}>
 
         <Image source={{ uri: img }} style={styles.image} resizeMode='cover' />
         {
@@ -52,14 +53,23 @@ export default function ShopCarousel(props) {
 
           >
        
-            <Image source={require('../../image/true.png')}
-            style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
+       <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={trueSvg}/>
+           
+
        
          </Pressable>
             : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id))}>
-              <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
-              </Image>
-
+              {/* <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
+              </Image> */}
+              <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={falseSvg}/>
               </Pressable>
 
 }

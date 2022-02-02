@@ -54,12 +54,17 @@ const BlueTooth = () => {
   const [connect, setConnect] = useState();
   
   const [working, setWorking] = useState();
-  const [time, setTime] = useState();
+  const [time, setTime] = useState(1);
   const [mode, setMode] = useState();
   const [level, setLevel] = useState();
   
   console.log(working,time,mode,level)
+  // useEffect(() => {
+  //   setInterval(() => {
+  //    setTime(time+1)
+  //   }, 1000);
 
+  // }, [time]);
 
   const startScan = () => {
     if (!isScanning) {
@@ -124,25 +129,44 @@ const BlueTooth = () => {
       await  BleManager.connect(peripheral.id).then(async() => {
       
          await   BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
-          
+          let p = peripherals.get(peripheral.id);
+          if (p) {
+            p.connected = true;
+            peripherals.set(peripheral.id, p);
+            setList(Array.from(peripherals.values()));
+          }
               const k =peripheralData.characteristics[0].value.bytes.map((e, index) => { return String.fromCharCode(e) }).join("")
-                console.log(k)
+           console.log(k)
+           
               if (k.split(",")[1].split(":")[0] == "Level")
                   setWorking(stopped)
               
               if (k.split(":")[1].split(",")[0])
               {
-                  if (k.split(":")[1].split(",")[0] == "working")
-                      setWorking("동작")
-                  else if (k.split(":")[1].split(",")[0] == "charging")
-                      setWorking("충전 중")
+                if (k.split(":")[1].split(",")[0] == "working")
+                {
+                  setWorking("동작")
+                  setMode(k.split(":")[3].split(",")[0])
+                  setLevel(k.split(":")[4].split(" ")[0])
+          
+                    }
+                      
+                else if (k.split(":")[1].split(",")[0] == "charging")
+                {
+                  setWorking("충전 중")
+                  setMode(k.split(":")[3].split(",")[0])
+                  setLevel(k.split(":")[4].split(" ")[0])
+           
+                  }
+                     
                   else {
-                      setWorking("정지")       
+                  setWorking("정지") 
+                  setLevel(0)
+               
                   }
                  //나머지 처리
+              
                  setTime(Number(k.split(":")[2].split(",")[0].split(" ")[0]))
-                 setMode(k.split(":")[3].split(",")[0])
-                 setLevel(k.split(":")[4].split(" ")[0])
                   }
               
               // console.log(k.split(":")[1].split(",")[0])  //working
@@ -195,6 +219,7 @@ const BlueTooth = () => {
       {
         setConnect(true)
         setInterval(() => {
+         
           testPeripheral(item)   
         }, 2000)
         }
@@ -230,11 +255,11 @@ const BlueTooth = () => {
           <View style={{ flexDirection: "row",justifyContent:'center',alignItems:'center',marginTop:50,marginHorizontal:30 }}>
             <Pressable style={{ width: "50%", borderWidth: 0.7, height: 100, borderRadius: 4, borderColor: "gba(153, 153, 153, 0.5)",justifyContent:'center',alignItems:'center',marginRight:20}}>
               <Image source={require("../image/Alarm2.png")} style={{ width: 25, height: 25 }} resizeMode='cover'></Image>   
-              <Text style={{ marginTop: 5 }}>{time ? time : "00초"}</Text>
+              <Text style={{ marginTop: 5 }}>{time ? time+"초" : "00초"}</Text>
           </Pressable>
             <Pressable style={{ width: "50%", borderWidth: 0.7, height: 100, borderRadius: 4, borderColor: "gba(153, 153, 153, 0.5)",justifyContent:'center',alignItems:'center' }} >
             <Image source={require("../image/stop.png")} style={{ width: 16, height: 25 }} resizeMode='cover'></Image>   
-              <Text style={{ marginTop: 5 }}>{ mode? mode: "정지"}</Text>
+              <Text style={{ marginTop: 5 }}>{ working? working: "정지"}</Text>
             </Pressable>
 
           </View>

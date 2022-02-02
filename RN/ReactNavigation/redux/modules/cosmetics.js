@@ -24,7 +24,7 @@ const initialState = {
 
 const mainCosmeticAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/cosmetic/worry-recommends", {
+    await axios.get("https://plaluvs-backend.me/cosmetic/worry-recommends", {
       headers: {
         // "Content-Type": "multipart/form-data",
     //   Accept: "application/json",
@@ -48,7 +48,7 @@ const mainCosmeticAPI = (cosmetic) => {
 
 const categoryAllAPI = (cosmetic) => {
   return async function  (dispatch, navigation) {
-    await axios.get("http://54.180.134.111/category", {
+    await axios.get("https://plaluvs-backend.me/category", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",
@@ -72,7 +72,7 @@ const categoryAllAPI = (cosmetic) => {
 
 const categoryCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
-      await axios.get("http://54.180.134.111/cosmetic/detail-recommends/617/1", {
+      await axios.get("https://plaluvs-backend.me/cosmetic/detail-recommends/617/0", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",
@@ -96,7 +96,7 @@ const categoryCosmeticAPI = (cosmetic) => {
 };
 const detailCosmeticAPI = (id) => {
   return async function  (dispatch, navigation) {
-    await axios.get(`http://54.180.134.111/cosmetic/detail-recommends/${id}/0`, {
+    await axios.get(`https://plaluvs-backend.me/cosmetic/detail-recommends/${id}/0`, {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",
@@ -119,7 +119,7 @@ const detailCosmeticAPI = (id) => {
 };
   const simpleCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
-      await axios.get("http://54.180.134.111/cosmetic/simple-recommends", {
+      await axios.get("https://plaluvs-backend.me/cosmetic/simple-recommends", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",
@@ -142,7 +142,7 @@ const detailCosmeticAPI = (id) => {
   };
   const elementCosmeticAPI = (elementsId,categoryId) => {
     return async function  (dispatch, navigation) {
-      await axios.get(`http://54.180.134.111/cosmetic/elements-recommend/${elementsId}/${categoryId}/0`, {
+      await axios.get(`https://plaluvs-backend.me/cosmetic/elements-recommend/${elementsId}/${categoryId}/0`, {
         headers: {
           // "Content-Type": "multipart/form-data",
       //   Accept: "application/json",

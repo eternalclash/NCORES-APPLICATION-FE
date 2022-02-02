@@ -50,7 +50,68 @@ const MainSkinPage = ({navigation}) => {
     console.log(getList)
 
    if(aquaScore.data&&oillScore.data&&pigmentScore.data&&winkleScore.data&&sensitiveScore.data)
-    return (
+       return (
+           getList.status == 0 ?
+           <View style={{ flex: 1,backgroundColor:"#F5EBE8" }}>
+           <View  >
+           <View style={{backgroundColor:"#F5EBE8"}}>
+               <View style={{ height: top }}></View>
+               <View style={styles.row1}>
+                   <Text style={styles.profileText1}>피부 점수</Text>
+                   <Text style={styles.profileText2}>추천화장품</Text>
+                   </View> 
+               <View style={{width:"100%",borderBottomWidth:1,}}></View>    
+                   <Text style={{ fontSize: 18, marginTop: 30, marginLeft: 10, fontWeight: "500", lineHeight: 22, }}>{getList.text}</Text>
+         
+            
+                  
+             
+             
+                
+          
+        
+
+                       {
+                           getList.status == 1 ?
+                          
+                                   <Pressable >
+                                <Text style={{position:'absolute',color:"black",left:120,top:40}}>오늘의 피부는 몇점인가요</Text>
+                               <View style={styles.lowButton1}>
+                                           <Pressable>
+                                           <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>
+                                   </Pressable>
+                          
+                           </View>
+                           </Pressable> : 
+                               <Pressable onPress={()=>{navigation.navigate("CameraCheck")}}>
+                               <View style={styles.lowButton2}>
+                    <Text>오늘의 피부 진단 하기</Text>
+                    </View>
+                    </Pressable>
+                       }
+                  
+   
+                 
+               
+          <Pressable onPress={()=>navigation.navigate("ShopList") } style={{marginTop:50}}>
+                   <View style={styles.information}>
+                      
+               <Text style={styles.informationKeyword}>나에게 맞는 제품 찾기</Text>
+                           <Icon name="chevron-right" size={45}></Icon>
+                         
+                       </View>
+                       </Pressable>
+               <SimpleCarousel simpleCos={simpleCos} />
+              
+          
+                   <View style={{height:30}}>
+
+</View>
+                   </View>
+           </View>
+
+       </View>
+               :
         <ScrollView style={{ flex: 1 }}>
             <View  >
             <View style={{backgroundColor:"#F5EBE8"}}>
@@ -78,20 +139,20 @@ const MainSkinPage = ({navigation}) => {
                         
                   
                 </View>
-              
+           
          
 
                         {
                             getList.status == 1 ?
                            
-                            <Pressable>
+                            <Pressable  onPress={()=>navigation.navigate("CameraCheck")}>
                                  <Text style={{position:'absolute',color:"black",left:120,top:40}}>오늘의 피부는 몇점인가요</Text>
                                 <View style={styles.lowButton1}>
                                     
                             <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>
                             </View>
                             </Pressable> : 
-                                <Pressable>
+                                <Pressable  onPress={()=>navigation.navigate("CameraCheck")}>
                                 <View style={styles.lowButton2}>
                      <Text>오늘의 피부 진단 하기</Text>
                      </View>

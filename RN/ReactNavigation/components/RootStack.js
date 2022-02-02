@@ -37,6 +37,10 @@ import XAxisExample from './XAxisExample';
 import GetOut from './MyPage/GetOut';
 import Thank from './MyPage/Thank';
 import MyElementList from './Report/MyElementList';
+import CameraLottie from './CameraLottie';
+import CameraLoading from './CameraLottie';
+import ErrorUploadScreen from './ErrorUploadScreen';
+import MainPage from './MainPage';
 
 
 // const get = async () => {
@@ -80,7 +84,7 @@ const RootStack = ({ navigation }) => {
      
      return (
          <Stack.Navigator 
-
+       
          >
              {
            login?  
@@ -120,6 +124,13 @@ const RootStack = ({ navigation }) => {
               <Stack.Screen
                 name="MainReport"
                 component={MainReport}
+                options={{
+                    headerShown: false
+                }}
+             />
+               <Stack.Screen
+                name="ErrorUploadScreen"
+                component={ErrorUploadScreen}
                 options={{
                     headerShown: false
                 }}
@@ -171,19 +182,25 @@ const RootStack = ({ navigation }) => {
                 options={{headerShown: false}}
             />
             
+            <Stack.Screen
+                name="CameraLoading"
+                component={CameraLoading}
+                options={{headerShown: false}}
+            />
               <Stack.Screen
                 name="BlueTooth"
                 component={BlueTooth}
                 options={{
-                    title: "기기연결",
+                    title:"",
                     headerTintColor: 'black',
-                    headerStyle: {
-                   
-                        headerHideShadow: true
-                    },
+             
                     headerShadowVisible: false, // applied here
                     headerBackTitleVisible: false,
-            
+                    headerLeft: () => {<Pressable onPress={()=>navigation.reset("MainPage")}>
+                      <Icon name="chevron-left" size={50}></Icon>
+                    </Pressable>
+
+                    }
                 }}
             />
                <Stack.Screen
@@ -292,7 +309,11 @@ const RootStack = ({ navigation }) => {
             <Stack.Screen
                 name="GetEmail"
                 component={GetEmail}
-                options={{headerShown: false}}
+                 options={{
+                     headerShown: false,
+                     headerStyle: {
+                        backgroundColor: 'white'
+                      },}}
             />
             <Stack.Screen
                 name="GetPassword"
@@ -330,7 +351,11 @@ const RootStack = ({ navigation }) => {
            component={SignInScreen}
            options={{headerShown: false}}
                          />
-         
+               <Stack.Screen
+           name="Main"
+           component={MainTab}
+           options={{headerShown: false}}
+                         />
                 <Stack.Screen
                 name="Upload"
                 component={UploadScreen}

@@ -36,11 +36,11 @@ const GetNickName = ({navigation, route}) => {
     return (
         <>
               <View style={{
-                height:top
+                height:top,backgroundColor:"white"
             }}></View>
          
             <View>
-                <Pressable onPress={()=>navigation.navigate("GetPassword")}>
+                <Pressable onPress={()=>navigation.navigate("GetPassword")} style={{backgroundColor:"white"}}>
                     <Icon name="chevron-left" size={60}></Icon>
                 </Pressable>
              </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+        backgroundColor:"white"
     },
     text: {
         fontSize: 32,

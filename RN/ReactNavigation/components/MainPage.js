@@ -38,7 +38,7 @@ const MainPage = ({ navigation }) => {
                     <View >
                     
                             <Image source={require('../image/Cal.png')} style={{ width: 22,
-        height:22,marginRight:10,}} resizeMode='center'/>
+        height:22,marginRight:10,}} resizeMode='cover'/>
                      
                     </View>
                     </Pressable>

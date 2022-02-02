@@ -7,6 +7,7 @@ import CustomButton from '../CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as reportActions } from '../../redux/modules/report'
 import { actionCreators as markActions } from '../../redux/modules/mark'
+import { actionCreators as skinActions} from '../../redux/modules/skin'
 import { actionCreators as cosActions } from '../../redux/modules/cosmetics'
 //삼항연산자 처리 차트 에러 걸리면~
 const MainReport = ({ navigation }) => {
@@ -58,7 +59,7 @@ const MainReport = ({ navigation }) => {
                     <View style={styles.mainImage}>
                     
                 <Image
-                    source={{ uri: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fHBlb3BsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=700&q=60"}}
+                    source={require("../../image/reportImage.png")}
                     style={styles.cosmetic}
                     resizeMode="cover"
                         />
@@ -259,11 +260,16 @@ const MainReport = ({ navigation }) => {
                     </View>
                     <View style={styles.row3}>
                         <CustomButton theme="gender" title="취소" onPress={() => {
-                            
+                            dispatch(skinActions.getBoumanAPI())
+                            dispatch(skinActions.getListAPI())
                             navigation.navigate("MainPage")
                             
                         }}/>
-                        <CustomButton theme="gender" title="확인" color="red" onPress={() => { navigation.navigate("MainPage") }}/>
+                        <CustomButton theme="gender" title="확인" color="red" onPress={() => {
+                               dispatch(skinActions.getBoumanAPI())
+                               dispatch(skinActions.getListAPI())
+                            navigation.navigate("MainPage")
+                        }} />
                     </View>
                     <View style={{ height: top }}></View>
                 </View>

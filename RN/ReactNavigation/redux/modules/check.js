@@ -15,7 +15,7 @@ const check1API = (check) => {
   return async function  (dispatch, navigation) {
      await axios({
       method: "POST",
-      url: "http://54.180.134.111/skin/daily/status",
+      url: "https://plaluvs-backend.me/skin/daily/status",
        data: {id:check},
          headers: {
             // "Content-Type": "multipart/form-data",
@@ -41,7 +41,7 @@ const check2API = (check) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
-        url: "http://54.180.134.111/skin/daily/Stimulation",
+        url: "https://plaluvs-backend.me/skin/daily/Stimulation",
          data: {id:check},
            headers: {
               // "Content-Type": "multipart/form-data",
@@ -67,7 +67,7 @@ const check3API = (num) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
-        url: "http://54.180.134.111/skin/worry",
+        url: "https://plaluvs-backend.me/skin/worry",
          data: {id:num},
            headers: {
               // "Content-Type": "multipart/form-data",
@@ -94,7 +94,7 @@ const check3API = (num) => {
     return async function  (dispatch, navigation) {
        await axios({
         method: "POST",
-        url: "http://54.180.134.111/skin/daily/self-check",
+        url: "https://plaluvs-backend.me/skin/daily/self-check",
          data: {score:num},
            headers: {
               // "Content-Type": "multipart/form-data",

@@ -4,6 +4,7 @@ import CustomButton from '../CustomButton'
 import BorderedInput from '../BorderedInput'
 import { useDispatch,useSelector } from 'react-redux'
 import { actionCreators as checkActions } from '../../redux/modules/check'
+import CameraLoading from '../CameraLottie'
 const CameraIndicate = ({ navigation, route }) => {
     const cameraCheck = useSelector(state => state.check.cameraCheck)
     const [num1, setNum1] = useState(false)
@@ -11,10 +12,11 @@ const CameraIndicate = ({ navigation, route }) => {
     const [num3, setNum3] = useState(false)
     const [num4, setNum4] = useState(false)
     const [num5, setNum5] = useState(false)
+    const [loading,setLoading] = useState(false)
     const dispatch = useDispatch();
     useEffect(() => {
         if (cameraCheck)
-        {   
+        {   setLoading(false)
             dispatch(checkActions.cameraCheck(false))
             navigation.navigate("CameraRating")
             }
@@ -33,11 +35,11 @@ const CameraIndicate = ({ navigation, route }) => {
             arr.push(5)
         // dispatch(signActions.setWorryAPI())
         // navigation.navigate("GetAge")
-   
+        setLoading(true)
         dispatch(checkActions.check3API(arr))
     }
 
-   
+    if(!loading)
     return (
         <>
             <View style={styles.fullscreen}>
@@ -116,6 +118,11 @@ const CameraIndicate = ({ navigation, route }) => {
             </View>   
         </>
     )
+
+    if (loading)
+        return (
+            <CameraLoading/>
+        )
 }
 const styles = StyleSheet.create({
     fullscreen: {

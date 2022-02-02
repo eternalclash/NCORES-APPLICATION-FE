@@ -33,10 +33,10 @@ const GetPassword = ({ navigation, route }) => {
     return (
         <>
               <View style={{
-                height:top
+                height:top,backgroundColor:"white"
             }}></View>
          
-            <View>
+            <View style={{backgroundColor:"white"}}>
                 <Pressable onPress={()=>navigation.navigate("GetEmail")}>
                     <Icon name="chevron-left" size={60}></Icon>
                 </Pressable>
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     fullscreen: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 104,
+     
+        backgroundColor:"white"
     },
     text: {
         fontSize: 32,

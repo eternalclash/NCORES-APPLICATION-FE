@@ -1,11 +1,40 @@
 import React, {useRef,useState,useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { StyleSheet,  View,Keyboard,KeyboardAvoidingView,Text, Image } from 'react-native'
+import { StyleSheet,  View,Keyboard,KeyboardAvoidingView,Text, Image, Pressable ,ScrollView} from 'react-native'
 import BorderedInput from './BorderedInput'
 import CustomButton from './CustomButton'
-import sign, { actionCreators as signActions } from '../redux/modules/sign'
-import { useDispatch,useSelector } from 'react-redux'
+import  { actionCreators as signActions } from '../redux/modules/sign'
+import { useDispatch, useSelector } from 'react-redux'
+import KakaoSDK from "@actbase/react-kakaosdk"
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 const SignInScreen = ({ navigation, route }) => {
+    const [result, setResult] = useState();
+    const login2 = async () => {
+        try {
+            await KakaoSDK.init("b82ed2611d4ed50d44600697e4257716") 
+            const tokens = await KakaoSDK.login();
+            console.log(tokens)
+            const profile = await KakaoSDK.getProfile();
+            console.log(profile)
+            dispatch(signActions.kakaoLoginAPI(profile.kakao_account.email,String(profile.id),profile.properties.nickname))
+            // await KakaoSDK.logout()
+        }
+        catch (e)
+        {
+            console.log(e)
+        }
+    }
+    // const login3 = async () => {
+    //     try {
+    //         await KakaoSDK.init("b82ed2611d4ed50d44600697e4257716")
+        
+    //         await KakaoSDK.logout()
+    //     }
+    //     catch (e)
+    //     {
+    //         console.log(e)
+    //     }
+    // }
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
     const dispatch = useDispatch()
@@ -43,6 +72,7 @@ const SignInScreen = ({ navigation, route }) => {
                 dispatch(signActions.check(false))
                 dispatch(signActions.loginError(""))
                 dispatch(signActions.checkLoginMD(false))
+                // dispatch(navigation.navigate("Main"))
                 }
                     
         }
@@ -55,9 +85,11 @@ const SignInScreen = ({ navigation, route }) => {
     const logInHandler =  () => {
         dispatch(signActions.logInAPI(form.email, form.password))  
     }
+    const { top } = useSafeAreaInsets()
     return (
   
-            <SafeAreaView style={styles.fullscreen}>
+        <ScrollView style={styles.fullscreen}>
+              <View style={{ height: 150 }}></View>
                 <View style={{alignItems:"center",justifyContent:"flex-start",position:"relative",top:0}}>
                 <Image source={require('../image/img_logo.png')}></Image>
             <Text style={styles.text}>로그인</Text>          
@@ -90,23 +122,25 @@ const SignInScreen = ({ navigation, route }) => {
                     />
                     <Text style={styles.error}>{loginError}</Text>
                 
+                
                    
                 <View style={styles.buttons}>
-                    {
-                        (
-                                <>
+                    
+                        
+                             
                                     <CustomButton title="로그인" hasMarginBottom onPress={logInHandler} />
-                                 
+                             
                                     <CustomButton title="이메일로 회원가입하기" theme="secondary" onPress={() => {
                                         navigation.push('GetEmail')
-                                    }}/>
-                                </>
-                        )
-                    }
+                                }} />
+                               
+                          
+                        
+                    
                
                 </View>
             </View>
-            </SafeAreaView>
+            </ScrollView>
            
     )
 }
@@ -116,8 +150,8 @@ const styles = StyleSheet.create({
     },
     fullscreen: {
         flex: 1,
-      
-        marginTop: 104,
+        backgroundColor:"white",
+       
     
     },
     text: {
@@ -133,6 +167,8 @@ const styles = StyleSheet.create({
     },
     buttons: {
         marginTop: 24,
+        justifyContent: 'center',
+        alignContent:'center'
     },
     buttons2: {
         marginTop: 257,
