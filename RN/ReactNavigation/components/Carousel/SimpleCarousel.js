@@ -10,7 +10,10 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+import trueSvg from '../../image/true.svg'
+import falseSvg from '../../image/false.svg'
 import Carousel from 'react-native-anchor-carousel';
+import { WithLocalSvg } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as markActions } from '../../redux/modules/mark';
@@ -50,13 +53,20 @@ export default function SimpleCarousel(props) {
 
           >
        
-            <Image source={require('../../image/true.png')}
-            style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
-       
+               
+       <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={trueSvg}/>
          </Pressable>
             : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,100000,categoryId))}>
-              <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
-              </Image>
+               <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={falseSvg}/>
+         
 
               </Pressable>
 

@@ -83,9 +83,9 @@ const MainSkinPage = ({navigation}) => {
                           
                            </View>
                            </Pressable> : 
-                               <Pressable onPress={()=>{navigation.navigate("CameraCheck")}}>
-                               <View style={styles.lowButton2}>
-                    <Text>오늘의 피부 진단 하기</Text>
+                               <Pressable  onPress={()=>{navigation.navigate("CameraCheck")}}>
+                               <View style={styles.lowButton1}>
+                    <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>
                     </View>
                     </Pressable>
                        }
@@ -152,9 +152,10 @@ const MainSkinPage = ({navigation}) => {
                             <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>
                             </View>
                             </Pressable> : 
-                                <Pressable  onPress={()=>navigation.navigate("CameraCheck")}>
+                                   <Pressable onPress={() => navigation.navigate("CameraCheck")}>
+                                       
                                 <View style={styles.lowButton2}>
-                     <Text>오늘의 피부 진단 하기</Text>
+                               <Text >오늘의 피부 진단 하기</Text>
                      </View>
                      </Pressable>
                         }
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
     },
     lowButton2: {
         height:56,
-        backgroundColor:"#F5EBE8",
+  
         marginHorizontal:20,
         alignItems: 'center',
         justifyContent: 'center',

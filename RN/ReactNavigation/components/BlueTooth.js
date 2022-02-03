@@ -129,44 +129,25 @@ const BlueTooth = () => {
       await  BleManager.connect(peripheral.id).then(async() => {
       
          await   BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
-          let p = peripherals.get(peripheral.id);
-          if (p) {
-            p.connected = true;
-            peripherals.set(peripheral.id, p);
-            setList(Array.from(peripherals.values()));
-          }
+          
               const k =peripheralData.characteristics[0].value.bytes.map((e, index) => { return String.fromCharCode(e) }).join("")
-           console.log(k)
-           
+                console.log(k)
               if (k.split(",")[1].split(":")[0] == "Level")
                   setWorking(stopped)
               
               if (k.split(":")[1].split(",")[0])
               {
-                if (k.split(":")[1].split(",")[0] == "working")
-                {
-                  setWorking("동작")
-                  setMode(k.split(":")[3].split(",")[0])
-                  setLevel(k.split(":")[4].split(" ")[0])
-          
-                    }
-                      
-                else if (k.split(":")[1].split(",")[0] == "charging")
-                {
-                  setWorking("충전 중")
-                  setMode(k.split(":")[3].split(",")[0])
-                  setLevel(k.split(":")[4].split(" ")[0])
-           
-                  }
-                     
+                  if (k.split(":")[1].split(",")[0] == "working")
+                      setWorking("동작")
+                  else if (k.split(":")[1].split(",")[0] == "charging")
+                      setWorking("충전 중")
                   else {
-                  setWorking("정지") 
-                  setLevel(0)
-               
+                      setWorking("정지")       
                   }
                  //나머지 처리
-              
                  setTime(Number(k.split(":")[2].split(",")[0].split(" ")[0]))
+                 setMode(k.split(":")[3].split(",")[0])
+                 setLevel(k.split(":")[4].split(" ")[0])
                   }
               
               // console.log(k.split(":")[1].split(",")[0])  //working
@@ -217,10 +198,11 @@ const BlueTooth = () => {
     return (
       <TouchableHighlight onPress={() =>
       {
+        let count = 0;
         setConnect(true)
         setInterval(() => {
-         
-          testPeripheral(item)   
+          count++;
+          testPeripheral(item)
         }, 2000)
         }
       
@@ -264,7 +246,8 @@ const BlueTooth = () => {
 
           </View>
           <View style={{ backgroundColor:"rgba(240, 223, 222, 0.5)", height:220,borderWidth:0.7,marginHorizontal:20,marginTop:50,borderRadius:4,justifyContent:"center",alignItems:"center"}}>
-            <Text style={{fontSize:20}}>플라럽스가</Text>
+            <View style={{position:"absolute",top:10,right:10,}}><Text style={{fontSize:15}}>{mode=="Face"&&"페이스모드",mode=="Scalp"&&"스컬프모드"}</Text></View>
+            <Text style={{ fontSize: 20 }}>플라럽스가</Text>
             <Text style={{fontSize:20}}>피부를 관리중이에요</Text>
             <View style={{ flexDirection: "row", marginTop: 20 }}>
               {
@@ -310,8 +293,8 @@ const BlueTooth = () => {
   );
   else {
     return (
-      <>
-        <SafeAreaView >
+      <View style={{backgroundColor:"white",flex:1}}> 
+        <SafeAreaView  style={{backgroundColor:"white"}}>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
@@ -354,7 +337,7 @@ const BlueTooth = () => {
             <Text style={{color:"white",fontSize:15}}>플라럽스 기기 찾기</Text>
           </View>
         </Pressable>     
-      </>
+      </View>
     );
   }
  
@@ -362,7 +345,7 @@ const BlueTooth = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: "white",
   },
  
   body: {
@@ -375,13 +358,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.black,
+    color: "white",
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
-    color: Colors.dark,
+    color: "white",
   },
   highlight: {
     fontWeight: '700',

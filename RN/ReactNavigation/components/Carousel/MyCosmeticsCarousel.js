@@ -11,8 +11,12 @@ import {
   Alert,
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
-import { useDispatch, useSelector } from 'react-redux';
+import { WithLocalSvg } from 'react-native-svg'
 import { actionCreators as markActions } from '../../redux/modules/mark';
+import trueSvg from '../../image/true.svg'
+import falseSvg from '../../image/false.svg'
+import { useDispatch, useSelector } from 'react-redux';
+
 const {width: windowWidth} = Dimensions.get('window');
 
 
@@ -48,13 +52,19 @@ export default function MyCosmeticsCarousel(props) {
 
           >
        
-            <Image source={require('../../image/true.png')}
-            style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" />
+       <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={trueSvg}/>
        
          </Pressable>
             : <Pressable style={styles.heart} onPress={() => dispatch(markActions.markCosmeticAPI(id,categoryId))}>
-              <Image source={require('../../image/false.png')} style={{ width: 28, height: 28, marginBottom: 10 }} resizeMode="center" >
-              </Image>
+               <WithLocalSvg
+                width={28}
+                height={28}
+                fill={'#000000'}
+                asset={falseSvg}/>
 
               </Pressable>
 

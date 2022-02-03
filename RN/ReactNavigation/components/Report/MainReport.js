@@ -7,18 +7,20 @@ import CustomButton from '../CustomButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as reportActions } from '../../redux/modules/report'
 import { actionCreators as markActions } from '../../redux/modules/mark'
-import { actionCreators as skinActions} from '../../redux/modules/skin'
+import { actionCreators as skinActions } from '../../redux/modules/skin'
+import { actionCreators as photoActions} from '../../redux/modules/photo'
 import { actionCreators as cosActions } from '../../redux/modules/cosmetics'
 //삼항연산자 처리 차트 에러 걸리면~
 const MainReport = ({ navigation }) => {
     const { top } = useSafeAreaInsets()
     const dispatch = useDispatch();
     const cameraReport = useSelector(state => state.report.cameraReport)
-    const aqua = useSelector(state=>state.report.aquaScore)
-    const oill = useSelector(state=>state.report.oillScore)
-    const pigment = useSelector(state=>state.report.pigmentScore)
-    const sensitive = useSelector(state=>state.report.sensitiveScore)
-    const winkle = useSelector(state=>state.report.winkleScore)
+    const aqua = useSelector(state=>state.report.aqua)
+    const oill = useSelector(state=>state.report.oill)
+    const pigment = useSelector(state=>state.report.pigment)
+    const sensitive = useSelector(state=>state.report.sensitive)
+    const winkle = useSelector(state => state.report.winkle)
+    const cameraCheck = useSelector(state => state.photo.checkPhoto)
     const [info, setInfo] = useState("")
     const data = [
         {
@@ -31,19 +33,23 @@ const MainReport = ({ navigation }) => {
     ]
     const colors = ['#323632', '#F0DFDE']
     const keys = ['apples','banana']
-    console.log(aqua)
+    console.log(aqua,"아쿠아")
+    console.log(oill,"오일")
+    console.log(pigment,"색조")
+    console.log(sensitive,"민감성")
+    console.log(winkle,"주름")
     useEffect( () => {
-       
+            console.log("에러 로깅 리포트")
             dispatch(reportActions.cameraReportAPI())
          
     
-    },[] )
+    },[cameraCheck])
    
  
-    if (cameraReport)
+    if (cameraCheck==0)
     { 
         return (
-        
+            <View style={{ flex:1}}>
             <ScrollView showsVerticalScrollIndicator={false}  nestedScrollEnabled >
             
             <View style={styles.main}>
@@ -258,26 +264,33 @@ const MainReport = ({ navigation }) => {
               
                     </View>
                     </View>
-                    <View style={styles.row3}>
-                        <CustomButton theme="gender" title="취소" onPress={() => {
-                            dispatch(skinActions.getBoumanAPI())
-                            dispatch(skinActions.getListAPI())
-                            navigation.navigate("MainPage")
-                            
-                        }}/>
-                        <CustomButton theme="gender" title="확인" color="red" onPress={() => {
-                               dispatch(skinActions.getBoumanAPI())
-                               dispatch(skinActions.getListAPI())
-                            navigation.navigate("MainPage")
-                        }} />
-                    </View>
+                  
                     <View style={{ height: top }}></View>
                 </View>
-                </ScrollView>
+            </ScrollView>
+              <View style={{position:"absolute",flexDirection:'row',bottom:0,justifyContent:"center",alignItems:"center",marginTop:30,zIndex:99}}>
+              <Pressable style={{height:70,borderWidth:1,width:"50%",justifyContent:'center',alignItems:'center',backgroundColor:"#F0DFDE"}}  onPress={() => {
+        dispatch(skinActions.getBoumanAPI())
+        dispatch(skinActions.getListAPI())
+        navigation.navigate("MainPage")
+        
+    }}>
+              <Text style={{fontSize:18}}>다시하기</Text>
+              </Pressable>
+              <Pressable style={{height:70,borderWidth:1,width:"50%",justifyContent:'center',alignItems:'center',backgroundColor:"black"}}  onPress={() => {
+        dispatch(skinActions.getBoumanAPI())
+        dispatch(skinActions.getListAPI())
+        navigation.navigate("MainPage")
+        
+    }}>
+              <Text style={{fontSize:18,color:'white'}}>계속하기</Text>
+              </Pressable>
+                </View>
+                </View>
         )
     }
-    
-    if(!cameraReport)
+
+    if(!winkle)
 return (
     <View ></View>
 )

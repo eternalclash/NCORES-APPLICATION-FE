@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
     black: {
         backgroundColor: 'black',
-        fontColor:'white',
+     
     }
 });
 export default CustomButton;

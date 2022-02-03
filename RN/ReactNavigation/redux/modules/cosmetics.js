@@ -72,7 +72,7 @@ const categoryAllAPI = (cosmetic) => {
 
 const categoryCosmeticAPI = (cosmetic) => {
     return async function  (dispatch, navigation) {
-      await axios.get("https://plaluvs-backend.me/cosmetic/detail-recommends/617/0", {
+      await axios.get("https://plaluvs-backend.me/cosmetic/detail-recommends/618/0", {
     headers: {
       // "Content-Type": "multipart/form-data",
   //   Accept: "application/json",

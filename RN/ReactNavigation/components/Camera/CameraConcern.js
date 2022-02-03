@@ -103,12 +103,12 @@ const CameraConcern = ({ navigation, route }) => {
                          ?<CustomButton color="red"
                          title="음주" theme="secondary" hasMarginBottom
                          onPress={() => {
-                                         setNum4(!num4)
+                                         setNum5(!num4)
                             }} />:
                             <CustomButton
                             title="음주" theme="secondary" hasMarginBottom
                             onPress={() => {
-                                setNum4(!num4)
+                                setNum5(!num4)
                         }} />
                     }
                  { num6==true

@@ -27,10 +27,17 @@ const postImageAPI = (image) => {
       })
         .then(async(res) => { //바디 부분
 
-          dispatch(checkPhoto("success"))
-         dispatch(ReportActions.cameraReportAPI())
-         dispatch(CosmeticActions.mainCosmeticAPI())
-      })
+         
+          dispatch(ReportActions.cameraReportAPI())
+          dispatch(CosmeticActions.mainCosmeticAPI())
+        
+        
+         
+        }).then(
+          () => {
+            dispatch(checkPhoto("success"))
+        }
+      )
          .catch(async (err) => {
             console.log(await AsyncStorage.getItem("token"))
 

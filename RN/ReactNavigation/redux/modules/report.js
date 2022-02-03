@@ -4,26 +4,26 @@ import axios from "axios";
 import AsyncStorage from '@react-native-community/async-storage'
 import { RefreshControl } from "react-native";
 const GET_CAMERAREPORT = "GET_CAMERAREPORT";
-const AQUA_SCORE = "AQUA_SCORE"
-const OILL_SCORE = "OILL_SCORE"
-const PIGMENT_SCORE = "PIGMENT_SCORE"
-const SENSITIVE_SCORE = "SENSITIVE_SCORE"
-const WINKLE_SCORE = "WINKLE_SCORE"
+const AQUA = "AQUA"
+const OILL = "OILL"
+const PIGMENT = "PIGMENT"
+const SENSITIVE = "SENSITIVE"
+const WINKLE = "WINKLE"
 const getCameraReport=createAction(GET_CAMERAREPORT,(cameraReport)=>({cameraReport}))
-const aquaScore = createAction(AQUA_SCORE,(aquaScore)=>({aquaScore}))
-const oillScore = createAction(OILL_SCORE,(oillScore)=>({oillScore}))
-const pigmentScore = createAction(PIGMENT_SCORE,(pigmentScore)=>({pigmentScore}))
-const sensitiveScore = createAction(SENSITIVE_SCORE,(sensitiveScore)=>({sensitiveScore}))
-const winkleScore = createAction(WINKLE_SCORE,(winkleScore)=>({winkleScore}))
+const aqua = createAction(AQUA,(aqua)=>({aqua}))
+const oill = createAction(OILL,(oill)=>({oill}))
+const pigment = createAction(PIGMENT,(pigment)=>({pigment}))
+const sensitive = createAction(SENSITIVE,(sensitive)=>({sensitive}))
+const winkle = createAction(WINKLE,(winkle)=>({winkle}))
 
 const initialState = {
     cameraReport:"",
   element: "",
-  aquaScore: "",
-  oillScore: "",
-  pigmentScore: "",
-  sensitiveScore: "",
-  winkleScore: "",
+  aqua: "",
+  oill: "",
+  pigment: "",
+  sensitive: "",
+  winkle: "",
 }
 
 
@@ -39,11 +39,11 @@ const cameraReportAPI = (id) => {
     })
         .then(async(res) => { //바디 부분
           console.log(res.data)
-          dispatch(aquaScore([{apples:res.data.dry,banana:100-res.data.dry}]))
-          dispatch(oillScore([{apples:res.data.oilIndicate,banana:100-res.data.oilIndicate}]))
-          dispatch(pigmentScore([{apples:res.data.pigment,banana:100-res.data.pigment}]))
-          dispatch(sensitiveScore([{apples:res.data.sensitivity,banana:100-res.data.sensitivity}]))
-          dispatch(winkleScore([{apples:res.data.winkle,banana:100-res.data.winkle}]))
+          dispatch(aqua([{apples:res.data.dry,banana:100-res.data.dry}]))
+          dispatch(oill([{apples:res.data.oilIndicate,banana:100-res.data.oilIndicate}]))
+          dispatch(pigment([{apples:res.data.pigment,banana:100-res.data.pigment}]))
+          dispatch(sensitive([{apples:res.data.sensitivity,banana:100-res.data.sensitivity}]))
+          dispatch(winkle([{apples:res.data.winkle,banana:100-res.data.winkle}]))
          dispatch(getCameraReport(res.data))
          
       })
@@ -88,25 +88,25 @@ export default handleActions(
         produce(state, (draft) => {
           draft.cameraReport = action.payload.cameraReport
         }),
-        [AQUA_SCORE]: (state, action) =>
+        [AQUA]: (state, action) =>
         produce(state, (draft) => {
-          draft.aquaScore= action.payload.aquaScore
+          draft.aqua= action.payload.aqua
         }),
-        [OILL_SCORE]: (state, action) =>
+        [OILL]: (state, action) =>
         produce(state, (draft) => {
-          draft.oillScore= action.payload.oillScore
+          draft.oill= action.payload.oill
         }),
-        [PIGMENT_SCORE]: (state, action) =>
+        [PIGMENT]: (state, action) =>
         produce(state, (draft) => {
-          draft.pigmentScore= action.payload.pigmentScore
+          draft.pigment= action.payload.pigment
         }),
-        [SENSITIVE_SCORE]: (state, action) =>
+        [SENSITIVE]: (state, action) =>
         produce(state, (draft) => {
-          draft.sensitiveScore= action.payload.sensitiveScore
+          draft.sensitive= action.payload.sensitive
         }),
-        [WINKLE_SCORE]: (state, action) =>
+        [WINKLE]: (state, action) =>
         produce(state, (draft) => {
-          draft.winkleScore= action.payload.winkleScore
+          draft.winkle= action.payload.winkle
         }),
         
     },

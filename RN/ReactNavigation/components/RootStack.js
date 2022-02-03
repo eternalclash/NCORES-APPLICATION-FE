@@ -84,7 +84,7 @@ const RootStack = ({ navigation }) => {
      
      return (
          <Stack.Navigator 
-       
+
          >
              {
            login?  
