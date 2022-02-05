@@ -95,7 +95,7 @@ const RootStack = ({ navigation }) => {
                              options={{ headerShown: false }}
                            
                          /> 
-                         <Stack.Screen
+                          <Stack.Screen
                          name="GetHead"
                          component={GetHead}
                          options={{headerShown: false}}
@@ -119,8 +119,13 @@ const RootStack = ({ navigation }) => {
                </>
  
              }
-        
-            
+       
+       <Stack.Screen
+               name="MainPage2"
+               component={MainTab}
+                             options={{ headerShown: false }}
+                           
+                         /> 
               <Stack.Screen
                 name="MainReport"
                 component={MainReport}

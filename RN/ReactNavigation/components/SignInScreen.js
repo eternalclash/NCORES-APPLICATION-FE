@@ -8,33 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import KakaoSDK from "@actbase/react-kakaosdk"
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 const SignInScreen = ({ navigation, route }) => {
-    const [result, setResult] = useState();
-    const login2 = async () => {
-        try {
-            await KakaoSDK.init("b82ed2611d4ed50d44600697e4257716") 
-            const tokens = await KakaoSDK.login();
-            console.log(tokens)
-            const profile = await KakaoSDK.getProfile();
-            console.log(profile)
-            dispatch(signActions.kakaoLoginAPI(profile.kakao_account.email,String(profile.id),profile.properties.nickname))
-            // await KakaoSDK.logout()
-        }
-        catch (e)
-        {
-            console.log(e)
-        }
-    }
-    // const login3 = async () => {
-    //     try {
-    //         await KakaoSDK.init("b82ed2611d4ed50d44600697e4257716")
-        
-    //         await KakaoSDK.logout()
-    //     }
-    //     catch (e)
-    //     {
-    //         console.log(e)
-    //     }
-    // }
+    
+  
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
     const dispatch = useDispatch()
@@ -72,6 +47,13 @@ const SignInScreen = ({ navigation, route }) => {
                 dispatch(signActions.check(false))
                 dispatch(signActions.loginError(""))
                 dispatch(signActions.checkLoginMD(false))
+                navigation.reset({
+                    routes: [{
+                        name: 'Main',
+                        
+                    }]
+                })
+                console.log("checklogin움직임")
                 // dispatch(navigation.navigate("Main"))
                 }
                     

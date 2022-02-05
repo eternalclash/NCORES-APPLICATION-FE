@@ -24,7 +24,7 @@ const MainSkin = ({getScore}) => {
                 alignmentBaseline={ 'hanging' }
                 textAnchor={'middle'}
             >
-                 {value>1?`${value}점`:'0점'}
+                 {value>1?`${value}`:''}
                 </Text>
                
             </G>
@@ -35,7 +35,7 @@ const MainSkin = ({getScore}) => {
        
        
         <View style={{
-            height: 200, flexDirection: 'row', justifyContent:'center',marginTop:40,marginHorizontal:15,
+            height: 200, flexDirection: 'row', justifyContent:'center',marginTop:40,marginHorizontal:10,
         }}>
             <BarChart
                 style={{ flex:1}}

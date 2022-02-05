@@ -40,7 +40,7 @@ export default function ElementList({route,navigation}) {
   useEffect(() => {
 
 
-    dispatch(cosActions.elementCosmeticAPI(route.params.id,617))
+    dispatch(cosActions.elementCosmeticAPI(route.params.id,618))
      setDetail(element)
   }, [])
   console.log(element)

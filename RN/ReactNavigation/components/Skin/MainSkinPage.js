@@ -146,7 +146,7 @@ const MainSkinPage = ({navigation}) => {
                             getList.status == 1 ?
                            
                             <Pressable  onPress={()=>navigation.navigate("CameraCheck")}>
-                                 <Text style={{position:'absolute',color:"black",left:120,top:40}}>오늘의 피부는 몇점인가요</Text>
+                               
                                 <View style={styles.lowButton1}>
                                     
                             <Text style={{color:"white"}}>오늘의 피부 진단 하기</Text>

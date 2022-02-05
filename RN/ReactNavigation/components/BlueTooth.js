@@ -137,17 +137,31 @@ const BlueTooth = () => {
               
               if (k.split(":")[1].split(",")[0])
               {
-                  if (k.split(":")[1].split(",")[0] == "working")
-                      setWorking("동작")
-                  else if (k.split(":")[1].split(",")[0] == "charging")
-                      setWorking("충전 중")
+                if (k.split(":")[1].split(",")[0] == "working")
+                {
+                  setWorking("동작")
+                  setMode(k.split(":")[3].split(",")[0])
+                  setLevel(k.split(":")[4].split(" ")[0])
+           
+                    }
+                     
+                else if (k.split(":")[1].split(",")[0] == "charging")
+                {
+                  setWorking("충전 중")
+                  setMode(k.split(":")[3].split(",")[0])
+                  setLevel(k.split(":")[4].split(" ")[0])
+           
+                  }
+                      
                   else {
-                      setWorking("정지")       
+                  setWorking("정지")       
+                  setMode(k.split(":")[3].split(",")[0])
+                  setLevel(0)
+                  setTime(0)
                   }
                  //나머지 처리
-                 setTime(Number(k.split(":")[2].split(",")[0].split(" ")[0]))
-                 setMode(k.split(":")[3].split(",")[0])
-                 setLevel(k.split(":")[4].split(" ")[0])
+                //  setTime(Number(k.split(":")[2].split(",")[0].split(" ")[0]))
+                
                   }
               
               // console.log(k.split(":")[1].split(",")[0])  //working
@@ -201,7 +215,14 @@ const BlueTooth = () => {
         let count = 0;
         setConnect(true)
         setInterval(() => {
-          count++;
+          count = count + 2;
+          if (working =="정지")
+          {
+            setTime(0)
+            count = 0;
+           }
+           else
+            setTime(count)
           testPeripheral(item)
         }, 2000)
         }

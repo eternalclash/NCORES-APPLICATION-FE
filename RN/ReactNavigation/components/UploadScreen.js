@@ -41,7 +41,7 @@ const UploadScreen = ({navigation}) => {
                 style={[styles.image]}
                 resizeMode="cover"
             />
-             <Text style={styles.step}>잘 찍으셨네요!</Text>
+             
             <Text style={styles.info}>이 사진으로 피부 진단을 시작할게요</Text>
             <View style={styles.row}>
                 <CustomButton theme="gender" title="다시하기" onPress={()=>{navigation.pop()}}/>

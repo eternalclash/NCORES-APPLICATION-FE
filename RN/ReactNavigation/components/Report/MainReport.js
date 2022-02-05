@@ -59,7 +59,7 @@ const MainReport = ({ navigation }) => {
                   
                     <View style={styles.row1}>
                         <Text style={styles.profileText1}>피부 점수</Text>
-                        <Text style={styles.profileText1}>추천 화장품</Text>
+                 
                     </View>
                
                     <View style={styles.mainImage}>
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     profileText1: {
         fontSize: 20,
         marginTop: 20,
-        marginBottom:10,
+    
         marginRight:20,
     },
     profileText: {
@@ -347,7 +347,8 @@ const styles = StyleSheet.create({
     profileText3: {
         fontSize: 14,
         marginTop: 15,
-        width:"90%"
+        width: "90%",
+        marginBottom:40,
     },
     lowButton: {
         flex: 0.5,
@@ -375,17 +376,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:"#F5EBE8"
     },
+    main2: {
+        position:"relative",
+        flex: 1,
+        backgroundColor:"#F5EBE8"
+    },
     main1: {
         flex: 1,
-       
+    
     },
     mainImage: {
-        height:400,
+        height:500,
         marginHorizontal: 20,
         borderTopColor:"gray",
         borderBottomColor:"gray",
         borderTopWidth: 1,
         borderBottomWidth: 1,
+        marginTop: 20,
         
         alignItems: "center",
         justifyContent:"center",
@@ -393,7 +400,8 @@ const styles = StyleSheet.create({
     cosmetic: {
         width: 150,
         height: 150,
-        borderRadius:75,
+        borderRadius: 75,
+        marginTop:20,
     },
     information: {
         flexDirection: "row",
