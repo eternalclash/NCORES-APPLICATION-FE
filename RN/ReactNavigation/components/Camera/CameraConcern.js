@@ -60,6 +60,7 @@ const CameraConcern = ({ navigation, route }) => {
                             <CustomButton
                             title="수면 부족" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum6(false)
                                 setNum1(!num1)
                         }} />
                     }
@@ -72,6 +73,7 @@ const CameraConcern = ({ navigation, route }) => {
                             <CustomButton
                             title="스트레스" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum6(false)
                                 setNum2(!num2)
                         }} />
                     }
@@ -84,6 +86,7 @@ const CameraConcern = ({ navigation, route }) => {
                             <CustomButton
                             title="생리 주기" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum6(false)
                                 setNum3(!num3)
                         }} />
                     }
@@ -96,6 +99,7 @@ const CameraConcern = ({ navigation, route }) => {
                             <CustomButton
                             title="강추위 또는 뜨거운 햇빛 노출" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum6(false)
                                 setNum4(!num4)
                         }} />
                     }
@@ -103,12 +107,13 @@ const CameraConcern = ({ navigation, route }) => {
                          ?<CustomButton color="red"
                          title="음주" theme="secondary" hasMarginBottom
                          onPress={() => {
-                                         setNum5(!num4)
+                                         setNum5(!num5)
                             }} />:
                             <CustomButton
                             title="음주" theme="secondary" hasMarginBottom
                             onPress={() => {
-                                setNum5(!num4)
+                                setNum6(false)
+                                setNum5(!num5)
                         }} />
                     }
                  { num6==true
@@ -120,6 +125,11 @@ const CameraConcern = ({ navigation, route }) => {
                             <CustomButton
                             title="없음" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
+                                setNum3(false)
+                                setNum4(false)
+                                setNum5(false)
                                 setNum6(!num6)
                         }} />
                     }

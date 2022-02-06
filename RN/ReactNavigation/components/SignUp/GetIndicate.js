@@ -32,7 +32,7 @@ const GetIndicate = ({ navigation, route }) => {
         <>
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>현재 피부상태는 어떤가요?</Text>
-                <Text style={styles.text1}>현재 피부상태는 어떤가요?</Text>
+                <Text style={styles.text1}>하나만 골라주세요</Text>
                 
                 <View style={styles.form}> 
                     { indicate==1

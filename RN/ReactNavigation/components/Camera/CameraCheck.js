@@ -40,6 +40,7 @@ const CameraCheck = ({ navigation, route }) => {
         // navigation.navigate("CameraConcern")
         // if (check)
         //     navigation.navigate("GetAge")
+        console.log(arr)
         setLoading(true)
         dispatch(checkActions.check1API(arr))
     }
@@ -60,6 +61,7 @@ const CameraCheck = ({ navigation, route }) => {
                             <CustomButton
                             title="따가움" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum5(false)
                                 setNum1(!num1)
                         }} />
                     }
@@ -72,6 +74,7 @@ const CameraCheck = ({ navigation, route }) => {
                             <CustomButton
                             title="건조함" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum5(false)
                                 setNum2(!num2)
                         }} />
                     }
@@ -84,6 +87,7 @@ const CameraCheck = ({ navigation, route }) => {
                             <CustomButton
                             title="트러블" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum5(false)
                                 setNum3(!num3)
                         }} />
                     }
@@ -96,18 +100,24 @@ const CameraCheck = ({ navigation, route }) => {
                             <CustomButton
                             title="유분기" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum5(false)
                                 setNum4(!num4)
                         }} />
                     }
                  { num5==true
                          ?<CustomButton color="red"
                          title="없음" theme="secondary" hasMarginBottom
-                         onPress={() => {
+                            onPress={() => {
+                                    
                                          setNum5(!num5)
                             }} />:
                             <CustomButton
                             title="없음" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
+                                setNum3(false)
+                                setNum4(false)
                                 setNum5(!num5)
                         }} />
                     }

@@ -12,6 +12,7 @@ const CameraIndicate = ({ navigation, route }) => {
     const [num3, setNum3] = useState(false)
     const [num4, setNum4] = useState(false)
     const [num5, setNum5] = useState(false)
+    const [num6, setNum6] = useState(false)
     const [loading,setLoading] = useState(false)
     const dispatch = useDispatch();
     useEffect(() => {
@@ -33,6 +34,8 @@ const CameraIndicate = ({ navigation, route }) => {
             arr.push(4)
         if (num5)
             arr.push(5)
+            if (num6)
+            arr.push(6)
         // dispatch(signActions.setWorryAPI())
         // navigation.navigate("GetAge")
         setLoading(true)
@@ -44,7 +47,7 @@ const CameraIndicate = ({ navigation, route }) => {
         <>
             <View style={styles.fullscreen}>
                 <Text style={styles.text}>오늘의 피부 고민이 있나요?</Text>
-                <Text style={styles.textMedium}>해당하는 항목을 모두 골라주세요</Text>
+                <Text style={styles.textMedium}>하나만 골라주세요</Text>
                 <View style={styles.form}>
                 { num1==true
                          ?<CustomButton color="red"
@@ -56,6 +59,11 @@ const CameraIndicate = ({ navigation, route }) => {
                             title="모공 또는 트러블성 피부" theme="secondary" hasMarginBottom
                             onPress={() => {
                                 setNum1(!num1)
+                                setNum2(false)
+                                setNum3(false)
+                                setNum4(false)
+                                setNum5(false)
+                                setNum6(false)
                         }} />
                     }
                  { num2==true
@@ -67,7 +75,12 @@ const CameraIndicate = ({ navigation, route }) => {
                             <CustomButton
                             title="탄력 또는 주름이 고민인 피부" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
                                 setNum2(!num2)
+                                setNum3(false)
+                                setNum4(false)
+                                setNum5(false)
+                                setNum6(false)
                         }} />
                     }
                  { num3==true
@@ -79,7 +92,12 @@ const CameraIndicate = ({ navigation, route }) => {
                             <CustomButton
                             title="민감한 피부" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
                                 setNum3(!num3)
+                                setNum4(false)
+                                setNum5(false)
+                                setNum6(false)
                         }} />
                     }
                  { num4==true
@@ -91,7 +109,12 @@ const CameraIndicate = ({ navigation, route }) => {
                             <CustomButton
                             title="색소침착 또는 칙칙한 피부" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
+                                setNum3(false)
                                 setNum4(!num4)
+                                setNum5(false)
+                                setNum6(false)
                         }} />
                     }
                  { num5==true
@@ -103,7 +126,29 @@ const CameraIndicate = ({ navigation, route }) => {
                             <CustomButton
                             title="유수분의 불균형인 피부" theme="secondary" hasMarginBottom
                             onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
+                                setNum3(false)
+                                setNum4(false)
                                 setNum5(!num5)
+                                setNum6(false)
+                        }} />
+                    }
+                      { num6==true
+                         ?<CustomButton color="red"
+                         title="없음" theme="secondary" hasMarginBottom
+                         onPress={() => {
+                                         setNum6(!num6)
+                            }} />:
+                            <CustomButton
+                            title="없음" theme="secondary" hasMarginBottom
+                            onPress={() => {
+                                setNum1(false)
+                                setNum2(false)
+                                setNum3(false)
+                                setNum4(false)
+                                setNum5(false)
+                                setNum6(!num6)
                         }} />
                     }
                

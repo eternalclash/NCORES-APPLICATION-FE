@@ -120,7 +120,11 @@ const MyPage = ({ navigation }) => {
                      })
                         }
                          
-                            </ScrollView>:<><Text style={{marginLeft:20,marginVertical:40,fontSize:30}}>찜한 성분이 없습니다.</Text></>}       
+                        </ScrollView> : <View style={{ height: 150, backgroundColor: "lightgrey", marginHorizontal: 20, borderRadius: 4,justifyContent:'center',alignItems:"center" }}>
+                        <Text>피부 진단을 하면</Text>
+                        <Text>나에게 맞는 성분을 찾을 수 있어요</Text>
+                        <Text>하트를 눌러 기억하세요</Text>
+                        </View>}       
           
                
              <View style={styles.information}>
@@ -129,7 +133,11 @@ const MyPage = ({ navigation }) => {
                     </View>
                     {
                         myCosmetics[0] ? <MyCosmeticsCarousel myCosmetics={myCosmetics} /> : 
-                        <><Text style={{marginLeft:20,marginVertical:40,fontSize:30}}>찜한 성분이 없습니다.</Text></>
+                        <View style={{ height: 150, backgroundColor: "lightgrey", marginHorizontal: 20, borderRadius: 4,justifyContent:'center',alignItems:"center" }}>
+                        <Text>아직 찜한 상품이 없어요</Text>
+                        <Text>마음에 드는 상품엔 하트를 눌러보세요</Text>
+                        
+                        </View>
                     }
             
                 </View>
